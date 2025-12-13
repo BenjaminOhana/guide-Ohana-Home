@@ -35,39 +35,64 @@
                             <p class="greeting-sub">Votre séjour commence ici</p>
                         </div>
                     </div>
+                    
+                    <!-- Weather Widget -->
+                    <div class="weather-widget">
+                        <div class="weather-icon-wrapper">
+                            <span id="weather-icon">--</span>
+                        </div>
+                        <div class="weather-info">
+                            <span id="weather-temp">--°</span>
+                            <span id="current-time">--:--</span>
+                        </div>
+                        
+                        <!-- Hidden Details -->
+                        <div class="weather-details">
+                            <div class="detail-row">
+                                <span class="detail-icon">💨</span>
+                                <span id="weather-wind">-- km/h</span>
+                            </div>
+                            <div class="detail-row">
+                                <span class="detail-icon">💧</span>
+                                <span id="weather-humidity">--%</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
                 <!-- Right Column: Navigation -->
                 <div class="hub-sidebar">
                     <nav class="hub-nav">
                         <button class="nav-card" onclick="openSection('maison')">
-                            <span class="card-icon">🏠</span>
+                            <span class="card-icon">🏡</span>
                             <span class="card-label">Votre séjour</span>
-                        </button>
-                        <button class="nav-card" onclick="openSection('regles')">
-                            <span class="card-icon">📋</span>
-                            <span class="card-label">Consignes</span>
                         </button>
                         <button class="nav-card" onclick="openSection('decouvrir')">
                             <span class="card-icon">📍</span>
                             <span class="card-label">Nos adresses</span>
                         </button>
-                        <button class="nav-card" onclick="openSection('urgences')">
-                            <span class="card-icon">🆘</span>
-                            <span class="card-label">Assistance</span>
+                        <button class="nav-card" onclick="alert('Bientôt disponible')" style="opacity:0.7;">
+                            <span class="card-icon">🤖</span>
+                            <span class="card-label">Assistant IA</span>
                         </button>
+                        <!-- Empty Slot as requested -->
+                        <div class="nav-card" style="visibility: hidden; pointer-events: none;"></div>
                     </nav>
                     <footer class="hub-footer">
                         <div class="wifi-card">
-                            <div class="wifi-icon">📶</div>
-                            <div class="wifi-info">
-                                <span class="wifi-label">Réseau Wi-Fi</span>
-                                <span class="wifi-value">Julienetben</span>
+                            <div class="qr-container">
+                                <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=WIFI:S:Julienetben;T:WPA;P:Welcome57100!;;;color=3D3A35&bgcolor=FFFFFF" alt="Scan for WiFi" class="qr-code-img">
+                                <div class="scan-label">Scanner pour rejoindre</div>
                             </div>
-                            <div class="wifi-divider"></div>
-                            <div class="wifi-info">
-                                <span class="wifi-label">Mot de passe</span>
-                                <span class="wifi-value">Welcome57100!</span>
+                            <div class="wifi-details-row">
+                                <div class="wifi-pill">
+                                    <span class="pill-icon">📡</span>
+                                    <span class="pill-text">Julienetben</span>
+                                </div>
+                                <div class="wifi-pill">
+                                    <span class="pill-icon">🔐</span>
+                                    <span class="pill-text">Welcome57100!</span>
+                                </div>
                             </div>
                         </div>
                     </footer>
@@ -76,356 +101,401 @@
 
         </section>
 
-        <!-- View: VOTRE SÉJOUR (Maison) -->
-        <section id="view-maison" class="view content-view centered-view">
-            <header class="section-header">
-                <button class="back-btn" onclick="goBack()">
-                    <span class="icon-back">←</span> Retour
-                </button>
-                <h2>Votre séjour</h2>
-                <div class="header-spacer"></div>
-            </header>
-            <div class="section-content no-scroll-desktop">
-                <div class="accordion-container">
-                    
-                    <!-- Accordion 1: Arrivée & Départ -->
-                    <div class="accordion-item">
-                        <div class="accordion-header" onclick="toggleAccordion(this)">
-                            <div class="header-icon">⏰</div>
-                            <h3>Arrivée & Départ</h3>
-                            <div class="header-arrow">▼</div>
+        <!-- View: VOTRE SÉJOUR (Menu) -->
+        <section id="view-maison" class="view">
+            <div class="split-page-layout">
+                <!-- Left Panel: Image -->
+                <div class="split-left-panel">
+                    <img src="https://images.unsplash.com/photo-1604812329355-635fa7c04130?q=80&w=2000&auto=format&fit=crop" alt="Intérieur Maison">
+                </div>
+
+                <!-- Right Panel: Sub-Menu Grid -->
+                <div class="split-right-panel" style="padding: var(--gap-lg); justify-content: center;">
+                    <header class="section-header" style="background:transparent; border:none; margin-bottom: 20px; padding:0;">
+                        <button class="back-btn" onclick="goBack()">
+                            <span class="icon-back">←</span> Retour
+                        </button>
+                        <h2 style="text-align:left; margin-left:20px;">Votre séjour</h2>
+                    </header>
+
+                    <div class="vertical-menu-grid">
+                        <!-- 1. Consignes de départ (Moved to top) -->
+                        <button class="nav-card" onclick="openSection('details-consignes')">
+                            <span class="card-icon">🧹</span>
+                            <span class="card-label">Consignes de départ</span>
+                        </button>
+
+                        <!-- 2. Parking & Wi-Fi -->
+                        <button class="nav-card" onclick="openSection('details-parking')">
+                            <span class="card-icon">🚗</span>
+                            <span class="card-label">Parking & Wi-Fi</span>
+                        </button>
+
+                        <!-- 3. Équipements -->
+                        <button class="nav-card" onclick="openSection('details-equipements')">
+                            <span class="card-icon">🏠</span>
+                            <span class="card-label">Équipements</span>
+                        </button>
+
+                        <!-- 4. Règles de vie -->
+                        <button class="nav-card" onclick="openSection('details-regles')">
+                            <span class="card-icon">📋</span>
+                            <span class="card-label">Règles de vie</span>
+                        </button>
+
+                        <!-- 5. Besoin d'aide -->
+                        <button class="nav-card" onclick="openSection('details-assistance')">
+                            <span class="card-icon">🆘</span>
+                            <span class="card-label">Besoin d'aide ?</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- View: DETAILS - PARKING & WIFI -->
+        <section id="view-details-parking" class="view no-scroll">
+             <div class="split-page-layout">
+                <div class="split-left-panel">
+                    <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=2000&auto=format&fit=crop" alt="Parking">
+                </div>
+                <div class="split-right-panel">
+                    <header class="section-header">
+                        <button class="back-btn" onclick="openSection('maison')">
+                            <span class="icon-back">←</span> Retour
+                        </button>
+                        <h2>Parking & Wi-Fi</h2>
+                        <div class="header-spacer"></div>
+                    </header>
+                    <div class="section-content" style="display:flex; flex-direction:column; gap:20px; height:100%;">
+                        
+                        <!-- WiFi Card -->
+                        <div class="wifi-card" style="padding: 25px; flex:1; justify-content:center;">
+                             <div class="qr-container" style="padding: 15px;">
+                                <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=WIFI:S:Julienetben;T:WPA;P:Welcome57100!;;;color=3D3A35&bgcolor=FFFFFF" alt="Scan for WiFi" class="qr-code-img" style="width:140px; height:140px;">
+                                <div class="scan-label" style="font-size:0.9rem; margin-top:5px;">Scanner pour rejoindre</div>
+                            </div>
+                            <div class="wifi-details-row" style="margin-top:10px;">
+                                <div class="wifi-pill" style="padding: 12px 20px;">
+                                    <span class="pill-text" style="font-size:1.1rem;">Julienetben</span>
+                                </div>
+                                <div class="wifi-pill" style="padding: 12px 20px;">
+                                    <span class="pill-text" style="font-size:1.1rem;">Welcome57100!</span>
+                                </div>
+                            </div>
                         </div>
-                        <div class="accordion-content">
-                            <div class="content-inner">
-                                <h4 class="sub-title">Arrivée</h4>
-                                <ul class="info-list">
-                                    <li>À partir de 15h</li>
-                                    <li>Remise des clés en main propre</li>
-                                    <li>Horaires flexibles (dans la limite du raisonnable)</li>
-                                </ul>
-                                <h4 class="sub-title">Départ</h4>
-                                <ul class="info-list">
-                                    <li>Heure limite : 11h</li>
-                                    <li>La femme de ménage arrive à 11h15</li>
-                                </ul>
-                                <button class="action-btn" onclick="goToChecklist()" style="margin-top: 15px;">📋 Voir la check-list de départ</button>
+
+                        <!-- Parking Hero -->
+                        <div class="hero-card" style="flex:1;">
+                            <div class="card-icon-hero">🚗</div>
+                            <div class="hero-label">Parking Privé</div>
+                            <div class="hero-number">N°3</div>
+                            <div class="hero-desc">
+                                🎮 Télécommande fournie (⚠️ ne pas perdre)<br>
+                                <div style="font-size:0.9rem; opacity:0.8; margin-top:8px; padding-top:8px; border-top:1px solid rgba(0,0,0,0.05);">
+                                    <strong>Accès :</strong> Étage -1 → Sortie → Droite → Droite → Porte Orange (clé rouge)
+                                </div>
                             </div>
                         </div>
                     </div>
+                </div>
+            </div>
+        </section>
 
-                    <!-- Accordion 2: Wifi -->
-                    <div class="accordion-item">
-                        <div class="accordion-header" onclick="toggleAccordion(this)">
-                            <div class="header-icon">📶</div>
-                            <h3>Wifi</h3>
-                            <div class="header-arrow">▼</div>
-                        </div>
-                         <div class="accordion-content">
-                            <div class="content-inner">
-                                <ul class="info-list">
-                                    <li><strong>Réseau :</strong> Julien et Ben</li>
-                                    <li><strong>Mot de passe :</strong> Welcome57100!</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Accordion 3: Parking -->
-                    <div class="accordion-item">
-                        <div class="accordion-header" onclick="toggleAccordion(this)">
-                            <div class="header-icon">🚗</div>
-                            <h3>Parking</h3>
-                            <div class="header-arrow">▼</div>
-                        </div>
-                        <div class="accordion-content">
-                            <div class="content-inner">
-                                <ul class="info-list">
-                                    <li><strong>Place n°3</strong></li>
-                                    <li>Télécommande fournie (⚠️ ne pas perdre)</li>
-                                    <li><strong>Accès parking :</strong> Étage -1 → Sortie → Droite → Droite → Porte orange (Clé rouge)</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Accordion 4: Cuisine & Équipements -->
-                    <div class="accordion-item">
-                        <div class="accordion-header" onclick="toggleAccordion(this)">
-                            <div class="header-icon">🍽️</div>
-                            <h3>Cuisine & Équipements</h3>
-                            <div class="header-arrow">▼</div>
-                        </div>
-                        <div class="accordion-content">
-                            <div class="content-inner">
-                                <ul class="info-list">
-                                    <li><strong>Four :</strong> Éteindre et nettoyer après chaque usage</li>
-                                    <li><strong>Lave-vaisselle :</strong> Bouton power 3s (Voyant rouge au sol = Marche)</li>
-                                    <li><strong>Réfrigérateur :</strong> Vérifier fermeture, ne pas claquer</li>
+        <!-- View: DETAILS - ÉQUIPEMENTS -->
+        <section id="view-details-equipements" class="view">
+             <div class="split-page-layout">
+                <div class="split-left-panel">
+                    <img src="https://images.unsplash.com/photo-1556911220-bff31c812dba?q=80&w=2000&auto=format&fit=crop" alt="Kitchen">
+                </div>
+                <div class="split-right-panel">
+                    <header class="section-header">
+                        <button class="back-btn" onclick="openSection('maison')">
+                            <span class="icon-back">←</span> Retour
+                        </button>
+                        <h2>Équipements</h2>
+                        <div class="header-spacer"></div>
+                    </header>
+                    <div class="section-content" style="padding-bottom:10px;">
+                         <div class="equip-grid">
+                            
+                            <div class="equip-card">
+                                <div class="equip-header">
+                                    <span style="font-size:1.8rem;">🍽️</span>
+                                    <h4>Cuisine</h4>
+                                </div>
+                                <ul class="clean-list equip-list">
+                                    <li><strong>Four :</strong> Éteindre et nettoyer après usage</li>
+                                    <li><strong>Lave-vaisselle :</strong> Maintenir Power 3s. Rouge au sol = ON</li>
+                                    <li><strong>Frigo :</strong> Bien fermer, ne pas claquer</li>
                                     <li><strong>Café :</strong> Nespresso + Dolce Gusto</li>
-                                    <li><strong>Mobilier blanc :</strong> Éponges magiques fournies</li>
+                                    <li><strong>Entretien :</strong> Éponges magiques fournies (sur blanc)</li>
                                 </ul>
                             </div>
-                        </div>
-                    </div>
 
-                    <!-- Accordion 5: Linge & Machines -->
-                    <div class="accordion-item">
-                        <div class="accordion-header" onclick="toggleAccordion(this)">
-                            <div class="header-icon">🧺</div>
-                            <h3>Linge & Machines</h3>
-                            <div class="header-arrow">▼</div>
-                        </div>
-                        <div class="accordion-content">
-                            <div class="content-inner">
-                                <ul class="info-list">
-                                    <li><strong>Serviettes :</strong> 1 grande + 1 petite par personne</li>
-                                    <li><strong>Lave-linge :</strong> Ne pas surcharger, Mode Délicat, Vider bac à eau</li>
-                                    <li><strong>Sèche-linge :</strong> Au-dessus du lave-linge</li>
-                                    <li><strong>Panier à linge :</strong> Salle de bain, sous le meuble</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Accordion 6: Salle de Bain & Confort -->
-                    <div class="accordion-item">
-                        <div class="accordion-header" onclick="toggleAccordion(this)">
-                            <div class="header-icon">🚿</div>
-                            <h3>Salle de Bain & Confort</h3>
-                            <div class="header-arrow">▼</div>
-                        </div>
-                        <div class="accordion-content">
-                            <div class="content-inner">
-                                <ul class="info-list">
-                                    <li><strong>Forte condensation possible :</strong> Ventiler au maximum</li>
+                            <div class="equip-card">
+                                <div class="equip-header">
+                                    <span style="font-size:1.8rem;">🚿</span>
+                                    <h4>Salle de Bain</h4>
+                                </div>
+                                <ul class="clean-list equip-list">
+                                    <li><strong>Condensation :</strong> Ventiler au maximum</li>
                                     <li>Laisser la porte ouverte pendant la douche si besoin</li>
                                 </ul>
                             </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Accordion 7: Salon -->
-                    <div class="accordion-item">
-                        <div class="accordion-header" onclick="toggleAccordion(this)">
-                            <div class="header-icon">🛋️</div>
-                            <h3>Salon</h3>
-                            <div class="header-arrow">▼</div>
-                        </div>
-                        <div class="accordion-content">
-                            <div class="content-inner">
-                                <ul class="info-list">
+
+                            <div class="equip-card">
+                                <div class="equip-header">
+                                    <span style="font-size:1.8rem;">🧺</span>
+                                    <h4>Linge</h4>
+                                </div>
+                                <ul class="clean-list equip-list">
+                                    <li>1 Grande + 1 Petite serviette / pers.</li>
+                                    <li><strong>Lave-linge :</strong> Mode Délicat. Vider bac à eau.</li>
+                                    <li><strong>Sèche-linge :</strong> Au-dessus du lave-linge</li>
+                                    <li><strong>Panier :</strong> SDB, sous le meuble</li>
+                                </ul>
+                            </div>
+
+                             <div class="equip-card">
+                                <div class="equip-header">
+                                    <span style="font-size:1.8rem;">🛋️</span>
+                                    <h4>Salon & Fenêtres</h4>
+                                </div>
+                                <ul class="clean-list equip-list">
                                     <li>Laisser les plaids de protection sur le canapé</li>
-                                    <li>Protection et produit fournis pour la table en verre</li>
+                                    <li><strong>Fenêtres :</strong> Fragiles (simple vitrage). Manipuler avec soin.</li>
+                                    <li><strong>Rideaux :</strong> Isolation phonique + Occultation.</li>
                                 </ul>
                             </div>
+
                         </div>
                     </div>
+                </div>
+            </div>
+        </section>
 
-                    <!-- Accordion 8: Fenêtres -->
-                    <div class="accordion-item">
-                        <div class="accordion-header" onclick="toggleAccordion(this)">
-                            <div class="header-icon">🪟</div>
-                            <h3>Fenêtres & Rideaux</h3>
-                            <div class="header-arrow">▼</div>
-                        </div>
-                        <div class="accordion-content">
-                            <div class="content-inner">
-                                <ul class="info-list">
-                                    <li><strong>Fenêtres fragiles (simple vitrage) :</strong> Manipuler avec soin</li>
-                                    <li><strong>Rideaux :</strong> Isolation phonique + Occultation</li>
-                                    <li>Volets recommandés pour réduire le bruit</li>
-                                </ul>
+        <!-- View: DETAILS - CONSIGNES DE DÉPART -->
+        <section id="view-details-consignes" class="view no-scroll">
+            <div class="split-page-layout">
+                <div class="split-left-panel">
+                    <img src="https://images.unsplash.com/photo-1584622650111-993a426fbf0a?q=80&w=2000&auto=format&fit=crop" alt="Clean">
+                </div>
+                <div class="split-right-panel">
+                     <header class="section-header">
+                        <button class="back-btn" onclick="openSection('maison')">
+                            <span class="icon-back">←</span> Retour
+                        </button>
+                        <h2>Consignes Départ</h2>
+                        <div class="header-spacer"></div>
+                    </header>
+                    
+                    <div class="section-content">
+                        <!-- Centered Content -->
+                        <div style="display:flex; flex-direction:column; align-items:center; width:100%; max-width:500px; margin:0 auto;">
+                            
+                            <!-- Timing Info -->
+                            <div style="text-align:center; margin-bottom:20px; background:white; padding:15px 25px; border-radius:var(--radius-lg); box-shadow:0 5px 15px rgba(0,0,0,0.03); width:100%;">
+                                <div style="font-size:1.1rem; color:var(--color-text-light); margin-bottom:5px;">Départ avant</div>
+                                <div style="font-size:2.5rem; font-weight:bold; color:var(--color-accent-terracotta); line-height:1;">11:00</div>
+                                <div style="font-size:0.85rem; color:#888; margin-top:5px;">(Ménage à 11h15)</div>
+                            </div>
+
+                            <!-- Tasks Grid -->
+                            <div class="departure-grid" style="width:100%; gap: 10px;">
+                                <!-- Simple Toggle Cards -->
+                                <div class="departure-card" onclick="toggleTask(this)" style="padding: 12px;">
+                                    <div class="card-status-indicator"></div>
+                                    <div style="font-size:1.5rem;">🧺</div>
+                                    <div class="card-content"><strong>Linge Sale</strong><br><span style="font-size:0.8rem;">Draps/Serviettes au sol (Cuisine)</span></div>
+                                </div>
+                                <div class="departure-card" onclick="toggleTask(this)" style="padding: 12px;">
+                                    <div class="card-status-indicator"></div>
+                                    <div style="font-size:1.5rem;">🗑️</div>
+                                    <div class="card-content"><strong>Poubelles</strong><br><span style="font-size:0.8rem;">Sortir (Face garage)</span></div>
+                                </div>
+                                <div class="departure-card" onclick="toggleTask(this)" style="padding: 12px;">
+                                    <div class="card-status-indicator"></div>
+                                    <div style="font-size:1.5rem;">❄️</div>
+                                    <div class="card-content"><strong>Frigo</strong><br><span style="font-size:0.8rem;">Vider (Laisser non-périssables)</span></div>
+                                </div>
+                                <div class="departure-card" onclick="toggleTask(this)" style="padding: 12px;">
+                                    <div class="card-status-indicator"></div>
+                                    <div style="font-size:1.5rem;">🍽️</div>
+                                    <div class="card-content"><strong>Vaisselle</strong><br><span style="font-size:0.8rem;">Lancer lave-vaisselle</span></div>
+                                </div>
+                                <div class="departure-card" onclick="toggleTask(this)" style="padding: 12px;">
+                                    <div class="card-status-indicator"></div>
+                                    <div style="font-size:1.5rem;">⚡</div>
+                                    <div class="card-content"><strong>Électricité</strong><br><span style="font-size:0.8rem;">Tout éteindre</span></div>
+                                </div>
+                                <div class="departure-card" onclick="toggleTask(this)" style="padding: 12px;">
+                                    <div class="card-status-indicator"></div>
+                                    <div style="font-size:1.5rem;">🪟</div>
+                                    <div class="card-content"><strong>Fermer</strong><br><span style="font-size:0.8rem;">Fenêtres & Portes</span></div>
+                                </div>
+                                
+                                <!-- Final Step -->
+                            <div class="departure-card final-step urgent-keys" onclick="toggleTask(this)" style="padding: 15px; gap: 15px;">
+                                <div class="card-status-indicator"></div>
+                                <div class="card-icon-large" style="font-size:2.5rem;">🔑</div>
+                                <div class="card-content">
+                                    <h4 style="font-size:1.1rem; margin:0;">⚠️ NE PAS OUBLIER</h4>
+                                    <p style="font-size:1rem; font-weight:bold; color:#333; margin-top:2px;">CLÉS + BADGE DANS LA BOÎTE</p>
+                                    <p style="font-size:0.85rem; margin-top:2px;">Boîte n°2 – "POULET Benjamin"</p>
+                                </div>
                             </div>
                         </div>
                     </div>
-
                 </div>
             </div>
         </section>
 
-        <!-- View: CONSIGNES (Règles) -->
-        <section id="view-regles" class="view content-view centered-view">
-            <header class="section-header">
-                <button class="back-btn" onclick="goBack()">
-                    <span class="icon-back">←</span> Retour
-                </button>
-                <h2>Consignes</h2>
-                <div class="header-spacer"></div>
-            </header>
-            <div class="section-content scrollable">
-                
-                <h3 class="section-subtitle">🏠 Règles de vie</h3>
-                <ul class="rules-list compact-rules">
-                    <li class="rule-item">✅ Respecter le lieu et le mobilier</li>
-                    <li class="rule-item">✅ Signaler tout dégât ou problème</li>
-                    <li class="rule-item">❌ Pas de fêtes</li>
-                    <li class="rule-item">🔇 Calme demandé après 22h</li>
-                    <li class="rule-item">❌ Animaux non autorisés</li>
-                    <li class="rule-item">❌ Interdiction de fumer à l'intérieur (toléré fenêtre cuisine)</li>
-                    <li class="rule-item">❌ Ne pas utiliser d'équipements électriques dangereux</li>
-                </ul>
-
-                <h3 id="checklist-anchor" class="section-subtitle highlight departure-title">🧹 Consignes de Départ (Obligatoires)</h3>
-                
-                <div class="departure-grid">
-                    <!-- Step 1 -->
-                    <div class="departure-card" onclick="toggleTask(this)">
-                        <div class="card-status-indicator"></div>
-                        <div class="card-icon-large">🧺</div>
-                        <div class="card-content">
-                            <h4>Linge Dirty</h4>
-                            <p>Au sol (Cuisine)</p>
-                        </div>
-                    </div>
-                    
-                    <!-- Step 2 -->
-                    <div class="departure-card" onclick="toggleTask(this)">
-                        <div class="card-status-indicator"></div>
-                        <div class="card-icon-large">🗑️</div>
-                        <div class="card-content">
-                            <h4>Poubelles</h4>
-                            <p>Sortir (Face garage)</p>
-                        </div>
-                    </div>
-
-                    <!-- Step 3 -->
-                    <div class="departure-card" onclick="toggleTask(this)">
-                        <div class="card-status-indicator"></div>
-                        <div class="card-icon-large">❄️</div>
-                        <div class="card-content">
-                            <h4>Frigo</h4>
-                            <p>Vider (Périssables)</p>
-                        </div>
-                    </div>
-
-                    <!-- Step 4 -->
-                    <div class="departure-card" onclick="toggleTask(this)">
-                        <div class="card-status-indicator"></div>
-                        <div class="card-icon-large">🍽️</div>
-                        <div class="card-content">
-                            <h4>Vaisselle</h4>
-                            <p>Lancer Lave-vaisselle</p>
-                        </div>
-                    </div>
-
-                    <!-- Step 5 -->
-                    <div class="departure-card" onclick="toggleTask(this)">
-                        <div class="card-status-indicator"></div>
-                        <div class="card-icon-large">⚡</div>
-                        <div class="card-content">
-                            <h4>Électricité</h4>
-                            <p>Éteindre tout</p>
-                        </div>
-                    </div>
-
-                    <!-- Step 6 -->
-                    <div class="departure-card" onclick="toggleTask(this)">
-                        <div class="card-status-indicator"></div>
-                        <div class="card-icon-large">🪟</div>
-                        <div class="card-content">
-                            <h4>Fermer</h4>
-                            <p>Fenêtres & Portes</p>
-                        </div>
-                    </div>
-
-                    <!-- Final Step (Full Width) -->
-                    <div class="departure-card final-step" onclick="toggleTask(this)">
-                        <div class="card-status-indicator"></div>
-                        <div class="card-icon-large">🔑</div>
-                        <div class="card-content">
-                            <h4>DERNIÈRE ÉTAPE : Clés + Badge</h4>
-                            <p>Boîte n°2 – "POULET Benjamin" (Étage 0)</p>
-                        </div>
-                    </div>
+        <!-- View: DETAILS - BESOIN D'AIDE -->
+        <section id="view-details-assistance" class="view no-scroll">
+             <div class="split-page-layout">
+                <div class="split-left-panel">
+                    <img src="https://images.unsplash.com/photo-1588611910609-0d32b5e29fa6?q=80&w=2000&auto=format&fit=crop" alt="Help">
                 </div>
-
-                <p class="thank-you-note">🙏 Merci d'avance pour votre aide.</p>
-            </div>
-        </section>
-
-        <!-- View: NOS ADRESSES (Découvrir) -->
-        <section id="view-decouvrir" class="view content-view centered-view">
-             <header class="section-header">
-                <button class="back-btn" onclick="goBack()">
-                    <span class="icon-back">←</span> Retour
-                </button>
-                <h2>Nos adresses</h2>
-                <div class="header-spacer"></div>
-            </header>
-            <div class="section-content scrollable">
-                <p style="text-align: center; opacity: 0.6; padding: 40px;">Vos recommandations locales apparaîtront ici.</p>
-            </div>
-        </section>
-
-        <!-- View: ASSISTANCE (Urgences) -->
-        <section id="view-urgences" class="view content-view centered-view">
-            <header class="section-header">
-                <button class="back-btn" onclick="goBack()">
-                    <span class="icon-back">←</span> Retour
-                </button>
-                <h2>Sécurité & Urgences</h2>
-                <div class="header-spacer"></div>
-            </header>
-            <div class="section-content scrollable">
-                <div class="contacts-list">
+                <div class="split-right-panel">
+                     <header class="section-header">
+                        <button class="back-btn" onclick="openSection('maison')">
+                            <span class="icon-back">←</span> Retour
+                        </button>
+                        <h2>Besoin d'aide ?</h2>
+                        <div class="header-spacer"></div>
+                    </header>
                     
-                    <h3 class="section-subtitle">🚨 SÉCURITÉ & URGENCES</h3>
-                    
-                    <div class="accordion-container">
-                         <div class="accordion-item">
-                            <div class="accordion-header" onclick="toggleAccordion(this)">
-                                <div class="header-icon">📞</div>
-                                <h3>Numéros d'urgence</h3>
-                                <div class="header-arrow">▼</div>
-                            </div>
-                            <div class="accordion-content">
-                                <div class="content-inner">
-                                    <ul class="info-list">
-                                        <li><strong>Pompiers :</strong> 18</li>
-                                        <li><strong>SAMU :</strong> 15</li>
-                                        <li><strong>Police :</strong> 17</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="accordion-item">
-                            <div class="accordion-header" onclick="toggleAccordion(this)">
-                                <div class="header-icon">👤</div>
-                                <h3>Contacts</h3>
-                                <div class="header-arrow">▼</div>
-                            </div>
-                            <div class="accordion-content">
-                                <div class="content-inner">
-                                    <ul class="info-list">
-                                        <li><strong>Concierge :</strong> Sandrine – 06 40 25 84 77</li>
-                                        <li><strong>Hôte :</strong> Benjamin</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
+                    <div class="section-content">
+                        <div class="assistance-container" style="gap: 20px;">
+                            
+                            <!-- Main Contact Card (Host & Concierge) -->
+                            <div class="contact-card-main" style="background: white; padding: 25px; border-radius: var(--radius-lg); box-shadow: 0 5px 20px rgba(0,0,0,0.03); border: 1px solid rgba(0,0,0,0.03);">
+                                <h3 style="margin:0 0 20px 0; font-size:1.2rem; color:var(--color-accent-terracotta); border-bottom:1px solid rgba(0,0,0,0.05); padding-bottom:10px;">📞 Vos Contacts</h3>
+                                
+                                <div style="display:flex; gap:30px; justify-content: space-around;">
+                                    <!-- Host -->
+                                    <div style="display:flex; flex-direction:column; align-items:center;">
+                                        <div style="font-size:3rem; margin-bottom:5px;">👨‍💻</div>
+                                        <div style="font-weight:bold; font-size:1.2rem;">Benjamin</div>
+                                        <div style="color:#888; font-size:0.9rem; margin-bottom:5px;">Votre Hôte</div>
+                                        <a href="tel:0658842511" style="font-size:1.4rem; color:var(--color-text); text-decoration:none; font-weight:bold;">06 58 84 25 11</a>
+                                    </div>
+                                    
+                                    <div style="width:1px; background:rgba(0,0,0,0.1);"></div>
 
-                         <div class="accordion-item">
-                            <div class="accordion-header" onclick="toggleAccordion(this)">
-                                <div class="header-icon">🛡️</div>
-                                <h3>Sécurité Appartement</h3>
-                                <div class="header-arrow">▼</div>
-                            </div>
-                            <div class="accordion-content">
-                                <div class="content-inner">
-                                    <ul class="info-list">
-                                        <li><strong>Détecteurs de fumée :</strong> Cuisine & Chambres</li>
-                                        <li><strong>Extincteur + Trousse :</strong> Placard produits ménagers cuisine (à gauche)</li>
-                                        <li><strong>Coupure d'eau :</strong> À droite porte entrée (Extérieur, trappe)</li>
-                                    </ul>
+                                    <!-- Concierge -->
+                                    <div style="display:flex; flex-direction:column; align-items:center;">
+                                        <div style="font-size:3rem; margin-bottom:5px;">👩</div>
+                                        <div style="font-weight:bold; font-size:1.2rem;">Sandrine</div>
+                                        <div style="color:#888; font-size:0.9rem; margin-bottom:5px;">Concierge</div>
+                                        <a href="tel:0640258477" style="font-size:1.4rem; color:var(--color-text); text-decoration:none; font-weight:bold;">06 40 25 84 77</a>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
 
+                            <!-- Emergency Numbers (Aligned) -->
+                            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 15px;">
+                                <a href="tel:18" class="urgency-btn-compact" style="justify-content:center; flex-direction:column; padding:15px; text-align:center;">
+                                    <span style="font-size:2rem; margin-bottom:5px;">🔥</span>
+                                    <div>Pompiers <br><strong style="font-size:1.5rem;">18</strong></div>
+                                </a>
+                                <a href="tel:15" class="urgency-btn-compact" style="justify-content:center; flex-direction:column; padding:15px; text-align:center;">
+                                    <span style="font-size:2rem; margin-bottom:5px;">🏥</span>
+                                    <div>SAMU <br><strong style="font-size:1.5rem;">15</strong></div>
+                                </a>
+                                <a href="tel:17" class="urgency-btn-compact" style="justify-content:center; flex-direction:column; padding:15px; text-align:center;">
+                                    <span style="font-size:2rem; margin-bottom:5px;">👮</span>
+                                    <div>Police <br><strong style="font-size:1.5rem;">17</strong></div>
+                                </a>
+                            </div>
+
+                            <!-- Address Info -->
+                            <div class="address-card" style="background: rgba(255,255,255,0.6); padding: 15px; border-radius: var(--radius-md); text-align:center; border: 1px dashed rgba(0,0,0,0.1);">
+                                <div style="font-size:0.9rem; color:#888; margin-bottom:5px;">📍 Adresse du logement (pour les secours)</div>
+                                <div style="font-weight:bold; font-size:1.1rem; user-select: text;">2 boulevard Robert Schuman, 57100 Thionville</div>
+                            </div>
+
+                        </div>
                     </div>
                 </div>
             </div>
         </section>
+
+        <!-- View: DETAILS - RÈGLES DE VIE (New Page) -->
+        <section id="view-details-regles" class="view no-scroll">
+             <div class="split-page-layout">
+                <div class="split-left-panel">
+                    <img src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?q=80&w=2000&auto=format&fit=crop" alt="Rules">
+                </div>
+                <div class="split-right-panel">
+                     <header class="section-header">
+                        <button class="back-btn" onclick="openSection('maison')">
+                            <span class="icon-back">←</span> Retour
+                        </button>
+                        <h2>Règles de vie</h2>
+                        <div class="header-spacer"></div>
+                    </header>
+                    
+                    <div class="section-content">
+                         <!-- Large Rules Grid -->
+                         <div class="rules-grid-large">
+                            
+                            <div class="rule-card-large">
+                                <span class="icon">🔇</span>
+                                <div class="content">
+                                    <h4>Calme après 22h</h4>
+                                    <p>Respect du voisinage</p>
+                                </div>
+                            </div>
+
+                            <div class="rule-card-large">
+                                <span class="icon">🚭</span>
+                                <div class="content">
+                                    <h4>Non Fumeur</h4>
+                                    <p>Toléré fenêtre cuisine</p>
+                                </div>
+                            </div>
+
+                            <div class="rule-card-large">
+                                <span class="icon">❌</span>
+                                <div class="content">
+                                    <h4>Pas de fêtes</h4>
+                                    <p>Ni événements</p>
+                                </div>
+                            </div>
+
+                            <div class="rule-card-large">
+                                <span class="icon">🐾</span>
+                                <div class="content">
+                                    <h4>Pas d'animaux</h4>
+                                    <p>Sauf accord</p>
+                                </div>
+                            </div>
+
+                            <div class="rule-card-large">
+                                <span class="icon">✅</span>
+                                <div class="content">
+                                    <h4>Respect des lieux</h4>
+                                    <p>Signaler les dégâts</p>
+                                </div>
+                            </div>
+
+                            <div class="rule-card-large">
+                                <span class="icon">⚡</span>
+                                <div class="content">
+                                    <h4>Sécurité</h4>
+                                    <p>Éteindre en sortant</p>
+                                </div>
+                            </div>
+
+                         </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
         
         <!-- Screensaver Overlay -->
         <div id="screensaver" class="hidden">

@@ -86,13 +86,16 @@ button {
     left: 0;
     width: 100%;
     height: 100%;
-    padding: var(--gap-lg);
+    /* Remove padding to allow split screen full bleed */
+    padding: 0;
     opacity: 0;
     pointer-events: none;
     transform: scale(0.98);
     transition: opacity var(--anim-smooth), transform var(--anim-smooth);
     display: flex;
     flex-direction: column;
+    /* Ensure content views have bg if not split */
+    background: var(--color-bg);
 }
 
 .view.active {
@@ -101,11 +104,61 @@ button {
     transform: scale(1);
 }
 
+/* Utility to force no scroll */
+.view.no-scroll .section-content {
+    overflow: hidden;
+}
+
+/* --- SPLIT PAGE LAYOUT (Content Pages) --- */
+.split-page-layout {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.split-left-panel {
+    flex: 1.22;
+    /* Approx 55% vs 45% (1.22 vs 1) */
+    position: relative;
+    overflow: hidden;
+    background: #000;
+}
+
+.split-left-panel img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.9;
+}
+
+.split-right-panel {
+    flex: 1;
+    /* Approx 45% */
+    display: flex;
+    flex-direction: column;
+    background: var(--color-bg);
+    position: relative;
+    height: 100%;
+}
+
+/* Ensure Header stays sticky within the right panel */
+.split-right-panel .section-header {
+    background: rgba(245, 240, 232, 0.95);
+    /* Match bg with blur */
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
 /* --- HUB LAYOUT (Split View) --- */
 #view-hub {
     display: flex;
     /* Override grid */
     padding: var(--gap-lg);
+    /* Manual padding for Hub only */
+    background: transparent;
+    /* Let body bg show through */
 }
 
 .hub-layout {
@@ -166,9 +219,157 @@ button {
     /* Ensure it has some presence */
 }
 
+/* --- Weather Widget --- */
+.weather-widget {
+    position: absolute;
+    top: 25px;
+    right: 25px;
+    z-index: 10;
+
+    /* Glassmorphism */
+    background: rgba(255, 255, 255, 0.25);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+
+    border-radius: 50px;
+    /* Pill shape */
+    padding: 8px 16px;
+
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    /* Increased gap */
+
+    transition: all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+    cursor: pointer;
+    overflow: hidden;
+    height: 64px;
+    /* Increased from 54px */
+    width: auto;
+    min-width: 160px;
+    /* Increased min-width */
+}
+
+.weather-widget:hover {
+    background: rgba(255, 255, 255, 0.35);
+    transform: translateY(1px);
+}
+
+.weather-widget.expanded {
+    background: rgba(255, 255, 255, 0.6);
+    /* More opaque when open */
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-radius: 28px;
+    /* Slightly less round when big */
+    height: auto;
+    min-width: 220px;
+    padding: 20px 24px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+}
+
+/* Re-layout for open state */
+.weather-widget.expanded .weather-icon-wrapper {
+    font-size: 3rem;
+    /* Bigger icon */
+    align-self: center;
+    margin-bottom: -5px;
+}
+
+.weather-widget.expanded .weather-info {
+    align-items: center;
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.weather-widget.expanded #weather-temp {
+    font-size: 2rem;
+    color: var(--color-text);
+    /* Switch to dark text for readability */
+    text-shadow: none;
+}
+
+.weather-widget.expanded #current-time {
+    color: var(--color-text-light);
+    font-size: 1.1rem;
+}
+
+/* Hidden Details */
+.weather-details {
+    display: none;
+    width: 100%;
+    flex-direction: column;
+    gap: 8px;
+    padding-top: 10px;
+    border-top: 1px solid rgba(0, 0, 0, 0.05);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.weather-widget.expanded .weather-details {
+    display: flex;
+    opacity: 1;
+}
+
+.detail-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1rem;
+    color: var(--color-text);
+}
+
+.detail-icon {
+    font-size: 1.2rem;
+}
+
+.weather-widget:active {
+    transform: scale(0.98);
+}
+
+.weather-icon-wrapper {
+    font-size: 1.8rem;
+    /* Increased icon size */
+    line-height: 1;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+    transition: all 0.4s ease;
+}
+
+.weather-info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    line-height: 1.1;
+    transition: all 0.4s ease;
+}
+
+#weather-temp {
+    font-size: 1.2rem;
+    /* Increased size */
+    font-weight: 700;
+    color: white;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+}
+
+#current-time {
+    font-size: 1rem;
+    /* Much more visible time (was 0.8rem) */
+    font-weight: 600;
+    /* Bolder */
+    color: rgba(255, 255, 255, 1);
+    /* Full white */
+    letter-spacing: 0.5px;
+    transition: all 0.3s ease;
+}
+
 .greeting-pre {
     font-size: 0.9rem;
-    text-transform: uppercase;
     letter-spacing: 4px;
     margin-bottom: 16px;
     opacity: 0.9;
@@ -261,54 +462,81 @@ button {
     letter-spacing: 0.5px;
 }
 
-/* Updated Wifi Footer */
+/* Updated WiFi Footer with Vertical Card */
 .hub-footer {
     padding-top: 0;
-    /* Reset */
+    margin-top: auto;
+    /* Push to bottom */
 }
 
 .wifi-card {
-    background: rgba(255, 255, 255, 0.8);
+    background: rgba(255, 255, 255, 0.6);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
     border-radius: var(--radius-md);
-    padding: 20px 24px;
+    padding: 20px;
     display: flex;
+    flex-direction: column;
     align-items: center;
-    justify-content: space-between;
+    gap: 16px;
     box-shadow: 0 4px 20px rgba(61, 58, 53, 0.04);
 }
 
-.wifi-icon {
-    font-size: 1.5rem;
-    margin-right: 16px;
-    opacity: 0.8;
-}
-
-.wifi-info {
+.qr-container {
+    background: white;
+    padding: 10px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
     display: flex;
     flex-direction: column;
-    gap: 2px;
+    align-items: center;
+    width: 100%;
 }
 
-.wifi-label {
-    font-size: 0.7rem;
+.qr-code-img {
+    width: 120px;
+    height: 120px;
+    object-fit: contain;
+    margin-bottom: 8px;
+}
+
+.scan-label {
+    font-size: 0.75rem;
     text-transform: uppercase;
-    color: var(--color-text-light);
     letter-spacing: 1px;
+    color: var(--color-text-light);
+    font-weight: 600;
 }
 
-.wifi-value {
+.wifi-details-row {
+    display: flex;
+    flex-direction: row;
+    /* Horizontal stack for info */
+    gap: 10px;
+    width: 100%;
+}
+
+.wifi-pill {
+    flex: 1;
+    background: rgba(255, 255, 255, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    border-radius: 100px;
+    padding: 8px 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    white-space: nowrap;
+}
+
+.pill-icon {
     font-size: 1rem;
+}
+
+.pill-text {
+    font-size: 0.9rem;
     font-weight: 600;
     color: var(--color-text);
-}
-
-.wifi-divider {
-    width: 1px;
-    height: 30px;
-    background: rgba(0, 0, 0, 0.08);
-    margin: 0 20px;
 }
 
 /* Screensaver */
@@ -735,8 +963,9 @@ button {
 .departure-card.final-step {
     grid-column: 1 / -1;
     /* Span all columns */
-    background: var(--color-accent-terracotta);
-    /* Changed from dark grey to warm Terracotta */
+    background: #D35400;
+    /* More urgent Burnt Orange */
+    /* Changed from Terracotta to urgent Orange */
     color: white;
     border: none;
     flex-direction: row;
@@ -746,8 +975,25 @@ button {
     padding: 32px;
     min-height: auto;
     /* Let content dictate height */
-    box-shadow: 0 15px 35px rgba(196, 110, 90, 0.25);
+    box-shadow: 0 15px 35px rgba(211, 84, 0, 0.3);
     /* Colored shadow */
+    position: relative;
+    overflow: hidden;
+    animation: urgentPulse 3s infinite;
+}
+
+@keyframes urgentPulse {
+    0% {
+        box-shadow: 0 15px 35px rgba(211, 84, 0, 0.3);
+    }
+
+    50% {
+        box-shadow: 0 15px 45px rgba(211, 84, 0, 0.5);
+    }
+
+    100% {
+        box-shadow: 0 15px 35px rgba(211, 84, 0, 0.3);
+    }
 }
 
 .departure-card.final-step .card-content h4 {
@@ -796,11 +1042,128 @@ button {
     flex-direction: column;
 }
 
-.place-img {
-    height: 140px;
-    background-size: cover;
-    background-position: center;
+/* --- NEW UTILITIES FOR SPLIT CONTENT --- */
+
+/* Adjust grids for narrower split panel */
+.split-right-panel .departure-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    /* Force 2 cols */
+    gap: 12px;
 }
+
+.split-right-panel .info-grid,
+.split-right-panel .section-subtitle,
+.split-right-panel .rules-list,
+.split-right-panel .departure-grid {
+    max-width: 100%;
+    /* reset max-width constraints */
+}
+
+/* Card Header Row */
+.card-header-row {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 12px;
+}
+
+.card-header-row .info-icon {
+    margin-bottom: 0;
+    /* Override default */
+    font-size: 1.8rem;
+    background: rgba(196, 164, 132, 0.15);
+    /* Soft terracotta bg */
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+}
+
+.card-header-row h3 {
+    margin: 0;
+    font-size: 1.1rem;
+    line-height: 1.2;
+}
+
+/* Clean List */
+.clean-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.clean-list li {
+    position: relative;
+    padding-left: 0;
+    line-height: 1.5;
+    font-size: 0.95rem;
+    color: var(--color-text);
+}
+
+/* Two Col Text */
+.two-col-text {
+    display: grid;
+    gap: 15px;
+}
+
+/* Urgency Grid */
+.urgency-grid {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    /* 1 col for big buttons */
+    gap: 15px;
+    margin-bottom: 30px;
+}
+
+.emergency-btn {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #fff;
+    padding: 20px 25px;
+    border-radius: var(--radius-lg);
+    text-decoration: none;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    transition: transform 0.2s;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.emergency-btn:active {
+    transform: scale(0.97);
+}
+
+.emergency-btn .emoji {
+    font-size: 2rem;
+}
+
+.emergency-btn .label {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--color-text);
+    text-transform: uppercase;
+    flex-grow: 1;
+    margin-left: 20px;
+}
+
+.emergency-btn .number {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: #E74C3C;
+    /* Red for emergency */
+}
+
+/* Contact Card specifics */
+.contact-card a {
+    display: block;
+    margin-top: 5px;
+}
+
+
 
 .place-info {
     padding: 16px;
@@ -1048,6 +1411,284 @@ button {
     gap: 12px;
 }
 
-.rule-item:last-child {
-    border-bottom: none;
+
+/* Vertical Menu Grid in Split Panel */
+.vertical-menu-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 15px;
+    width: 100%;
+    grid-auto-rows: min-content;
+    overflow-y: auto;
+    padding: 10px 0;
+}
+
+.vertical-menu-grid .nav-card {
+    flex-direction: row;
+    justify-content: flex-start;
+    padding: 24px 30px;
+    height: auto;
+    min-height: 80px;
+    text-align: left;
+}
+
+.vertical-menu-grid .nav-card .card-icon {
+    margin-bottom: 0;
+    margin-right: 20px;
+    font-size: 2rem;
+}
+
+/* --- Optimized Detail View Styles --- */
+
+/* Hero Cards (for Parking/Arrivée) */
+.hero-card {
+    background: white;
+    border-radius: var(--radius-lg);
+    padding: 30px;
+    margin-bottom: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03);
+    border: 1px solid rgba(0, 0, 0, 0.03);
+    text-align: center;
+    flex: 1;
+    /* Allow stretching */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.hero-card .card-icon-hero {
+    font-size: 3.5rem;
+    margin-bottom: 15px;
+    background: var(--color-bg);
+    width: 90px;
+    height: 90px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+}
+
+.hero-number {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 3.5rem;
+    font-weight: 300;
+    color: var(--color-accent-terracotta);
+    margin: 10px 0;
+    line-height: 1;
+}
+
+.hero-label {
+    font-size: 1.2rem;
+    color: var(--color-text);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.hero-desc {
+    font-size: 1rem;
+    color: var(--color-text-light);
+    margin-top: 10px;
+    max-width: 80%;
+}
+
+/* Equipment Grid Optimization */
+.equip-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+    padding-bottom: 20px;
+}
+
+.equip-card {
+    background: white;
+    padding: 20px 25px;
+    border-radius: var(--radius-md);
+    border: 1px solid rgba(0, 0, 0, 0.04);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.equip-header {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 5px;
+}
+
+.equip-header h4 {
+    font-size: 1.2rem;
+    margin: 0;
+    color: var(--color-accent-terracotta);
+}
+
+.equip-list li {
+    font-size: 1rem;
+    margin-bottom: 6px;
+    padding-left: 0;
+}
+
+/* --- Scroll Fix for Equipment Page --- */
+#view-details-equipements .section-content {
+    overflow-y: auto !important;
+    padding-right: 10px;
+}
+
+#view-details-equipements .equip-grid {
+    overflow-y: visible;
+}
+
+/* --- Centering Consignes --- */
+#view-details-consignes .section-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+#view-details-consignes .departure-grid {
+    width: 100%;
+}
+
+/* --- Assistance Page Utilities --- */
+.assistance-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    height: 100%;
+}
+
+.contact-row {
+    display: flex;
+    gap: 15px;
+    align-items: stretch;
+}
+
+.concierge-card {
+    background: white;
+    border-radius: var(--radius-lg);
+    padding: 20px 25px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.03);
+    border: 1px solid rgba(0, 0, 0, 0.03);
+    flex: 2;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.urgency-column {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    flex: 1;
+}
+
+.urgency-btn-compact {
+    background: #FFF0F0;
+    color: #D32F2F;
+    text-decoration: none;
+    padding: 12px 15px;
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-weight: bold;
+    font-size: 0.95rem;
+    flex: 1;
+}
+
+.rules-section {
+    background: white;
+    border-radius: var(--radius-lg);
+    padding: 20px 25px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.03);
+    border: 1px solid rgba(0, 0, 0, 0.03);
+    flex: 1;
+}
+
+.rules-list {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px 25px;
+    margin-top: 15px;
+}
+
+.rule-item {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    font-size: 0.95rem;
+    line-height: 1.4;
+}
+
+/* --- New Large Rules Grid --- */
+.rules-grid-large {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    gap: 20px;
+    padding: 20px 0;
+    width: 100%;
+    margin: 0 auto;
+}
+
+@media (min-width: 768px) {
+    .rules-grid-large {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 25px;
+    }
+}
+
+@media (min-width: 1024px) {
+    .rules-grid-large {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 30px;
+        align-content: center;
+    }
+}
+
+.rule-card-large {
+    background: white;
+    padding: 30px 20px;
+    border-radius: var(--radius-lg);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03);
+    border: 1px solid rgba(0, 0, 0, 0.04);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    gap: 15px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    height: 100%;
+}
+
+.rule-card-large:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.06);
+}
+
+.rule-card-large .icon {
+    font-size: 3.5rem;
+    margin-bottom: 5px;
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.1));
+}
+
+.rule-card-large .content h4 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: var(--color-accent-terracotta);
+    margin: 0 0 8px 0;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.rule-card-large .content p {
+    font-size: 1.15rem;
+    color: var(--color-text-light);
+    margin: 0;
+    line-height: 1.5;
 }

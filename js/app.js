@@ -13,18 +13,17 @@ let slideInterval;
 // -- Navigation Logic --
 
 function openSection(sectionId) {
-    // Hide Hub
-    document.getElementById('view-hub').classList.remove('active');
+    // Hide ALL active views first (Clean slate)
+    document.querySelectorAll('.view.active').forEach(view => {
+        view.classList.remove('active');
+    });
 
     // Show Target Section
-    // Note: We need to actually create the sections in HTML first, 
-    // for now this is just a placeholder logic to prove interaction.
-    const targetSection = document.getElementById(`view-${sectionId}`);
+    const targetSection = document.getElementById(sectionId.startsWith('view-') ? sectionId : `view-${sectionId}`);
     if (targetSection) {
         targetSection.classList.add('active');
     } else {
         console.warn(`Section ${sectionId} not found, creating temp view...`);
-        // Fallback for visual testing if section doesn't exist yet
         createTempSection(sectionId);
     }
 }
@@ -191,5 +190,96 @@ function toggleAccordion(header) {
 }
 window.toggleAccordion = toggleAccordion;
 
+
 window.toggleTask = toggleTask;
 window.goToChecklist = goToChecklist;
+
+// -- Weather & Time Widget Logic --
+function updateTime() {
+    const timeElement = document.getElementById('current-time');
+    if (!timeElement) return;
+
+    const now = new Date();
+    const hours = String(now.getHours()).padStart(2, '0');
+    const minutes = String(now.getMinutes()).padStart(2, '0');
+    timeElement.textContent = `${hours}:${minutes}`;
+}
+
+function getWeatherIcon(code, isDay = 1) {
+    // isDay: 1 = Day, 0 = Night
+
+    // Clear/Partly Cloudy handling for Night
+    if (isDay === 0) {
+        if (code === 0) return '🌙'; // Clear Night
+        if ([1, 2, 3].includes(code)) return '☁️'; // Cloudy Night (simplified to cloud, or could be Moon+Cloud if emoji exists)
+    }
+
+    if (code === 0) return '☀️'; // Clear
+    if ([1, 2, 3].includes(code)) return '⛅'; // Cloudy/Partly
+    if ([45, 48].includes(code)) return '🌫️'; // Fog
+    if ([51, 53, 55, 61, 63, 65, 80, 81, 82].includes(code)) return '🌧️'; // Rain
+    if ([71, 73, 75, 77, 85, 86].includes(code)) return '❄️'; // Snow
+    if ([95, 96, 99].includes(code)) return '⛈️'; // Thunder
+    return '🌡️'; // Unknown
+}
+
+async function fetchWeather() {
+    try {
+        const lat = 49.35;
+        const lon = 6.16;
+
+        // Added: wind_speed_10m, relative_humidity_2m, is_day
+        const response = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true&current=is_day,relative_humidity_2m,wind_speed_10m`);
+        const data = await response.json();
+
+        // Open-Meteo structure changes slightly when adding &current=
+        // It provides 'current' object with everything, or 'current_weather' legacy
+        // Let's check 'current' first
+        const current = data.current || data.current_weather;
+
+        if (current) {
+            const temp = Math.round(current.temperature || current.temperature_2m);
+            const code = current.weathercode;
+            const isDay = current.is_day !== undefined ? current.is_day : 1;
+            const wind = Math.round(current.wind_speed_10m || (data.current_weather ? data.current_weather.windspeed : 0));
+            const humidity = current.relative_humidity_2m || '--'; // Available in 'current' object
+
+            // Update DOM
+            const tempEl = document.getElementById('weather-temp');
+            const iconEl = document.getElementById('weather-icon');
+            const windEl = document.getElementById('weather-wind');
+            const humEl = document.getElementById('weather-humidity');
+
+            if (tempEl) tempEl.textContent = `${temp}°`;
+            if (iconEl) iconEl.textContent = getWeatherIcon(code, isDay);
+            if (windEl) windEl.textContent = `${wind} km/h`;
+            if (humEl) humEl.textContent = `${humidity}%`;
+        }
+    } catch (error) {
+        console.error('Weather fetch failed:', error);
+    }
+}
+
+// Widget Interaction
+const weatherWidget = document.querySelector('.weather-widget');
+if (weatherWidget) {
+    weatherWidget.addEventListener('click', (e) => {
+        weatherWidget.classList.toggle('expanded');
+        e.stopPropagation(); // Prevent bubbling if needed
+    });
+
+    // Close when clicking outside
+    document.addEventListener('click', (e) => {
+        if (!weatherWidget.contains(e.target) && weatherWidget.classList.contains('expanded')) {
+            weatherWidget.classList.remove('expanded');
+        }
+    });
+}
+
+// Init Widget
+updateTime();
+fetchWeather();
+
+// Updates
+setInterval(updateTime, 60000); // Every minute
+setInterval(fetchWeather, 1800000); // Every 30 mins
