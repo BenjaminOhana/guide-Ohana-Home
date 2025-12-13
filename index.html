@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>Bienvenue - Ohana Home</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Raleway:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <!-- Main Container -->
+    <main id="app">
+        
+        <!-- View: HUB -->
+        <section id="view-hub" class="view active">
+            
+            <div class="hub-layout">
+                <!-- Left Column: Hero & Greeting -->
+                <div class="hub-main-card">
+                    <img src="https://images.unsplash.com/photo-1544644181-1484b3fdfc62?q=80&w=2000&auto=format&fit=crop" alt="Vue sur Bali" class="hero-bg">
+                    <div class="hero-overlay">
+                        <div class="greeting">
+                            <span class="greeting-pre">Bienvenue à Bali</span>
+                            <h1>Julie & Thomas</h1>
+                            <div class="separator-line"></div>
+                            <p class="greeting-sub">Votre séjour commence ici</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Column: Navigation -->
+                <div class="hub-sidebar">
+                    <nav class="hub-nav">
+                        <button class="nav-card" onclick="openSection('maison')">
+                            <span class="card-icon">🏠</span>
+                            <span class="card-label">Votre séjour</span>
+                        </button>
+                        <button class="nav-card" onclick="openSection('regles')">
+                            <span class="card-icon">📋</span>
+                            <span class="card-label">Consignes</span>
+                        </button>
+                        <button class="nav-card" onclick="openSection('decouvrir')">
+                            <span class="card-icon">📍</span>
+                            <span class="card-label">Nos adresses</span>
+                        </button>
+                        <button class="nav-card" onclick="openSection('urgences')">
+                            <span class="card-icon">🆘</span>
+                            <span class="card-label">Assistance</span>
+                        </button>
+                    </nav>
+                    <footer class="hub-footer">
+                        <div class="wifi-card">
+                            <div class="wifi-icon">📶</div>
+                            <div class="wifi-info">
+                                <span class="wifi-label">Réseau Wi-Fi</span>
+                                <span class="wifi-value">Julienetben</span>
+                            </div>
+                            <div class="wifi-divider"></div>
+                            <div class="wifi-info">
+                                <span class="wifi-label">Mot de passe</span>
+                                <span class="wifi-value">Welcome57100!</span>
+                            </div>
+                        </div>
+                    </footer>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- View: VOTRE SÉJOUR (Maison) -->
+        <section id="view-maison" class="view content-view centered-view">
+            <header class="section-header">
+                <button class="back-btn" onclick="goBack()">
+                    <span class="icon-back">←</span> Retour
+                </button>
+                <h2>Votre séjour</h2>
+                <div class="header-spacer"></div>
+            </header>
+            <div class="section-content no-scroll-desktop">
+                <div class="accordion-container">
+                    
+                    <!-- Accordion 1: Arrivée & Départ -->
+                    <div class="accordion-item">
+                        <div class="accordion-header" onclick="toggleAccordion(this)">
+                            <div class="header-icon">⏰</div>
+                            <h3>Arrivée & Départ</h3>
+                            <div class="header-arrow">▼</div>
+                        </div>
+                        <div class="accordion-content">
+                            <div class="content-inner">
+                                <h4 class="sub-title">Arrivée</h4>
+                                <ul class="info-list">
+                                    <li>À partir de 15h</li>
+                                    <li>Remise des clés en main propre</li>
+                                    <li>Horaires flexibles (dans la limite du raisonnable)</li>
+                                </ul>
+                                <h4 class="sub-title">Départ</h4>
+                                <ul class="info-list">
+                                    <li>Heure limite : 11h</li>
+                                    <li>La femme de ménage arrive à 11h15</li>
+                                </ul>
+                                <button class="action-btn" onclick="goToChecklist()" style="margin-top: 15px;">📋 Voir la check-list de départ</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Accordion 2: Wifi -->
+                    <div class="accordion-item">
+                        <div class="accordion-header" onclick="toggleAccordion(this)">
+                            <div class="header-icon">📶</div>
+                            <h3>Wifi</h3>
+                            <div class="header-arrow">▼</div>
+                        </div>
+                         <div class="accordion-content">
+                            <div class="content-inner">
+                                <ul class="info-list">
+                                    <li><strong>Réseau :</strong> Julien et Ben</li>
+                                    <li><strong>Mot de passe :</strong> Welcome57100!</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Accordion 3: Parking -->
+                    <div class="accordion-item">
+                        <div class="accordion-header" onclick="toggleAccordion(this)">
+                            <div class="header-icon">🚗</div>
+                            <h3>Parking</h3>
+                            <div class="header-arrow">▼</div>
+                        </div>
+                        <div class="accordion-content">
+                            <div class="content-inner">
+                                <ul class="info-list">
+                                    <li><strong>Place n°3</strong></li>
+                                    <li>Télécommande fournie (⚠️ ne pas perdre)</li>
+                                    <li><strong>Accès parking :</strong> Étage -1 → Sortie → Droite → Droite → Porte orange (Clé rouge)</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Accordion 4: Cuisine & Équipements -->
+                    <div class="accordion-item">
+                        <div class="accordion-header" onclick="toggleAccordion(this)">
+                            <div class="header-icon">🍽️</div>
+                            <h3>Cuisine & Équipements</h3>
+                            <div class="header-arrow">▼</div>
+                        </div>
+                        <div class="accordion-content">
+                            <div class="content-inner">
+                                <ul class="info-list">
+                                    <li><strong>Four :</strong> Éteindre et nettoyer après chaque usage</li>
+                                    <li><strong>Lave-vaisselle :</strong> Bouton power 3s (Voyant rouge au sol = Marche)</li>
+                                    <li><strong>Réfrigérateur :</strong> Vérifier fermeture, ne pas claquer</li>
+                                    <li><strong>Café :</strong> Nespresso + Dolce Gusto</li>
+                                    <li><strong>Mobilier blanc :</strong> Éponges magiques fournies</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Accordion 5: Linge & Machines -->
+                    <div class="accordion-item">
+                        <div class="accordion-header" onclick="toggleAccordion(this)">
+                            <div class="header-icon">🧺</div>
+                            <h3>Linge & Machines</h3>
+                            <div class="header-arrow">▼</div>
+                        </div>
+                        <div class="accordion-content">
+                            <div class="content-inner">
+                                <ul class="info-list">
+                                    <li><strong>Serviettes :</strong> 1 grande + 1 petite par personne</li>
+                                    <li><strong>Lave-linge :</strong> Ne pas surcharger, Mode Délicat, Vider bac à eau</li>
+                                    <li><strong>Sèche-linge :</strong> Au-dessus du lave-linge</li>
+                                    <li><strong>Panier à linge :</strong> Salle de bain, sous le meuble</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Accordion 6: Salle de Bain & Confort -->
+                    <div class="accordion-item">
+                        <div class="accordion-header" onclick="toggleAccordion(this)">
+                            <div class="header-icon">🚿</div>
+                            <h3>Salle de Bain & Confort</h3>
+                            <div class="header-arrow">▼</div>
+                        </div>
+                        <div class="accordion-content">
+                            <div class="content-inner">
+                                <ul class="info-list">
+                                    <li><strong>Forte condensation possible :</strong> Ventiler au maximum</li>
+                                    <li>Laisser la porte ouverte pendant la douche si besoin</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Accordion 7: Salon -->
+                    <div class="accordion-item">
+                        <div class="accordion-header" onclick="toggleAccordion(this)">
+                            <div class="header-icon">🛋️</div>
+                            <h3>Salon</h3>
+                            <div class="header-arrow">▼</div>
+                        </div>
+                        <div class="accordion-content">
+                            <div class="content-inner">
+                                <ul class="info-list">
+                                    <li>Laisser les plaids de protection sur le canapé</li>
+                                    <li>Protection et produit fournis pour la table en verre</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Accordion 8: Fenêtres -->
+                    <div class="accordion-item">
+                        <div class="accordion-header" onclick="toggleAccordion(this)">
+                            <div class="header-icon">🪟</div>
+                            <h3>Fenêtres & Rideaux</h3>
+                            <div class="header-arrow">▼</div>
+                        </div>
+                        <div class="accordion-content">
+                            <div class="content-inner">
+                                <ul class="info-list">
+                                    <li><strong>Fenêtres fragiles (simple vitrage) :</strong> Manipuler avec soin</li>
+                                    <li><strong>Rideaux :</strong> Isolation phonique + Occultation</li>
+                                    <li>Volets recommandés pour réduire le bruit</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- View: CONSIGNES (Règles) -->
+        <section id="view-regles" class="view content-view centered-view">
+            <header class="section-header">
+                <button class="back-btn" onclick="goBack()">
+                    <span class="icon-back">←</span> Retour
+                </button>
+                <h2>Consignes</h2>
+                <div class="header-spacer"></div>
+            </header>
+            <div class="section-content scrollable">
+                
+                <h3 class="section-subtitle">🏠 Règles de vie</h3>
+                <ul class="rules-list compact-rules">
+                    <li class="rule-item">✅ Respecter le lieu et le mobilier</li>
+                    <li class="rule-item">✅ Signaler tout dégât ou problème</li>
+                    <li class="rule-item">❌ Pas de fêtes</li>
+                    <li class="rule-item">🔇 Calme demandé après 22h</li>
+                    <li class="rule-item">❌ Animaux non autorisés</li>
+                    <li class="rule-item">❌ Interdiction de fumer à l'intérieur (toléré fenêtre cuisine)</li>
+                    <li class="rule-item">❌ Ne pas utiliser d'équipements électriques dangereux</li>
+                </ul>
+
+                <h3 id="checklist-anchor" class="section-subtitle highlight departure-title">🧹 Consignes de Départ (Obligatoires)</h3>
+                
+                <div class="departure-grid">
+                    <!-- Step 1 -->
+                    <div class="departure-card" onclick="toggleTask(this)">
+                        <div class="card-status-indicator"></div>
+                        <div class="card-icon-large">🧺</div>
+                        <div class="card-content">
+                            <h4>Linge Dirty</h4>
+                            <p>Au sol (Cuisine)</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Step 2 -->
+                    <div class="departure-card" onclick="toggleTask(this)">
+                        <div class="card-status-indicator"></div>
+                        <div class="card-icon-large">🗑️</div>
+                        <div class="card-content">
+                            <h4>Poubelles</h4>
+                            <p>Sortir (Face garage)</p>
+                        </div>
+                    </div>
+
+                    <!-- Step 3 -->
+                    <div class="departure-card" onclick="toggleTask(this)">
+                        <div class="card-status-indicator"></div>
+                        <div class="card-icon-large">❄️</div>
+                        <div class="card-content">
+                            <h4>Frigo</h4>
+                            <p>Vider (Périssables)</p>
+                        </div>
+                    </div>
+
+                    <!-- Step 4 -->
+                    <div class="departure-card" onclick="toggleTask(this)">
+                        <div class="card-status-indicator"></div>
+                        <div class="card-icon-large">🍽️</div>
+                        <div class="card-content">
+                            <h4>Vaisselle</h4>
+                            <p>Lancer Lave-vaisselle</p>
+                        </div>
+                    </div>
+
+                    <!-- Step 5 -->
+                    <div class="departure-card" onclick="toggleTask(this)">
+                        <div class="card-status-indicator"></div>
+                        <div class="card-icon-large">⚡</div>
+                        <div class="card-content">
+                            <h4>Électricité</h4>
+                            <p>Éteindre tout</p>
+                        </div>
+                    </div>
+
+                    <!-- Step 6 -->
+                    <div class="departure-card" onclick="toggleTask(this)">
+                        <div class="card-status-indicator"></div>
+                        <div class="card-icon-large">🪟</div>
+                        <div class="card-content">
+                            <h4>Fermer</h4>
+                            <p>Fenêtres & Portes</p>
+                        </div>
+                    </div>
+
+                    <!-- Final Step (Full Width) -->
+                    <div class="departure-card final-step" onclick="toggleTask(this)">
+                        <div class="card-status-indicator"></div>
+                        <div class="card-icon-large">🔑</div>
+                        <div class="card-content">
+                            <h4>DERNIÈRE ÉTAPE : Clés + Badge</h4>
+                            <p>Boîte n°2 – "POULET Benjamin" (Étage 0)</p>
+                        </div>
+                    </div>
+                </div>
+
+                <p class="thank-you-note">🙏 Merci d'avance pour votre aide.</p>
+            </div>
+        </section>
+
+        <!-- View: NOS ADRESSES (Découvrir) -->
+        <section id="view-decouvrir" class="view content-view centered-view">
+             <header class="section-header">
+                <button class="back-btn" onclick="goBack()">
+                    <span class="icon-back">←</span> Retour
+                </button>
+                <h2>Nos adresses</h2>
+                <div class="header-spacer"></div>
+            </header>
+            <div class="section-content scrollable">
+                <p style="text-align: center; opacity: 0.6; padding: 40px;">Vos recommandations locales apparaîtront ici.</p>
+            </div>
+        </section>
+
+        <!-- View: ASSISTANCE (Urgences) -->
+        <section id="view-urgences" class="view content-view centered-view">
+            <header class="section-header">
+                <button class="back-btn" onclick="goBack()">
+                    <span class="icon-back">←</span> Retour
+                </button>
+                <h2>Sécurité & Urgences</h2>
+                <div class="header-spacer"></div>
+            </header>
+            <div class="section-content scrollable">
+                <div class="contacts-list">
+                    
+                    <h3 class="section-subtitle">🚨 SÉCURITÉ & URGENCES</h3>
+                    
+                    <div class="accordion-container">
+                         <div class="accordion-item">
+                            <div class="accordion-header" onclick="toggleAccordion(this)">
+                                <div class="header-icon">📞</div>
+                                <h3>Numéros d'urgence</h3>
+                                <div class="header-arrow">▼</div>
+                            </div>
+                            <div class="accordion-content">
+                                <div class="content-inner">
+                                    <ul class="info-list">
+                                        <li><strong>Pompiers :</strong> 18</li>
+                                        <li><strong>SAMU :</strong> 15</li>
+                                        <li><strong>Police :</strong> 17</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="accordion-item">
+                            <div class="accordion-header" onclick="toggleAccordion(this)">
+                                <div class="header-icon">👤</div>
+                                <h3>Contacts</h3>
+                                <div class="header-arrow">▼</div>
+                            </div>
+                            <div class="accordion-content">
+                                <div class="content-inner">
+                                    <ul class="info-list">
+                                        <li><strong>Concierge :</strong> Sandrine – 06 40 25 84 77</li>
+                                        <li><strong>Hôte :</strong> Benjamin</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                         <div class="accordion-item">
+                            <div class="accordion-header" onclick="toggleAccordion(this)">
+                                <div class="header-icon">🛡️</div>
+                                <h3>Sécurité Appartement</h3>
+                                <div class="header-arrow">▼</div>
+                            </div>
+                            <div class="accordion-content">
+                                <div class="content-inner">
+                                    <ul class="info-list">
+                                        <li><strong>Détecteurs de fumée :</strong> Cuisine & Chambres</li>
+                                        <li><strong>Extincteur + Trousse :</strong> Placard produits ménagers cuisine (à gauche)</li>
+                                        <li><strong>Coupure d'eau :</strong> À droite porte entrée (Extérieur, trappe)</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Screensaver Overlay -->
+        <div id="screensaver" class="hidden">
+            <div class="slideshow">
+                <!-- Slides will be injected by JS or hardcoded -->
+                <div class="slide active" style="background-image: url('https://images.unsplash.com/photo-1573843981267-be1999ff37cd?q=80&w=2000&auto=format&fit=crop')"></div>
+                <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1604812329355-635fa7c04130?q=80&w=2000&auto=format&fit=crop')"></div>
+                <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1537996194471-e657df975ab4?q=80&w=2000&auto=format&fit=crop')"></div>
+                <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1510525009512-ad7fc13eefab?q=80&w=2000&auto=format&fit=crop')"></div>
+            </div>
+            <div class="screensaver-prompt">
+                <p>Touchez l'écran pour commencer</p>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Scripts -->
+    <script src="js/app.js"></script>
+</body>
+</html>
