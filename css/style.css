@@ -570,11 +570,45 @@ button {
 
 .slide {
     opacity: 0;
-    transition: opacity 2s ease;
+    transform: scale(1);
+    transition: opacity 2s ease, transform 10s ease;
+    /* Ken Burns duration */
 }
 
 .slide.active {
     opacity: 1;
+    transform: scale(1.1);
+    /* Zoom in effect */
+}
+
+/* Screensaver Clock - Apple Style */
+.screensaver-clock {
+    position: absolute;
+    top: 15%;
+    /* iOS Style positioning */
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    color: white;
+    z-index: 2;
+    text-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+#ss-time {
+    font-size: 6rem;
+    font-weight: 200;
+    /* Ultra thin like iOS lockscreen */
+    font-family: 'Inter', sans-serif;
+    /* Clean san-serif */
+    line-height: 1;
+    margin-bottom: 5px;
+}
+
+#ss-date {
+    font-size: 1.5rem;
+    font-weight: 400;
+    text-transform: capitalize;
+    opacity: 0.9;
 }
 
 .screensaver-prompt {
@@ -582,7 +616,7 @@ button {
     bottom: 50px;
     width: 100%;
     text-align: center;
-    color: rgba(255, 255, 255, 0.8);
+    color: rgba(255, 255, 255, 0.6);
     font-size: 1rem;
     letter-spacing: 2px;
     text-transform: uppercase;
@@ -594,11 +628,11 @@ button {
 
     0%,
     100% {
-        opacity: 0.5;
+        opacity: 0.4;
     }
 
     50% {
-        opacity: 1;
+        opacity: 0.8;
     }
 }
 

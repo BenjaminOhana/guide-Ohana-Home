@@ -44,7 +44,41 @@ function createTempSection(id) {
     goBack();
 }
 
+
 // -- Screensaver Logic --
+
+// New Screensaver Images (Local)
+const screensaverImages = [
+    'assets/img/screensaver/slide_1.png',
+    'assets/img/screensaver/slide_2.jpg',
+    'assets/img/screensaver/slide_3.jpg',
+    'assets/img/screensaver/slide_4.jpg',
+    'assets/img/screensaver/slide_5.png',
+    'assets/img/screensaver/slide_6.jpg',
+    'assets/img/screensaver/slide_7.jpg',
+    'assets/img/screensaver/slide_8.jpg',
+    'assets/img/screensaver/slide_9.jpg',
+    'assets/img/screensaver/slide_10.jpg'
+];
+
+function initScreensaverSlides() {
+    const container = document.querySelector('.slideshow');
+    container.innerHTML = ''; // Clear existing
+
+    screensaverImages.forEach((imgSrc, index) => {
+        const slide = document.createElement('div');
+        slide.classList.add('slide');
+        if (index === 0) slide.classList.add('active');
+        slide.style.backgroundImage = `url('${imgSrc}')`;
+        container.appendChild(slide);
+    });
+
+    // Reset state
+    currentSlide = 0;
+    slidesNodeList = document.querySelectorAll('.slideshow .slide'); // Update ref
+}
+
+let slidesNodeList = []; // Will hold DOM elements
 
 function resetIdleTimer() {
     clearTimeout(idleTimer);
@@ -74,16 +108,45 @@ function startSlideshow() {
     if (slideInterval) clearInterval(slideInterval);
     // Switch slide every 8 seconds
     slideInterval = setInterval(nextSlide, 8000);
+
+    // Also start clock tick
+    updateScreensaverClock();
+    if (!clockInterval) clockInterval = setInterval(updateScreensaverClock, 1000);
 }
+
+let clockInterval;
 
 function stopSlideshow() {
     if (slideInterval) clearInterval(slideInterval);
+    if (clockInterval) clearInterval(clockInterval);
+    clockInterval = null;
 }
 
 function nextSlide() {
-    slides[currentSlide].classList.remove('active');
-    currentSlide = (currentSlide + 1) % slides.length;
-    slides[currentSlide].classList.add('active');
+    if (!slidesNodeList.length) return;
+
+    slidesNodeList[currentSlide].classList.remove('active');
+    currentSlide = (currentSlide + 1) % slidesNodeList.length;
+    slidesNodeList[currentSlide].classList.add('active');
+}
+
+// -- Screensaver Clock --
+function updateScreensaverClock() {
+    const timeEl = document.getElementById('ss-time');
+    const dateEl = document.getElementById('ss-date');
+    if (!timeEl || !dateEl) return;
+
+    const now = new Date();
+
+    // Time
+    const hours = String(now.getHours()).padStart(2, '0');
+    const minutes = String(now.getMinutes()).padStart(2, '0');
+    timeEl.textContent = `${hours}:${minutes}`;
+
+    // Date (French)
+    const options = { weekday: 'long', day: 'numeric', month: 'long' };
+    const dateStr = now.toLocaleDateString('fr-FR', options);
+    dateEl.textContent = dateStr;
 }
 
 // -- Event Listeners --
@@ -95,6 +158,7 @@ events.forEach(event => {
 });
 
 // Initialize
+initScreensaverSlides(); // Preload/Create slides
 resetIdleTimer(); // Start the timer
 // Ensure Hub is active
 document.getElementById('view-hub').classList.add('active');
