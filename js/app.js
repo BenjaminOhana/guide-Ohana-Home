@@ -50,18 +50,21 @@ function createTempSection(id) {
 // New Screensaver Images (Local)
 // New Screensaver Images (Local)
 const screensaverImages = [
-    // Gemini Generated Imports (New)
+    // --- TIER 1: PREMIUM (Generated / HQ) ---
+    'assets/img/screensaver/Gemini_Generated_Image_dmeedhdmeedhdmee.png', // New
+    'assets/img/screensaver/Gemini_Generated_Image_4ptud34ptud34ptu.png', // New
+    'assets/img/screensaver/Gemini_Generated_Image_b7hwygb7hwygb7hw.png', // New
     'assets/img/screensaver/Gemini_Generated_Image_qkrev4qkrev4qkre.png',
     'assets/img/screensaver/Gemini_Generated_Image_rcrx4ercrx4ercrx.png',
     'assets/img/screensaver/Gemini_Generated_Image_rkazuhrkazuhrkaz.png',
     'assets/img/screensaver/Gemini_Generated_Image_t4pdiwt4pdiwt4pd.png',
 
-    // Existing HQ Slides
     'assets/img/screensaver/slide_hq_1.png',
     'assets/img/screensaver/slide_hq_3.png',
     'assets/img/screensaver/slide_hq_4.png',
     'assets/img/screensaver/slide_hq_5.png',
-    'assets/img/screensaver/slide_hq_6.png',
+
+    // --- TIER 2: HIGH QUALITY (Selected) ---
     'assets/img/screensaver/slide_hq_7.png',
     'assets/img/screensaver/slide_hq_8.png',
     'assets/img/screensaver/slide_hq_9.png',
@@ -69,28 +72,30 @@ const screensaverImages = [
     'assets/img/screensaver/slide_hq_11.png',
     'assets/img/screensaver/slide_hq_12.png',
 
-    // Standard Slides (Filtered)
+    // --- TIER 3: STANDARD (Good Vibe) ---
+    'assets/img/screensaver/slide_12.png', // Nice bedroom
+    'assets/img/screensaver/slide_17.png', // Detail
+    'assets/img/screensaver/slide_22.png',
+    'assets/img/screensaver/slide_29.png',
+    'assets/img/screensaver/slide_32.png',
+
+    // --- TIER 4: OTHERS (Mixed) ---
     'assets/img/screensaver/slide_3.png',
     'assets/img/screensaver/slide_4.png',
     'assets/img/screensaver/slide_8.png',
-    'assets/img/screensaver/slide_12.png',
     'assets/img/screensaver/slide_13.png',
     'assets/img/screensaver/slide_14.png',
-    'assets/img/screensaver/slide_17.png',
     'assets/img/screensaver/slide_18.png',
     'assets/img/screensaver/slide_19.png',
     'assets/img/screensaver/slide_20.png',
     'assets/img/screensaver/slide_21.png',
-    'assets/img/screensaver/slide_22.png',
     'assets/img/screensaver/slide_23.png',
     'assets/img/screensaver/slide_24.png',
     'assets/img/screensaver/slide_26.png',
     'assets/img/screensaver/slide_27.png',
     'assets/img/screensaver/slide_28.png',
-    'assets/img/screensaver/slide_29.png',
     'assets/img/screensaver/slide_30.png',
-    'assets/img/screensaver/slide_31.png',
-    'assets/img/screensaver/slide_32.png'
+    'assets/img/screensaver/slide_31.png'
 ];
 
 function initScreensaverSlides() {
