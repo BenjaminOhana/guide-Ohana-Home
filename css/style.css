@@ -92,7 +92,8 @@ button {
 /* App Container */
 #app {
     width: 100%;
-    height: 100%;
+    /* Use JS calculated height if available (fix for iPad PWA), fallback to 100dvh */
+    height: var(--vh, 100dvh);
     position: relative;
     overflow: hidden;
     padding: var(--gap-lg);
