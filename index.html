@@ -80,12 +80,14 @@
                             <span class="card-icon">📍</span>
                             <span class="card-label">Nos adresses</span>
                         </button>
-                        <button class="nav-card" onclick="alert('Bientôt disponible')" style="opacity:0.7;">
-                            <span class="card-icon">🤖</span>
-                            <span class="card-label">Assistant IA</span>
-                        </button>
-                        <!-- Empty Slot as requested -->
+                        <!-- Empty Slot 1 -->
                         <div class="nav-card" style="visibility: hidden; pointer-events: none;"></div>
+                        
+                        <!-- Story Tile -->
+                        <button class="nav-card" onclick="openSection('story')">
+                            <span class="card-icon">📖</span>
+                            <span class="card-label">Notre histoire</span>
+                        </button>
                     </nav>
                     <footer class="hub-footer">
                         <div class="wifi-card">
@@ -549,6 +551,57 @@
                         </div>
                     </div>
 
+                </div>
+            </div>
+        </section>
+
+        <!-- View: NOTRE HISTOIRE -->
+        <section id="view-story" class="view">
+            <div class="split-page-layout">
+                <div class="split-left-panel">
+                    <!-- Placeholder image matching the vibe -->
+                    <img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=2000&auto=format&fit=crop" alt="Notre Histoire">
+                </div>
+                <div class="split-right-panel">
+                    <header class="section-header">
+                        <button class="back-btn" onclick="goBack()">
+                            <span class="icon-back">←</span> Retour
+                        </button>
+                        <h2>L'Esprit Ohana</h2>
+                        <div class="header-spacer"></div>
+                    </header>
+                    
+                    <div class="section-content" style="padding: 20px 40px;">
+                        <div class="story-container" style="max-width: 600px; margin: 0 auto; color: var(--color-text);">
+                            <h3 style="font-family: 'Montserrat', sans-serif; font-size: 1.8rem; margin-bottom: 20px; color: var(--color-accent-terracotta);">Bienvenue chez nous, bienvenue chez vous.</h3>
+                            
+                            <p style="font-size: 1.1rem; line-height: 1.8; margin-bottom: 20px; color: #555;">
+                                Tout a commencé par une envie simple : créer un lieu où l'on se sent instantanément <strong>apaisé</strong>. 
+                                Pas juste un appartement, mais un véritable cocon urbain.
+                            </p>
+
+                            <p style="font-size: 1.1rem; line-height: 1.8; margin-bottom: 20px; color: #555;">
+                                Nous sommes <strong>Benjamin & Julien</strong>, et nous avons rénové cet espace en pensant à chaque détail : 
+                                les matières brutes pour l'ancrage, la lumière pour la douceur, et ces petites touches végétales pour respirer.
+                            </p>
+
+                            <blockquote style="border-left: 4px solid var(--color-accent-terracotta); padding-left: 20px; font-style: italic; font-size: 1.2rem; margin: 30px 0; color: #333;">
+                                "Ohana signifie famille. Et famille signifie que personne n'est abandonné, ni oublié."
+                            </blockquote>
+
+                            <p style="font-size: 1.1rem; line-height: 1.8; margin-bottom: 30px; color: #555;">
+                                Nous espérons que vous ressentirez cette énergie positive durant votre séjour. 
+                                Profitez, déconnectez, et sentez-vous libres de nous écrire si vous avez besoin de quoi que ce soit.
+                            </p>
+
+                            <div style="display: flex; align-items: center; gap: 15px; margin-top: 40px;">
+                                <!-- Signatures / Avatars placeholders -->
+                                <div style="width: 50px; height: 50px; background: #ddd; border-radius: 50%;"></div>
+                                <div style="width: 50px; height: 50px; background: #ddd; border-radius: 50%;"></div>
+                                <span style="font-family: 'Damion', cursive; font-size: 1.5rem; color: var(--color-text); margin-left: 10px;">Ben & Ju</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
