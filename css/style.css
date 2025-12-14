@@ -570,15 +570,19 @@ button {
 
 .slide {
     opacity: 0;
-    transform: scale(1);
+    transform: scale(1) translateZ(0);
+    /* HW acceleration */
     transition: opacity 3s ease, transform 130s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    /* Very slow, smooth movement */
+    will-change: transform, opacity;
+    backface-visibility: hidden;
+    perspective: 1000px;
+    image-rendering: -webkit-optimize-contrast;
+    /* Try to force sharpness */
 }
 
 .slide.active {
     opacity: 1;
-    transform: scale(1.05);
-    /* Subtle premium zoom */
+    transform: scale(1.05) translateZ(0);
 }
 
 /* Screensaver Clock - Premium Style (Matching Hero Overlay) */
