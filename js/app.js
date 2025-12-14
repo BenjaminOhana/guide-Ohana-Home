@@ -49,11 +49,12 @@ function createTempSection(id) {
 
 // New Screensaver Images (Local)
 // New Screensaver Images (Local)
+// New Screensaver Images (Local)
 const screensaverImages = [
     // --- TIER 1: PREMIUM (Generated / HQ) ---
-    'assets/img/screensaver/Gemini_Generated_Image_dmeedhdmeedhdmee.png', // New
-    'assets/img/screensaver/Gemini_Generated_Image_4ptud34ptud34ptu.png', // New
-    'assets/img/screensaver/Gemini_Generated_Image_b7hwygb7hwygb7hw.png', // New
+    'assets/img/screensaver/Gemini_Generated_Image_dmeedhdmeedhdmee.png',
+    'assets/img/screensaver/Gemini_Generated_Image_4ptud34ptud34ptu.png',
+    'assets/img/screensaver/Gemini_Generated_Image_b7hwygb7hwygb7hw.png',
     'assets/img/screensaver/Gemini_Generated_Image_qkrev4qkrev4qkre.png',
     'assets/img/screensaver/Gemini_Generated_Image_rcrx4ercrx4ercrx.png',
     'assets/img/screensaver/Gemini_Generated_Image_rkazuhrkazuhrkaz.png',
@@ -63,8 +64,7 @@ const screensaverImages = [
     'assets/img/screensaver/slide_hq_3.png',
     'assets/img/screensaver/slide_hq_4.png',
     'assets/img/screensaver/slide_hq_5.png',
-
-    // --- TIER 2: HIGH QUALITY (Selected) ---
+    'assets/img/screensaver/slide_hq_6.png',
     'assets/img/screensaver/slide_hq_7.png',
     'assets/img/screensaver/slide_hq_8.png',
     'assets/img/screensaver/slide_hq_9.png',
@@ -72,30 +72,28 @@ const screensaverImages = [
     'assets/img/screensaver/slide_hq_11.png',
     'assets/img/screensaver/slide_hq_12.png',
 
-    // --- TIER 3: STANDARD (Good Vibe) ---
-    'assets/img/screensaver/slide_12.png', // Nice bedroom
-    'assets/img/screensaver/slide_17.png', // Detail
-    'assets/img/screensaver/slide_22.png',
-    'assets/img/screensaver/slide_29.png',
-    'assets/img/screensaver/slide_32.png',
-
-    // --- TIER 4: OTHERS (Mixed) ---
+    // --- TIER 2: STANDARD (Existing) ---
     'assets/img/screensaver/slide_3.png',
     'assets/img/screensaver/slide_4.png',
     'assets/img/screensaver/slide_8.png',
+    'assets/img/screensaver/slide_12.png',
     'assets/img/screensaver/slide_13.png',
     'assets/img/screensaver/slide_14.png',
+    'assets/img/screensaver/slide_17.png',
     'assets/img/screensaver/slide_18.png',
     'assets/img/screensaver/slide_19.png',
     'assets/img/screensaver/slide_20.png',
     'assets/img/screensaver/slide_21.png',
+    'assets/img/screensaver/slide_22.png',
     'assets/img/screensaver/slide_23.png',
     'assets/img/screensaver/slide_24.png',
     'assets/img/screensaver/slide_26.png',
     'assets/img/screensaver/slide_27.png',
     'assets/img/screensaver/slide_28.png',
+    'assets/img/screensaver/slide_29.png',
     'assets/img/screensaver/slide_30.png',
-    'assets/img/screensaver/slide_31.png'
+    'assets/img/screensaver/slide_31.png',
+    'assets/img/screensaver/slide_32.png'
 ];
 
 function initScreensaverSlides() {
@@ -251,18 +249,29 @@ document.getElementById('view-hub').classList.add('active');
 
 // -- Hero Slideshow Logic --
 const heroImages = [
-    // HQ Replacements
+    // HQ 
     'assets/img/hero/hero_hq_1.png',
-    'assets/img/hero/hero_hq_2.png',
+    // 'assets/img/hero/hero_hq_2.png', // DELETED (Broken Link Fix)
     'assets/img/hero/hero_hq_3.png',
     'assets/img/hero/hero_hq_4.png',
     'assets/img/hero/hero_hq_5.png',
-    // Keep better existing ones (6-10 were user uploaded recently)
+    'assets/img/hero/hero_hq_6.png',
+    'assets/img/hero/hero_hq_7.png',
+    'assets/img/hero/hero_hq_8.png',
+    'assets/img/hero/hero_hq_9.png',
+    'assets/img/hero/hero_hq_10.png',
+    'assets/img/hero/hero_hq_11.png',
+    'assets/img/hero/hero_hq_12.png',
+
+    // Standard
     'assets/img/hero/hero_6.png',
     'assets/img/hero/hero_7.png',
     'assets/img/hero/hero_8.jpg',
-    'assets/img/hero/hero_9.jpg',
-    'assets/img/hero/hero_10.jpg'
+    // 'assets/img/hero/hero_9.jpg', // Check existence? Keep if not confirm deleted
+    // 'assets/img/hero/hero_10.jpg' // Check existence? Keep if not confirm deleted
+    'assets/img/hero/hero_3.jpg',
+    'assets/img/hero/hero_4.jpg',
+    'assets/img/hero/hero_5.jpg'
 ];
 
 let heroIndex = 0;
