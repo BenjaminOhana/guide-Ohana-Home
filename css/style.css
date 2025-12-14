@@ -64,8 +64,10 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    /* Respect Safe Areas (Notches/Home Bars) */
-    padding: max(var(--gap-md), env(safe-area-inset-top)) max(var(--gap-md), env(safe-area-inset-right)) max(var(--gap-md), env(safe-area-inset-bottom)) max(var(--gap-md), env(safe-area-inset-left));
+    /* Respect Safe Areas (Notches/Home Bars) - forcing extra bottom space */
+    padding: max(var(--gap-md), env(safe-area-inset-top)) max(var(--gap-md), env(safe-area-inset-right)) max(50px, env(safe-area-inset-bottom) + 20px)
+        /* Aggressive bottom spacing */
+        max(var(--gap-md), env(safe-area-inset-left));
     box-sizing: border-box;
     overflow: hidden;
     /* Ensure no scroll leaks */
