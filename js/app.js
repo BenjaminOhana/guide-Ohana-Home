@@ -200,7 +200,12 @@ const heroImages = [
     'assets/img/hero/hero_2.jpg',
     'assets/img/hero/hero_3.jpg',
     'assets/img/hero/hero_4.jpg',
-    'assets/img/hero/hero_5.jpg'
+    'assets/img/hero/hero_5.jpg',
+    'assets/img/hero/hero_6.png',
+    'assets/img/hero/hero_7.png',
+    'assets/img/hero/hero_8.jpg',
+    'assets/img/hero/hero_9.jpg',
+    'assets/img/hero/hero_10.jpg'
 ];
 
 let heroIndex = 0;
