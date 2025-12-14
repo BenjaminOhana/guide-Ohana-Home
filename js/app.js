@@ -63,7 +63,24 @@ const screensaverImages = [
     'assets/img/screensaver/slide_12.jpg',
     'assets/img/screensaver/slide_13.png',
     'assets/img/screensaver/slide_14.png',
-    'assets/img/screensaver/slide_15.jpg'
+    'assets/img/screensaver/slide_15.jpg',
+    'assets/img/screensaver/slide_16.png',
+    'assets/img/screensaver/slide_17.png',
+    'assets/img/screensaver/slide_18.png',
+    'assets/img/screensaver/slide_19.png',
+    'assets/img/screensaver/slide_20.png',
+    'assets/img/screensaver/slide_21.png',
+    'assets/img/screensaver/slide_22.png',
+    'assets/img/screensaver/slide_23.png',
+    'assets/img/screensaver/slide_24.png',
+    'assets/img/screensaver/slide_25.png',
+    'assets/img/screensaver/slide_26.png',
+    'assets/img/screensaver/slide_27.png',
+    'assets/img/screensaver/slide_28.png',
+    'assets/img/screensaver/slide_29.png',
+    'assets/img/screensaver/slide_30.png',
+    'assets/img/screensaver/slide_31.png',
+    'assets/img/screensaver/slide_32.png'
 ];
 
 function initScreensaverSlides() {
