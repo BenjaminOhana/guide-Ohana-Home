@@ -507,6 +507,52 @@
 
 
         
+        <!-- View: DÉCOUVRIR (Nos Adresses) -->
+        <section id="view-decouvrir" class="view">
+            <div class="split-page-layout">
+                <!-- Left Panel: Dynamic Image -->
+                <div class="split-left-panel">
+                    <img id="discover-hero-img" src="assets/img/hero/hero_1.jpg" alt="Découvrir" style="transition: opacity 0.5s ease;">
+                </div>
+                
+                <!-- Right Panel: Navigation Content -->
+                <div class="split-right-panel" style="padding: 0;">
+                    
+                    <!-- LEVEL 1: MENU (Categories) -->
+                    <div id="discover-menu" class="discover-view active">
+                        <header class="section-header" style="padding: var(--gap-lg); padding-bottom: 0;">
+                            <button class="back-btn" onclick="goBack()">
+                                <span class="icon-back">←</span> Retour
+                            </button>
+                            <h2>Nos Adresses</h2>
+                        </header>
+                        
+                        <div class="discover-categories-grid">
+                            <!-- Categories injected via JS -->
+                        </div>
+                    </div>
+
+                    <!-- LEVEL 2: DETAILS (List) -->
+                    <div id="discover-details" class="discover-view hidden">
+                        <header class="section-header" style="padding: var(--gap-lg); padding-bottom: 10px;">
+                            <button class="back-btn" onclick="closeDiscoverCategory()">
+                                <span class="icon-back">←</span> Retour
+                            </button>
+                            <h2 id="discover-cat-title">Catégorie</h2>
+                        </header>
+
+                        <!-- Horizontal Scroll Container -->
+                        <div class="horizontal-scroll-wrapper">
+                            <div class="horizontal-scroll-container" id="discover-list">
+                                <!-- Cards injected via JS -->
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
         <!-- Screensaver Overlay -->
         <div id="screensaver" class="hidden">
             <div class="slideshow">

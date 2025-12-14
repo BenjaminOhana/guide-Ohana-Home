@@ -401,3 +401,166 @@ fetchWeather();
 // Updates
 setInterval(updateTime, 60000); // Every minute
 setInterval(fetchWeather, 1800000); // Every 30 mins
+// -- Discover Section Logic (Refactored) --
+
+const discoverData = {
+    'regaler': {
+        title: 'Se Régaler',
+        img: 'assets/img/hero/hero_1.jpg', // Placeholder
+        places: [
+            {
+                name: 'La Kaza',
+                type: 'Restaurant',
+                review: 'Une ambiance incroyable et des plats raffinés.',
+                img: 'assets/img/hero/hero_6.png'
+            },
+            {
+                name: 'Le Ptit Déj',
+                type: 'Brunch',
+                review: 'Les meilleurs pancakes de la ville, sans hésitation.',
+                img: 'assets/img/hero/hero_2.jpg'
+            },
+            {
+                name: 'Sushi Zen',
+                type: 'Japonais',
+                review: 'Frais, rapide et délicieux.',
+                img: 'assets/img/hero/hero_5.jpg'
+            }
+        ]
+    },
+    'respirer': {
+        title: 'Respirer',
+        img: 'assets/img/hero/hero_3.jpg',
+        places: [
+            {
+                name: 'Parc Napoléon',
+                type: 'Nature',
+                review: 'Idéal pour un jogging matinal au calme.',
+                img: 'assets/img/hero/hero_3.jpg'
+            },
+            {
+                name: 'Bords de Moselle',
+                type: 'Promenade',
+                review: 'Un coucher de soleil magnifique sur l\'eau.',
+                img: 'assets/img/hero/hero_8.jpg'
+            }
+        ]
+    },
+    'explorer': {
+        title: 'Explorer',
+        img: 'assets/img/hero/hero_4.jpg',
+        places: [
+            {
+                name: 'Château de Malbrouck',
+                type: 'Culture',
+                review: 'Une plongée fascinante dans l\'histoire.',
+                img: 'assets/img/hero/hero_4.jpg'
+            }
+        ]
+    },
+    'indispensables': {
+        title: 'Indispensables',
+        img: 'assets/img/hero/hero_7.png',
+        places: [
+            {
+                name: 'Pharmacie du Centre',
+                type: 'Santé',
+                review: 'Ouverte 24/7, très pratique en cas de pépin.',
+                img: 'assets/img/hero/hero_7.png'
+            },
+            {
+                name: 'Supermarché Match',
+                type: 'Courses',
+                review: 'Tout ce qu\'il faut à 5 minutes à pied.',
+                img: 'assets/img/hero/hero_9.jpg'
+            }
+        ]
+    }
+};
+
+function renderDiscoverMenu() {
+    const container = document.querySelector('.discover-categories-grid');
+    if (!container || container.children.length > 0) return; // Prevent re-render
+
+    Object.keys(discoverData).forEach(key => {
+        const cat = discoverData[key];
+        const tile = document.createElement('div');
+        tile.className = 'category-tile';
+        tile.onclick = () => openDiscoverCategory(key);
+        tile.innerHTML = `
+            <img src="${cat.img}" alt="${cat.title}">
+            <div class="category-overlay">
+                <h3>${cat.title}</h3>
+            </div>
+        `;
+        container.appendChild(tile);
+    });
+}
+
+function openDiscoverCategory(catKey) {
+    const cat = discoverData[catKey];
+    if (!cat) return;
+
+    // Populate Details
+    document.getElementById('discover-cat-title').textContent = cat.title;
+    const listContainer = document.getElementById('discover-list');
+    listContainer.innerHTML = ''; // Clear
+
+    // Update Left Image Animation
+    const heroImg = document.getElementById('discover-hero-img');
+    heroImg.style.opacity = '0';
+    setTimeout(() => {
+        heroImg.src = cat.img;
+        heroImg.style.opacity = '1';
+    }, 300);
+
+
+    // Render Cards
+    cat.places.forEach(place => {
+        const card = document.createElement('div');
+        card.className = 'place-card';
+        card.innerHTML = `
+            <div class="place-card-img-wrapper">
+                <img src="${place.img}" class="place-card-img" alt="${place.name}">
+            </div>
+            <div class="place-card-content">
+                <div class="place-type">${place.type}</div>
+                <div class="place-title">${place.name}</div>
+                <div class="place-review">"${place.review}"</div>
+                
+                <div class="place-qr-zone">
+                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=Maps:${place.name}" class="place-qr-placeholder" alt="QR">
+                    <div class="place-qr-text">Scanner pour<br><strong>L'Itinéraire</strong></div>
+                </div>
+            </div>
+        `;
+        listContainer.appendChild(card);
+    });
+
+    // Switch Views
+    document.getElementById('discover-menu').classList.remove('active');
+    document.getElementById('discover-menu').classList.add('hidden');
+
+    document.getElementById('discover-details').classList.remove('hidden');
+    document.getElementById('discover-details').classList.add('active');
+}
+
+function closeDiscoverCategory() {
+    // Switch Views Back
+    document.getElementById('discover-details').classList.remove('active');
+    document.getElementById('discover-details').classList.add('hidden');
+
+    document.getElementById('discover-menu').classList.remove('hidden');
+    document.getElementById('discover-menu').classList.add('active');
+
+    // Reset Hero Image to default (Optional)
+    // const heroImg = document.getElementById('discover-hero-img');
+    // heroImg.src = 'assets/img/hero/hero_1.jpg';
+}
+
+// Init when App loads
+renderDiscoverMenu();
+
+// Global exports for HTML onclicks
+window.openDiscoverCategory = openDiscoverCategory;
+window.closeDiscoverCategory = closeDiscoverCategory;
