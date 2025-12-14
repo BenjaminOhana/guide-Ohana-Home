@@ -175,6 +175,9 @@ function nextSlide() {
     slidesNodeList[currentSlide].classList.remove('active');
     currentSlide = (currentSlide + 1) % slidesNodeList.length;
     slidesNodeList[currentSlide].classList.add('active');
+
+    // Update Mantra occasionally
+    updateMantra();
 }
 
 // -- Screensaver Clock --
@@ -195,6 +198,43 @@ function updateScreensaverClock() {
     const dateStr = now.toLocaleDateString('fr-FR', options);
     dateEl.textContent = dateStr;
 }
+
+// -- Mantras Logic --
+const mantras = [
+    "Ici et maintenant.",
+    "Respirez. Vous êtes chez vous.",
+    "Prenez le temps de ne rien faire.",
+    "La simplicité est la sophistication suprême.",
+    "Ohana signifie famille.",
+    "Écoutez le silence.",
+    "Savourez l'instant.",
+    "Douceur de vivre.",
+    "", // Empty chance
+    "", // Empty chance
+    ""  // Empty chance
+];
+
+function updateMantra() {
+    const mantraEl = document.getElementById('ss-mantra');
+    if (!mantraEl) return;
+
+    // Pick random
+    const randomIndex = Math.floor(Math.random() * mantras.length);
+    const text = mantras[randomIndex];
+
+    // Reset Animation
+    mantraEl.style.animation = 'none';
+    mantraEl.offsetHeight; /* trigger reflow */
+    mantraEl.style.animation = null;
+
+    if (text) {
+        mantraEl.textContent = text;
+        mantraEl.style.display = 'block';
+    } else {
+        mantraEl.style.display = 'none';
+    }
+}
+
 
 // -- Event Listeners --
 

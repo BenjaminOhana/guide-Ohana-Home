@@ -582,57 +582,92 @@ button {
 
 .slide.active {
     opacity: 1;
-    transform: scale(1.05) translateZ(0);
+    transform: scale(1.15);
+    /* Slow zoom */
 }
 
-/* Screensaver Clock - Premium Style (Matching Hero Overlay) */
+/* Discrete Clock (Top Right) */
 .screensaver-clock {
     position: absolute;
-    top: 50%;
-    /* Centered */
-    left: 50%;
-    transform: translate(-50%, -50%);
-    text-align: center;
-    color: white;
-    z-index: 2;
-
-    /* Glassmorphism Container */
-    background: rgba(0, 0, 0, 0.2);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border-radius: var(--radius-xl);
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
-    padding: 60px 80px;
-    min-width: 400px;
+    top: 40px;
+    right: 40px;
+    text-align: right;
+    color: rgba(255, 255, 255, 0.9);
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
 }
 
 #ss-time {
-    font-size: 8rem;
-    font-weight: 500;
-    font-family: 'Cormorant Garamond', serif;
-    /* Matching H1 */
+    font-size: 3rem;
+    font-weight: 300;
+    letter-spacing: -1px;
     line-height: 1;
-    margin-bottom: 5px;
-    text-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    font-variant-numeric: tabular-nums;
 }
 
 #ss-date {
-    font-size: 1.8rem;
+    font-size: 1rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    opacity: 0.8;
+    margin-top: 5px;
+}
+
+/* Mantra Container (Liquid Glass) */
+.screensaver-mantra-container {
+    position: absolute;
+    bottom: 120px;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding: 0 40px;
+}
+
+.glass-mantra {
+    background: rgba(255, 255, 255, 0.15);
+    /* Subtle glass */
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    padding: 20px 40px;
+    border-radius: 50px;
+    /* Pill shape */
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: white;
+    font-size: 1.4rem;
+    font-family: 'Montserrat', sans-serif;
+    /* Using main font for clean look */
     font-weight: 400;
-    font-family: 'Raleway', sans-serif;
-    text-transform: capitalize;
-    opacity: 0.95;
-    letter-spacing: 1px;
+    text-align: center;
+    max-width: 80%;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+
+    /* Animation for appearance */
+    animation: floatUp 1s ease-out forwards;
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+.glass-mantra:empty {
+    display: none;
+    /* Hide if no text */
+}
+
+@keyframes floatUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .screensaver-prompt {
     position: absolute;
-    bottom: 50px;
+    bottom: 40px;
     width: 100%;
     text-align: center;
     color: rgba(255, 255, 255, 0.6);
-    font-size: 1rem;
-    letter-spacing: 2px;
+    font-size: 0.9rem;
+    letter-spacing: 1px;
     text-transform: uppercase;
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
     animation: pulse 3s infinite;
