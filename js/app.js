@@ -129,7 +129,7 @@ function hideScreensaver() {
 function startSlideshow() {
     if (slideInterval) clearInterval(slideInterval);
     // Switch slide every 8 seconds
-    slideInterval = setInterval(nextSlide, 8000);
+    slideInterval = setInterval(nextSlide, 120000); // 2 minutes per slide
 
     // Also start clock tick
     updateScreensaverClock();

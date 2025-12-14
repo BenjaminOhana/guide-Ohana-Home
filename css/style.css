@@ -571,44 +571,54 @@ button {
 .slide {
     opacity: 0;
     transform: scale(1);
-    transition: opacity 2s ease, transform 10s ease;
-    /* Ken Burns duration */
+    transition: opacity 3s ease, transform 130s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    /* Very slow, smooth movement */
 }
 
 .slide.active {
     opacity: 1;
-    transform: scale(1.1);
-    /* Zoom in effect */
+    transform: scale(1.05);
+    /* Subtle premium zoom */
 }
 
-/* Screensaver Clock - Apple Style */
+/* Screensaver Clock - Premium Style (Matching Hero Overlay) */
 .screensaver-clock {
     position: absolute;
-    top: 15%;
-    /* iOS Style positioning */
+    top: 50%;
+    /* Centered */
     left: 50%;
-    transform: translateX(-50%);
+    transform: translate(-50%, -50%);
     text-align: center;
     color: white;
     z-index: 2;
-    text-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+
+    /* Glassmorphism Container */
+    background: rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-radius: var(--radius-xl);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+    padding: 60px 80px;
+    min-width: 400px;
 }
 
 #ss-time {
-    font-size: 6rem;
-    font-weight: 200;
-    /* Ultra thin like iOS lockscreen */
-    font-family: 'Inter', sans-serif;
-    /* Clean san-serif */
+    font-size: 8rem;
+    font-weight: 500;
+    font-family: 'Cormorant Garamond', serif;
+    /* Matching H1 */
     line-height: 1;
     margin-bottom: 5px;
+    text-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
 }
 
 #ss-date {
-    font-size: 1.5rem;
+    font-size: 1.8rem;
     font-weight: 400;
+    font-family: 'Raleway', sans-serif;
     text-transform: capitalize;
-    opacity: 0.9;
+    opacity: 0.95;
+    letter-spacing: 1px;
 }
 
 .screensaver-prompt {
