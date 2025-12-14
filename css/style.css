@@ -183,7 +183,7 @@ button {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    opacity: 0.85;
+    opacity: 0.75;
     transition: transform 10s ease, opacity 1s ease;
     /* added opacity transition */
 }

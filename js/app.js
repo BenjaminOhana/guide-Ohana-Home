@@ -49,15 +49,15 @@ function createTempSection(id) {
 
 // New Screensaver Images (Local)
 const screensaverImages = [
-    'assets/img/screensaver/slide_1.png',
+    // 'assets/img/screensaver/slide_1.png', // Removed
     'assets/img/screensaver/slide_2.jpg',
     'assets/img/screensaver/slide_3.jpg',
-    'assets/img/screensaver/slide_4.jpg',
+    // 'assets/img/screensaver/slide_4.jpg', // Removed
     'assets/img/screensaver/slide_5.png',
     'assets/img/screensaver/slide_6.jpg',
     'assets/img/screensaver/slide_7.jpg',
     'assets/img/screensaver/slide_8.jpg',
-    'assets/img/screensaver/slide_9.jpg',
+    // 'assets/img/screensaver/slide_9.jpg', // Removed
     'assets/img/screensaver/slide_10.jpg',
     'assets/img/screensaver/slide_11.jpg',
     'assets/img/screensaver/slide_12.jpg',
@@ -196,11 +196,11 @@ document.getElementById('view-hub').classList.add('active');
 
 // -- Hero Slideshow Logic --
 const heroImages = [
-    'https://images.unsplash.com/photo-1544644181-1484b3fdfc62?q=80&w=2000&auto=format&fit=crop', // Vue Bali
-    'https://images.unsplash.com/photo-1573843981267-be1999ff37cd?q=80&w=2000&auto=format&fit=crop', // Interior Room
-    'https://images.unsplash.com/photo-1510525009512-ad7fc13eefab?q=80&w=2000&auto=format&fit=crop', // Pool details
-    'https://images.unsplash.com/photo-1627254598128-4ee4540d6c81?q=80&w=2000&auto=format&fit=crop', // Zen Garden
-    'https://images.unsplash.com/photo-1604812329355-635fa7c04130?q=80&w=2000&auto=format&fit=crop'  // Living room
+    'assets/img/hero/hero_1.jpg',
+    'assets/img/hero/hero_2.jpg',
+    'assets/img/hero/hero_3.jpg',
+    'assets/img/hero/hero_4.jpg',
+    'assets/img/hero/hero_5.jpg'
 ];
 
 let heroIndex = 0;
