@@ -48,45 +48,16 @@ function createTempSection(id) {
 // -- Screensaver Logic --
 
 // New Screensaver Images (Local)
+// New Screensaver Images (Local)
 const screensaverImages = [
-    // 'assets/img/screensaver/slide_1.png', // Removed
-    // 'assets/img/screensaver/slide_2.jpg', // Low Res Removed
-    // 'assets/img/screensaver/slide_3.jpg', // Low Res Removed
-    // 'assets/img/screensaver/slide_4.jpg', // Removed
-    'assets/img/screensaver/slide_5.png',
-    // 'assets/img/screensaver/slide_6.jpg', // Low Res Removed
-    // 'assets/img/screensaver/slide_7.jpg', // Low Res Removed
-    // 'assets/img/screensaver/slide_8.jpg', // Low Res Removed
-    // 'assets/img/screensaver/slide_9.jpg', // Removed
-    // 'assets/img/screensaver/slide_10.jpg', // Low Res Removed
-    // 'assets/img/screensaver/slide_11.jpg', // Low Res Removed
-    'assets/img/screensaver/slide_12.png',
-    'assets/img/screensaver/slide_13.png',
-    'assets/img/screensaver/slide_14.png',
-    // 'assets/img/screensaver/slide_15.png', // Removed by user
-    // 'assets/img/screensaver/slide_16.png', // Removed by user
-    'assets/img/screensaver/slide_17.png',
-    'assets/img/screensaver/slide_18.png',
-    'assets/img/screensaver/slide_19.png',
-    'assets/img/screensaver/slide_20.png',
-    'assets/img/screensaver/slide_21.png',
-    'assets/img/screensaver/slide_22.png',
-    'assets/img/screensaver/slide_23.png',
-    'assets/img/screensaver/slide_24.png',
-    // 'assets/img/screensaver/slide_25.png', // Removed by user
-    'assets/img/screensaver/slide_26.png',
-    'assets/img/screensaver/slide_27.png',
-    'assets/img/screensaver/slide_28.png',
-    'assets/img/screensaver/slide_29.png',
-    'assets/img/screensaver/slide_30.png',
-    'assets/img/screensaver/slide_31.png',
-    'assets/img/screensaver/slide_32.png',
-    'assets/img/screensaver/slide_3.png',
-    'assets/img/screensaver/slide_4.png',
-    'assets/img/screensaver/slide_8.png',
-    // New HQ Imports (V3/V4 Generated)
+    // Gemini Generated Imports (New)
+    'assets/img/screensaver/Gemini_Generated_Image_qkrev4qkrev4qkre.png',
+    'assets/img/screensaver/Gemini_Generated_Image_rcrx4ercrx4ercrx.png',
+    'assets/img/screensaver/Gemini_Generated_Image_rkazuhrkazuhrkaz.png',
+    'assets/img/screensaver/Gemini_Generated_Image_t4pdiwt4pdiwt4pd.png',
+
+    // Existing HQ Slides
     'assets/img/screensaver/slide_hq_1.png',
-    'assets/img/screensaver/slide_hq_2.png', // Note: Only if exists
     'assets/img/screensaver/slide_hq_3.png',
     'assets/img/screensaver/slide_hq_4.png',
     'assets/img/screensaver/slide_hq_5.png',
@@ -96,7 +67,30 @@ const screensaverImages = [
     'assets/img/screensaver/slide_hq_9.png',
     'assets/img/screensaver/slide_hq_10.png',
     'assets/img/screensaver/slide_hq_11.png',
-    'assets/img/screensaver/slide_hq_12.png'
+    'assets/img/screensaver/slide_hq_12.png',
+
+    // Standard Slides (Filtered)
+    'assets/img/screensaver/slide_3.png',
+    'assets/img/screensaver/slide_4.png',
+    'assets/img/screensaver/slide_8.png',
+    'assets/img/screensaver/slide_12.png',
+    'assets/img/screensaver/slide_13.png',
+    'assets/img/screensaver/slide_14.png',
+    'assets/img/screensaver/slide_17.png',
+    'assets/img/screensaver/slide_18.png',
+    'assets/img/screensaver/slide_19.png',
+    'assets/img/screensaver/slide_20.png',
+    'assets/img/screensaver/slide_21.png',
+    'assets/img/screensaver/slide_22.png',
+    'assets/img/screensaver/slide_23.png',
+    'assets/img/screensaver/slide_24.png',
+    'assets/img/screensaver/slide_26.png',
+    'assets/img/screensaver/slide_27.png',
+    'assets/img/screensaver/slide_28.png',
+    'assets/img/screensaver/slide_29.png',
+    'assets/img/screensaver/slide_30.png',
+    'assets/img/screensaver/slide_31.png',
+    'assets/img/screensaver/slide_32.png'
 ];
 
 function initScreensaverSlides() {
