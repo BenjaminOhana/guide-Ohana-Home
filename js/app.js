@@ -80,7 +80,20 @@ const screensaverImages = [
     'assets/img/screensaver/slide_29.png',
     'assets/img/screensaver/slide_30.png',
     'assets/img/screensaver/slide_31.png',
-    'assets/img/screensaver/slide_32.png'
+    'assets/img/screensaver/slide_32.png',
+    // New HQ Imports (V3/V4 Generated)
+    'assets/img/screensaver/slide_hq_1.png',
+    'assets/img/screensaver/slide_hq_2.png',
+    'assets/img/screensaver/slide_hq_3.png',
+    'assets/img/screensaver/slide_hq_4.png',
+    'assets/img/screensaver/slide_hq_5.png',
+    'assets/img/screensaver/slide_hq_6.png',
+    'assets/img/screensaver/slide_hq_7.png',
+    'assets/img/screensaver/slide_hq_8.png',
+    'assets/img/screensaver/slide_hq_9.png',
+    'assets/img/screensaver/slide_hq_10.png',
+    'assets/img/screensaver/slide_hq_11.png',
+    'assets/img/screensaver/slide_hq_12.png'
 ];
 
 function initScreensaverSlides() {
@@ -196,11 +209,13 @@ document.getElementById('view-hub').classList.add('active');
 
 // -- Hero Slideshow Logic --
 const heroImages = [
-    'assets/img/hero/hero_1.jpg',
-    'assets/img/hero/hero_2.jpg',
-    'assets/img/hero/hero_3.jpg',
-    'assets/img/hero/hero_4.jpg',
-    'assets/img/hero/hero_5.jpg',
+    // HQ Replacements
+    'assets/img/hero/hero_hq_1.png',
+    'assets/img/hero/hero_hq_2.png',
+    'assets/img/hero/hero_hq_3.png',
+    'assets/img/hero/hero_hq_4.png',
+    'assets/img/hero/hero_hq_5.png',
+    // Keep better existing ones (6-10 were user uploaded recently)
     'assets/img/hero/hero_6.png',
     'assets/img/hero/hero_7.png',
     'assets/img/hero/hero_8.jpg',
