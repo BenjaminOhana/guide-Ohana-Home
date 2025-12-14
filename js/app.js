@@ -50,20 +50,20 @@ function createTempSection(id) {
 // New Screensaver Images (Local)
 const screensaverImages = [
     // 'assets/img/screensaver/slide_1.png', // Removed
-    'assets/img/screensaver/slide_2.jpg',
-    'assets/img/screensaver/slide_3.jpg',
+    // 'assets/img/screensaver/slide_2.jpg', // Low Res Removed
+    // 'assets/img/screensaver/slide_3.jpg', // Low Res Removed
     // 'assets/img/screensaver/slide_4.jpg', // Removed
     'assets/img/screensaver/slide_5.png',
-    'assets/img/screensaver/slide_6.jpg',
-    'assets/img/screensaver/slide_7.jpg',
-    'assets/img/screensaver/slide_8.jpg',
+    // 'assets/img/screensaver/slide_6.jpg', // Low Res Removed
+    // 'assets/img/screensaver/slide_7.jpg', // Low Res Removed
+    // 'assets/img/screensaver/slide_8.jpg', // Low Res Removed
     // 'assets/img/screensaver/slide_9.jpg', // Removed
-    'assets/img/screensaver/slide_10.jpg',
-    'assets/img/screensaver/slide_11.jpg',
+    // 'assets/img/screensaver/slide_10.jpg', // Low Res Removed
+    // 'assets/img/screensaver/slide_11.jpg', // Low Res Removed
     'assets/img/screensaver/slide_12.jpg',
     'assets/img/screensaver/slide_13.png',
     'assets/img/screensaver/slide_14.png',
-    'assets/img/screensaver/slide_15.jpg',
+    // 'assets/img/screensaver/slide_15.jpg', // Low Res Removed
     'assets/img/screensaver/slide_16.png',
     'assets/img/screensaver/slide_17.png',
     'assets/img/screensaver/slide_18.png',
