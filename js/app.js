@@ -134,14 +134,23 @@ function startSlideshow() {
     // Also start clock tick
     updateScreensaverClock();
     if (!clockInterval) clockInterval = setInterval(updateScreensaverClock, 1000);
+
+    // Smart Auto-Reload: Refresh page if screensaver stays active for 1 hour
+    // This allows fetching new updates from GitHub without interrupting user
+    reloadTimer = setTimeout(() => {
+        window.location.reload(true);
+    }, 3600000); // 1 hour (60 * 60 * 1000)
 }
 
 let clockInterval;
+let reloadTimer; // Smart Auto-Reload
 
 function stopSlideshow() {
     if (slideInterval) clearInterval(slideInterval);
     if (clockInterval) clearInterval(clockInterval);
+    if (reloadTimer) clearTimeout(reloadTimer); // Cancel auto-reload if user returns
     clockInterval = null;
+    reloadTimer = null;
 }
 
 function nextSlide() {
