@@ -63,8 +63,8 @@ const screensaverImages = [
     'assets/img/screensaver/slide_12.png',
     'assets/img/screensaver/slide_13.png',
     'assets/img/screensaver/slide_14.png',
-    'assets/img/screensaver/slide_15.png',
-    'assets/img/screensaver/slide_16.png',
+    // 'assets/img/screensaver/slide_15.png', // Removed by user
+    // 'assets/img/screensaver/slide_16.png', // Removed by user
     'assets/img/screensaver/slide_17.png',
     'assets/img/screensaver/slide_18.png',
     'assets/img/screensaver/slide_19.png',
@@ -73,7 +73,7 @@ const screensaverImages = [
     'assets/img/screensaver/slide_22.png',
     'assets/img/screensaver/slide_23.png',
     'assets/img/screensaver/slide_24.png',
-    'assets/img/screensaver/slide_25.png',
+    // 'assets/img/screensaver/slide_25.png', // Removed by user
     'assets/img/screensaver/slide_26.png',
     'assets/img/screensaver/slide_27.png',
     'assets/img/screensaver/slide_28.png',
@@ -86,7 +86,7 @@ const screensaverImages = [
     'assets/img/screensaver/slide_8.png',
     // New HQ Imports (V3/V4 Generated)
     'assets/img/screensaver/slide_hq_1.png',
-    'assets/img/screensaver/slide_hq_2.png',
+    'assets/img/screensaver/slide_hq_2.png', // Note: Only if exists
     'assets/img/screensaver/slide_hq_3.png',
     'assets/img/screensaver/slide_hq_4.png',
     'assets/img/screensaver/slide_hq_5.png',
