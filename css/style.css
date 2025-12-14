@@ -1050,6 +1050,35 @@ button {
     margin-bottom: 4px;
 }
 
+/* -- Discrete Refresh Button -- */
+.refresh-btn {
+    position: absolute;
+    top: 25px;
+    right: 25px;
+    width: 44px;
+    height: 44px;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    cursor: pointer;
+    z-index: 10;
+    transition: all 0.3s ease;
+    opacity: 0.6;
+}
+
+.refresh-btn:hover {
+    background: rgba(255, 255, 255, 0.25);
+    transform: rotate(180deg) scale(1.1);
+    opacity: 1;
+}
+
+/* -- Sidebar (Desktop) -- */
 .departure-card.final-step .card-content p {
     color: rgba(255, 255, 255, 0.9);
     font-size: 1rem;
