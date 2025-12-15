@@ -802,6 +802,29 @@ function showGuestbookReadMode() {
     }, 300);
 }
 
+// Generate Dynamic QR Code (Fix for Netlify/Custom Domains)
+function updateGuestbookQR() {
+    const img = document.getElementById('guestbook-qr-img');
+    if (!img) return;
+
+    // Get current base URL (e.g. https://site.com/ or http://localhost/)
+    // Remove 'index.html' if present to get clean root
+    let baseUrl = window.location.href;
+    if (baseUrl.includes('index.html')) {
+        baseUrl = baseUrl.substring(0, baseUrl.lastIndexOf('index.html'));
+    }
+    // Ensure trailing slash
+    if (!baseUrl.endsWith('/')) {
+        baseUrl += '/';
+    }
+
+    const mobileUrl = baseUrl + 'guestbook_mobile.html';
+    const qrApi = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(mobileUrl)}`;
+
+    img.src = qrApi;
+    console.log('Guestbook QR generated for:', mobileUrl);
+}
+
 function saveGuestbookEntry() {
     const nameInput = document.getElementById('guest-name');
     const msgInput = document.getElementById('guest-message');
@@ -869,5 +892,5 @@ window.saveGuestbookEntry = saveGuestbookEntry;
 // Ensure init is called on load
 document.addEventListener('DOMContentLoaded', () => {
     initGuestbook();
+    updateGuestbookQR(); // Init QR
 });
-
