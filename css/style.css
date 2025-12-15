@@ -2633,3 +2633,288 @@ body:not(.on-hub) .global-home-btn {
     color: var(--color-accent-terracotta);
     font-size: 0.95rem;
 }
+
+/* --- GUESTBOOK OVERHAUL (Text-Only / Immersive) --- */
+
+/* Parent Container: Full Screen, Zen Mode */
+.guestbook-immersive-layout {
+    width: 100%;
+    height: 100%;
+    background: #FDFBF7;
+    /* Paper warm white */
+    background-image: radial-gradient(#E8E4D8 1px, transparent 1px);
+    background-size: 40px 40px;
+    /* Subtle dot grid */
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Header (Minimal) */
+.guestbook-header {
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 var(--gap-lg);
+    flex-shrink: 0;
+}
+
+.guestbook-content-wrapper {
+    flex: 1;
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* Center the form specifically */
+}
+
+/* State Management with Fade */
+.guestbook-state {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    transition: all 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(20px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.guestbook-state.active {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0);
+}
+
+/* --- STATE 1: THE ELEGANT FORM --- */
+.form-card-centered {
+    width: 100%;
+    max-width: 500px;
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(10px);
+    padding: 40px;
+    border-radius: var(--radius-lg);
+    box-shadow:
+        0 20px 40px rgba(186, 74, 44, 0.05),
+        0 1px 2px rgba(0, 0, 0, 0.05);
+    text-align: center;
+    border: 1px solid rgba(255, 255, 255, 0.6);
+}
+
+/* Typography */
+.handwritten-title {
+    font-family: 'Caveat', cursive;
+    font-size: 3.5rem;
+    color: var(--color-accent-terracotta);
+    margin-bottom: 5px;
+    line-height: 1;
+}
+
+.form-intro {
+    font-size: 1.1rem;
+    color: var(--color-text-light);
+    margin-bottom: 30px;
+    font-family: 'Raleway', sans-serif;
+}
+
+/* Inputs styling */
+.elegant-form {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+.input-group {
+    text-align: left;
+}
+
+.input-group label {
+    display: block;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #999;
+    margin-bottom: 8px;
+    font-weight: 600;
+}
+
+.input-group input,
+.input-group textarea {
+    width: 100%;
+    background: transparent;
+    border: none;
+    border-bottom: 2px solid rgba(0, 0, 0, 0.1);
+    font-family: 'Caveat', cursive;
+    /* Handwritten input feel */
+    font-size: 1.8rem;
+    color: var(--color-text);
+    padding: 5px 0;
+    transition: border-color 0.3s;
+    border-radius: 0;
+}
+
+.input-group textarea {
+    resize: none;
+    line-height: 1.4;
+    min-height: 100px;
+}
+
+.input-group input:focus,
+.input-group textarea:focus {
+    outline: none;
+    border-bottom-color: var(--color-accent-terracotta);
+}
+
+.input-group input::placeholder,
+.input-group textarea::placeholder {
+    color: rgba(0, 0, 0, 0.15);
+    font-family: 'Caveat', cursive;
+}
+
+/* Main Action Button */
+.btn-engrave {
+    margin-top: 10px;
+    background: var(--color-accent-terracotta);
+    color: white;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    padding: 18px 30px;
+    border-radius: 50px;
+    font-size: 1rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    box-shadow: 0 10px 25px rgba(186, 74, 44, 0.3);
+    transition: transform 0.2s, box-shadow 0.2s;
+    width: 100%;
+}
+
+.btn-engrave:active {
+    transform: scale(0.98);
+    box-shadow: 0 5px 15px rgba(186, 74, 44, 0.2);
+}
+
+.form-footer-link {
+    margin-top: 15px;
+    font-size: 0.9rem;
+    color: var(--color-text-light);
+    text-decoration: underline;
+    cursor: pointer;
+    opacity: 0.7;
+}
+
+/* --- STATE 2: THE BOOK GRID --- */
+.book-container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 0 var(--gap-lg) var(--gap-lg) var(--gap-lg);
+}
+
+.book-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.handwritten-title-small {
+    font-family: 'Caveat', cursive;
+    font-size: 2.5rem;
+    color: var(--color-text);
+}
+
+.btn-text-action {
+    color: var(--color-accent-terracotta);
+    font-weight: 700;
+    font-size: 1rem;
+    text-transform: uppercase;
+    padding: 10px 20px;
+    background: rgba(186, 74, 44, 0.1);
+    border-radius: 30px;
+}
+
+/* The Grid of Notes */
+.virtual-pages-grid {
+    flex: 1;
+    overflow-y: auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    align-content: start;
+    /* Fix for sparse grid */
+    gap: 30px;
+    padding-bottom: 40px;
+    padding-right: 10px;
+    /* Space for scrollbar */
+}
+
+/* Individual Note Card */
+.guest-note-card {
+    background: white;
+    padding: 25px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
+    border-radius: 2px;
+    /* Paper like */
+    position: relative;
+    transform: rotate(0deg);
+    transition: transform 0.3s ease;
+    border: 1px solid rgba(0, 0, 0, 0.03);
+}
+
+/* Random subtle rotations for realism (applied via child selection) */
+.guest-note-card:nth-child(2n) {
+    transform: rotate(1deg);
+}
+
+.guest-note-card:nth-child(3n) {
+    transform: rotate(-1.5deg);
+}
+
+.guest-note-card:nth-child(5n) {
+    transform: rotate(0.5deg);
+}
+
+.guest-note-card:hover {
+    transform: scale(1.02) rotate(0deg);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+    z-index: 2;
+}
+
+.note-date {
+    font-size: 0.75rem;
+    color: #aaa;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 15px;
+    font-weight: 600;
+}
+
+.note-message {
+    font-family: 'Caveat', cursive;
+    font-size: 1.6rem;
+    line-height: 1.3;
+    color: var(--color-text);
+    margin-bottom: 20px;
+}
+
+.note-author {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--color-accent-terracotta);
+    text-align: right;
+}

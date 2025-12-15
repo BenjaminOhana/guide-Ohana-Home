@@ -753,6 +753,8 @@ window.closeDiscoverCategory = closeDiscoverCategory;
 
 // -- GUESTBOOK LOGIC (LocalStorage) --
 
+// -- GUESTBOOK LOGIC (LocalStorage) --
+
 const GUESTBOOK_KEY = 'ohana_guestbook_entries';
 
 // Initial Mock Data (if empty)
@@ -779,22 +781,25 @@ function initGuestbook() {
     renderGuestbook();
 }
 
-function toggleGuestbookForm() {
-    const wrapper = document.getElementById('guestbook-form-container');
-    const btn = document.getElementById('btn-write-guestbook');
+// State Management
+function showGuestbookWriteMode() {
+    document.getElementById('guestbook-state-read').classList.remove('active');
+    document.getElementById('guestbook-state-read').classList.add('hidden');
 
-    if (wrapper.classList.contains('hidden')) {
-        wrapper.classList.remove('hidden');
-        btn.style.opacity = '0.5';
-        btn.style.pointerEvents = 'none'; // Disable btn while writing
-    } else {
-        wrapper.classList.add('hidden');
-        btn.style.opacity = '1';
-        btn.style.pointerEvents = 'auto'; // Re-enable
-        // Clear inputs
-        document.getElementById('guest-name').value = '';
-        document.getElementById('guest-message').value = '';
-    }
+    setTimeout(() => {
+        document.getElementById('guestbook-state-write').classList.remove('hidden');
+        document.getElementById('guestbook-state-write').classList.add('active');
+    }, 300); // Wait for fade out
+}
+
+function showGuestbookReadMode() {
+    document.getElementById('guestbook-state-write').classList.remove('active');
+    document.getElementById('guestbook-state-write').classList.add('hidden');
+
+    setTimeout(() => {
+        document.getElementById('guestbook-state-read').classList.remove('hidden');
+        document.getElementById('guestbook-state-read').classList.add('active');
+    }, 300);
 }
 
 function saveGuestbookEntry() {
@@ -829,8 +834,12 @@ function saveGuestbookEntry() {
     // Render
     renderGuestbook();
 
-    // Close and Clear
-    toggleGuestbookForm();
+    // Clear Inputs
+    nameInput.value = '';
+    msgInput.value = '';
+
+    // Switch to Read Mode (The visual "Action")
+    showGuestbookReadMode();
 }
 
 function renderGuestbook() {
@@ -842,18 +851,19 @@ function renderGuestbook() {
 
     entries.forEach(entry => {
         const card = document.createElement('div');
-        card.className = 'guestbook-entry';
+        card.className = 'guest-note-card'; // New Class
         card.innerHTML = `
-            <div class="entry-date">${entry.date}</div>
-            <p class="entry-text">"${entry.text}"</p>
-            <div class="entry-signature">- ${entry.name}</div>
+            <div class="note-date">${entry.date}</div>
+            <p class="note-message">"${entry.text}"</p>
+            <div class="note-author">- ${entry.name}</div>
         `;
         listContainer.appendChild(card);
     });
 }
 
 // Global Exports
-window.toggleGuestbookForm = toggleGuestbookForm;
+window.showGuestbookWriteMode = showGuestbookWriteMode;
+window.showGuestbookReadMode = showGuestbookReadMode;
 window.saveGuestbookEntry = saveGuestbookEntry;
 
 // Ensure init is called on load
