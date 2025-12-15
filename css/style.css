@@ -2328,37 +2328,40 @@ body:not(.on-hub) .global-home-btn {
     font-size: 1.2rem;
 }
 
-/* Fix Screensaver Scaling (Blurred Background Effect) */
+/* Fix Screensaver Scaling (Two-Layer Approach) */
 #screensaver .slide {
-    background-size: contain !important;
-    /* Main image always fully visible */
-    background-repeat: no-repeat !important;
-    background-position: center !important;
-    background-color: transparent;
-    /* No black bg */
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    z-index: 1;
+    background: black;
+    /* Base */
+    overflow: hidden;
 }
 
-/* Blurred background layer */
-#screensaver .slide::before {
-    content: "";
+/* Layer 1: Blurred Background */
+.slide-bg {
     position: absolute;
     top: -10%;
     left: -10%;
     width: 120%;
     height: 120%;
-    background-image: inherit;
-    /* Inherits the same image from parent */
     background-size: cover;
     background-position: center;
     filter: blur(40px) brightness(0.7);
-    /* Strong blur + slight dim */
-    z-index: -1;
+    z-index: 1;
 }
 
-```
+/* Layer 2: Sharp Image */
+.slide-img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    z-index: 2;
+}

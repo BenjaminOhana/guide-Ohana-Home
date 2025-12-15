@@ -123,7 +123,19 @@ function initScreensaverSlides() {
         const slide = document.createElement('div');
         slide.classList.add('slide');
         if (index === 0) slide.classList.add('active');
-        slide.style.backgroundImage = `url('${imgSrc}')`;
+
+        // Layer 1: Blurred Background (Full Cover)
+        const bgLayer = document.createElement('div');
+        bgLayer.classList.add('slide-bg');
+        bgLayer.style.backgroundImage = `url('${imgSrc}')`;
+        slide.appendChild(bgLayer);
+
+        // Layer 2: Sharp Image (Contain)
+        const imgLayer = document.createElement('div');
+        imgLayer.classList.add('slide-img');
+        imgLayer.style.backgroundImage = `url('${imgSrc}')`;
+        slide.appendChild(imgLayer);
+
         container.appendChild(slide);
     });
 
