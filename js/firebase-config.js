@@ -2,15 +2,14 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
 import { getFirestore } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-// TODO: Replace the following with your app's Firebase project configuration
-// See: https://firebase.google.com/docs/web/setup#config-object
+// Your web app's Firebase configuration
 const firebaseConfig = {
-    apiKey: "REPLACE_WITH_YOUR_API_KEY",
-    authDomain: "REPLACE_WITH_YOUR_PROJECT_ID.firebaseapp.com",
-    projectId: "REPLACE_WITH_YOUR_PROJECT_ID",
-    storageBucket: "REPLACE_WITH_YOUR_PROJECT_ID.appspot.com",
-    messagingSenderId: "REPLACE_WITH_YOUR_SENDER_ID",
-    appId: "REPLACE_WITH_YOUR_APP_ID"
+    apiKey: "AIzaSyAto2WicJFqx7OA3bnZP3ni3-eksfm1ALM",
+    authDomain: "ohana-home-7b75b.firebaseapp.com",
+    projectId: "ohana-home-7b75b",
+    storageBucket: "ohana-home-7b75b.firebasestorage.app",
+    messagingSenderId: "302187655366",
+    appId: "1:302187655366:web:4c36b720a7bf7392e227c7"
 };
 
 // Initialize Firebase
