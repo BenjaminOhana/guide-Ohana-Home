@@ -2640,6 +2640,36 @@ body:not(.on-hub) .global-home-btn {
     font-size: 0.95rem;
 }
 
+/* Guestbook QR Option */
+.guestbook-qr-option {
+    margin-top: 30px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    background: rgba(255, 255, 255, 0.5);
+    padding: 15px 25px;
+    border-radius: 20px;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    animation: fadeIn 1s ease 0.5s backwards;
+}
+
+.guestbook-qr-option .qr-text {
+    text-align: right;
+    font-family: 'Raleway', sans-serif;
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: var(--color-text);
+    line-height: 1.4;
+}
+
+.qr-code-img {
+    width: 60px;
+    height: 60px;
+    border-radius: 8px;
+    mix-blend-mode: multiply;
+    /* Blends nicely with paper bg */
+}
+
 /* --- GUESTBOOK OVERHAUL (Text-Only / Immersive) --- */
 
 /* Parent Container: Full Screen, Zen Mode */

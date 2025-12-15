@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Livre d'Or - Ohana Home</title>
+    
+    <!-- Fonts (Same as Main App) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Raleway:wght@300;400;600&family=Caveat:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --color-bg: #FDFBF7;
+            --color-text: #3D3A35;
+            --color-accent: #BA4A2C;
+            --radius: 20px;
+        }
+
+        * {
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background: var(--color-bg);
+            background-image: radial-gradient(#E8E4D8 1px, transparent 1px);
+            background-size: 30px 30px;
+            font-family: 'Raleway', sans-serif;
+            color: var(--color-text);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .mobile-container {
+            width: 100%;
+            max-width: 480px;
+            padding: 30px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            flex: 1;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        h1 {
+            font-family: 'Caveat', cursive;
+            font-size: 3.5rem;
+            color: var(--color-accent);
+            margin: 0;
+            line-height: 1;
+        }
+
+        .subtitle {
+            font-size: 1rem;
+            opacity: 0.7;
+            margin-top: 10px;
+        }
+
+        .input-card {
+            background: white;
+            width: 100%;
+            padding: 25px;
+            border-radius: var(--radius);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            border: 1px solid rgba(0,0,0,0.02);
+        }
+
+        .group {
+            margin-bottom: 25px;
+        }
+
+        label {
+            display: block;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: #999;
+            margin-bottom: 10px;
+            letter-spacing: 1px;
+        }
+
+        input, textarea {
+            width: 100%;
+            border: none;
+            border-bottom: 2px solid #eee;
+            background: transparent;
+            font-family: 'Caveat', cursive;
+            font-size: 1.8rem;
+            color: var(--color-text);
+            padding: 10px 0;
+            border-radius: 0;
+            outline: none;
+            resize: none;
+            transition: border-color 0.3s;
+        }
+
+        input:focus, textarea:focus {
+            border-color: var(--color-accent);
+        }
+
+        textarea {
+            min-height: 120px;
+            line-height: 1.3;
+        }
+
+        .btn-submit {
+            width: 100%;
+            background: var(--color-accent);
+            color: white;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            text-transform: uppercase;
+            padding: 18px;
+            border-radius: 50px;
+            border: none;
+            font-size: 1rem;
+            margin-top: 20px;
+            box-shadow: 0 10px 20px rgba(186, 74, 44, 0.2);
+            transition: transform 0.2s;
+            cursor: pointer;
+        }
+
+        .btn-submit:active {
+            transform: scale(0.98);
+        }
+
+        /* Success State */
+        .success-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(253, 251, 247, 0.95);
+            backdrop-filter: blur(5px);
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.5s ease;
+        }
+
+        .success-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .checkmark {
+            width: 80px;
+            height: 80px;
+            background: #6B9E78;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 30px rgba(107, 158, 120, 0.3);
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="mobile-container">
+        <header>
+            <h1>Livre d'Or</h1>
+            <div class="subtitle">Laissez-nous un petit mot...</div>
+        </header>
+
+        <div class="input-card">
+            <div class="group">
+                <label>Votre Prénom</label>
+                <input type="text" id="m-name" placeholder="Ex: Julie" autocomplete="off">
+            </div>
+            <div class="group">
+                <label>Votre Message</label>
+                <textarea id="m-msg" placeholder="On a adoré..."></textarea>
+            </div>
+            
+            <button class="btn-submit" onclick="submitMobile()">
+                Graver le message
+            </button>
+        </div>
+    </div>
+
+    <!-- Success View -->
+    <div class="success-overlay" id="success-view">
+        <div class="checkmark">✓</div>
+        <h2 style="font-family: 'Caveat'; font-size: 2.5rem; margin: 0; color: #6B9E78;">Merci !</h2>
+        <p style="margin-top: 10px; opacity: 0.7;">Votre message a été gravé avec succès.</p>
+        <button class="btn-submit" style="background: #333; margin-top: 30px; width: auto; padding: 15px 40px;" onclick="window.close()">Fermer</button>
+    </div>
+
+    <script>
+        function submitMobile() {
+            const name = document.getElementById('m-name').value.trim();
+            const msg = document.getElementById('m-msg').value.trim();
+
+            if (!name || !msg) {
+                alert('Oups ! Il manque votre prénom ou votre message.');
+                return;
+            }
+
+            // In a real app, this would POST to a backend.
+            // For now, we simulate success.
+            
+            const btn = document.querySelector('.btn-submit');
+            btn.innerHTML = 'Gravure en cours...';
+            btn.style.opacity = '0.7';
+
+            setTimeout(() => {
+                document.getElementById('success-view').classList.add('active');
+            }, 1000);
+        }
+    </script>
+</body>
+</html>
