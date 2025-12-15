@@ -2650,29 +2650,40 @@ body:not(.on-hub) .global-home-btn {
 
 /* Guestbook QR Option */
 .guestbook-qr-option {
-    margin-top: 30px;
+    margin-top: 10px;
+    /* Reduced top margin */
+    margin-bottom: 80px;
+    /* Added bottom margin to clear Home button */
     display: flex;
     align-items: center;
+    justify-content: center;
+    /* Explicit centering */
     gap: 20px;
     background: rgba(255, 255, 255, 0.5);
-    padding: 15px 25px;
+    padding: 10px 20px;
+    /* Reduced padding */
     border-radius: 20px;
     border: 1px solid rgba(0, 0, 0, 0.05);
     animation: fadeIn 1s ease 0.5s backwards;
+    max-width: 500px;
+    /* Constrain width */
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .guestbook-qr-option .qr-text {
-    text-align: right;
+    text-align: left;
+    /* Better readability */
     font-family: 'Raleway', sans-serif;
     font-weight: 600;
-    font-size: 0.95rem;
+    font-size: 0.9rem;
     color: var(--color-text);
     line-height: 1.4;
 }
 
 .qr-code-img {
-    width: 200px;
-    height: 200px;
+    width: 120px;
+    height: 120px;
     border-radius: 8px;
     mix-blend-mode: multiply;
     /* Blends nicely with paper bg */
