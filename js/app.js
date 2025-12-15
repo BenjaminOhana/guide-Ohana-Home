@@ -473,9 +473,9 @@ function updateMantra() {
 
     if (text) {
         mantraEl.textContent = text;
-        mantraEl.style.display = 'block';
+        container.style.display = 'block';
     } else {
-        mantraEl.style.display = 'none';
+        container.style.display = 'none';
     }
 }
 
