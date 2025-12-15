@@ -26,6 +26,13 @@ function openSection(sectionId) {
         console.warn(`Section ${sectionId} not found, creating temp view...`);
         createTempSection(sectionId);
     }
+
+    // Update Body Class for Global Nav
+    if (sectionId === 'hub') {
+        document.body.classList.add('on-hub');
+    } else {
+        document.body.classList.remove('on-hub');
+    }
 }
 
 function goBack() {
@@ -36,6 +43,7 @@ function goBack() {
 
     // Show Hub
     document.getElementById('view-hub').classList.add('active');
+    document.body.classList.add('on-hub');
 }
 
 function createTempSection(id) {
@@ -44,6 +52,11 @@ function createTempSection(id) {
     goBack();
 }
 
+// Initial State
+document.addEventListener('DOMContentLoaded', () => {
+    document.body.classList.add('on-hub');
+});
+
 
 // -- Screensaver Logic --
 
@@ -51,14 +64,20 @@ function createTempSection(id) {
 // New Screensaver Images (Local)
 // New Screensaver Images (Local)
 const screensaverImages = [
-    // --- TIER 1: PREMIUM (Generated / HQ) ---
-    'assets/img/screensaver/Gemini_Generated_Image_dmeedhdmeedhdmee.png',
-    'assets/img/screensaver/Gemini_Generated_Image_4ptud34ptud34ptu.png',
-    'assets/img/screensaver/Gemini_Generated_Image_b7hwygb7hwygb7hw.png',
-    'assets/img/screensaver/Gemini_Generated_Image_qkrev4qkrev4qkre.png',
-    'assets/img/screensaver/Gemini_Generated_Image_rcrx4ercrx4ercrx.png',
-    'assets/img/screensaver/Gemini_Generated_Image_rkazuhrkazuhrkaz.png',
-    'assets/img/screensaver/Gemini_Generated_Image_t4pdiwt4pdiwt4pd.png',
+    // Review Slide (10 minutes duration) - PRIORITY
+    'assets/img/screensaver/slide_review_ohana.png',
+
+    // Story Slide (Custom)
+    'assets/img/screensaver/slide_story_benjamin.png',
+
+    // Gemini Generated Imports (New)
+    'assets/img/screensaver/slide_gen_1.png',
+    'assets/img/screensaver/slide_gen_2.png',
+    'assets/img/screensaver/slide_gen_3.png',
+    'assets/img/screensaver/slide_gen_4.png',
+    'assets/img/screensaver/slide_gen_5.png',
+    'assets/img/screensaver/slide_gen_6.png',
+    'assets/img/screensaver/slide_gen_7.png',
 
     'assets/img/screensaver/slide_hq_1.png',
     'assets/img/screensaver/slide_hq_3.png',
@@ -139,31 +158,51 @@ function hideScreensaver() {
     goBack();
 }
 
+// Variable Slide Duration Logic
+let slideTimeout;
+
 function startSlideshow() {
-    if (slideInterval) clearInterval(slideInterval);
-    // Switch slide every 8 seconds
-    slideInterval = setInterval(nextSlide, 120000); // 2 minutes per slide
+    if (slideTimeout) clearTimeout(slideTimeout);
+
+    // Start cycle - determine how long strictly based on CURRENT slide
+    scheduleNextSlide();
 
     // Also start clock tick
     updateScreensaverClock();
     if (!clockInterval) clockInterval = setInterval(updateScreensaverClock, 1000);
 
-    // Smart Auto-Reload: Refresh page if screensaver stays active for 1 hour
-    // This allows fetching new updates from GitHub without interrupting user
-    reloadTimer = setTimeout(() => {
-        window.location.reload(true);
-    }, 3600000); // 1 hour (60 * 60 * 1000)
+    // Schedule the 5-minute reload
+    scheduleAutoReload();
 }
 
 let clockInterval;
 let reloadTimer; // Smart Auto-Reload
 
 function stopSlideshow() {
-    if (slideInterval) clearInterval(slideInterval);
+    if (slideTimeout) clearTimeout(slideTimeout);
     if (clockInterval) clearInterval(clockInterval);
     if (reloadTimer) clearTimeout(reloadTimer); // Cancel auto-reload if user returns
     clockInterval = null;
     reloadTimer = null;
+    slideTimeout = null;
+}
+
+function scheduleNextSlide() {
+    if (!slidesNodeList.length) return;
+
+    // Get current image source to determine duration
+    const currentImg = screensaverImages[currentSlide];
+    let duration = 120000; // Default 2 minutes (User preference)
+
+    // Custom Durations
+    if (currentImg.includes('slide_review_ohana.png')) {
+        duration = 600000; // 10 minutes
+    }
+
+    slideTimeout = setTimeout(() => {
+        nextSlide();
+        scheduleNextSlide(); // Recursive call
+    }, duration);
 }
 
 function nextSlide() {
@@ -215,6 +254,13 @@ function updateMantra() {
     const mantraEl = document.getElementById('ss-mantra');
     if (!mantraEl) return;
 
+    // Check if current slide is the story slide (which has its own text)
+    const activeSlide = document.querySelector('.slide.active');
+    if (activeSlide && activeSlide.style.backgroundImage.includes('slide_story_benjamin.png')) {
+        mantraEl.style.display = 'none';
+        return;
+    }
+
     // Pick random
     const randomIndex = Math.floor(Math.random() * mantras.length);
     const text = mantras[randomIndex];
@@ -251,7 +297,6 @@ document.getElementById('view-hub').classList.add('active');
 const heroImages = [
     // HQ 
     'assets/img/hero/hero_hq_1.png',
-    // 'assets/img/hero/hero_hq_2.png', // DELETED (Broken Link Fix)
     'assets/img/hero/hero_hq_3.png',
     'assets/img/hero/hero_hq_4.png',
     'assets/img/hero/hero_hq_5.png',
@@ -267,8 +312,6 @@ const heroImages = [
     'assets/img/hero/hero_6.png',
     'assets/img/hero/hero_7.png',
     'assets/img/hero/hero_8.jpg',
-    // 'assets/img/hero/hero_9.jpg', // Check existence? Keep if not confirm deleted
-    // 'assets/img/hero/hero_10.jpg' // Check existence? Keep if not confirm deleted
     'assets/img/hero/hero_3.jpg',
     'assets/img/hero/hero_4.jpg',
     'assets/img/hero/hero_5.jpg'
@@ -277,26 +320,41 @@ const heroImages = [
 let heroIndex = 0;
 const heroImgElement = document.querySelector('.hero-bg');
 
+// Rotate every 60 seconds (60000 ms)
 function rotateHeroImage() {
     if (!heroImgElement) return;
 
-    // Fade out
-    heroImgElement.style.opacity = '0';
+    // Determine next index
+    const nextIndex = (heroIndex + 1) % heroImages.length;
+    const nextSrc = heroImages[nextIndex];
 
-    setTimeout(() => {
-        // Swap Src
-        heroIndex = (heroIndex + 1) % heroImages.length;
-        heroImgElement.src = heroImages[heroIndex];
+    // Preload image
+    const imgLoader = new Image();
+    imgLoader.src = nextSrc;
 
-        // Wait for load (optional, but safer for smooth fade in)
-        heroImgElement.onload = () => {
-            // Fade in
-            heroImgElement.style.opacity = '0.85'; // Back to original opacity
-        };
-    }, 1000); // 1s transition time matches CSS
+    imgLoader.onload = () => {
+        // Only start transition once loaded
+        heroImgElement.style.opacity = '0';
+
+        setTimeout(() => {
+            heroImgElement.src = nextSrc;
+            heroIndex = nextIndex;
+
+            // Short delay to ensure DOM update before fading back in
+            requestAnimationFrame(() => {
+                heroImgElement.style.opacity = '0.85';
+            });
+        }, 1000); // Wait for fade out
+    };
+
+    imgLoader.onerror = () => {
+        console.error("Failed to load hero image:", nextSrc);
+        // Skip this image and try next one immediately (or soon)
+        heroIndex = nextIndex; // Advance index anyway to avoid loop
+    };
 }
 
-// Rotate every 60 seconds (60000 ms)
+// Initial call schedule
 setInterval(rotateHeroImage, 60000);
 
 // Expose functions to global scope for HTML onclicks
@@ -609,6 +667,49 @@ function closeDiscoverCategory() {
 // Init when App loads
 renderDiscoverMenu();
 
-// Global exports for HTML onclicks
+// -- Auto-Reload Logic --
+const RELOAD_INTERVAL = 300000; // 5 minutes
+
+function scheduleAutoReload() {
+    if (reloadTimer) clearTimeout(reloadTimer);
+    reloadTimer = setTimeout(() => {
+        // Only reload if screensaver is active (don't interrupt user)
+        if (!screensaver.classList.contains('hidden')) {
+            performSmartReload();
+        } else {
+            // If user is active, wait another minute and check again?
+            // Or just rely on the idle timer to trigger screensaver first
+            scheduleAutoReload();
+        }
+    }, RELOAD_INTERVAL);
+}
+
+function performSmartReload() {
+    // Save state so we know to show screensaver immediately after reload
+    sessionStorage.setItem('restore_screensaver', 'true');
+    window.location.reload(true);
+}
+
+// Check for restore state on load
+window.addEventListener('load', () => {
+    if (sessionStorage.getItem('restore_screensaver') === 'true') {
+        sessionStorage.removeItem('restore_screensaver');
+        // Show screensaver immediately without animation if possible
+        screensaver.classList.remove('hidden');
+        screensaver.style.transition = 'none'; // Disable fade for instant switch
+        screensaver.style.opacity = '1';
+
+        startSlideshow();
+
+        // Restore transition after a moment
+        setTimeout(() => {
+            screensaver.style.transition = '';
+        }, 100);
+    }
+});
+
+
+// -- Global exports for HTML onclicks
 window.openDiscoverCategory = openDiscoverCategory;
 window.closeDiscoverCategory = closeDiscoverCategory;
+

@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Preview Review Slide</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Raleway:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { 
+            font-family: 'Raleway', sans-serif; 
+            background: #fdfbf7; 
+            height: 100vh; 
+            width: 100vw; 
+            overflow: hidden; 
+            display: flex;
+        }
+
+        /* Split Layout */
+        .container {
+            display: flex;
+            width: 100%;
+            height: 100%;
+        }
+
+        /* Text Side (Left) */
+        .text-side {
+            flex: 1;
+            padding: 80px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            background: #fffcf8;
+            color: #4a4a4a;
+            background-color: #fffcf8;
+            box-sizing: border-box;
+            position: relative; /* Ensure z-index works if needed */
+            z-index: 20; /* Keep text above everything */
+        }
+
+        /* Image Side (Right) */
+        .image-side {
+            flex: 1;
+            position: relative;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .image-side img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Natural Fade Gradient */
+        .image-side::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0; /* align to the seam */
+            width: 15%; /* Width of the fade */
+            height: 100%;
+            background: linear-gradient(to right, #fffcf8 0%, rgba(255, 252, 248, 0) 100%);
+            z-index: 10;
+        }
+
+        /* Typography */
+        h1 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 3.5rem; /* Increased from 3rem */
+            color: #C46E5A; /* Terracotta */
+            line-height: 1.1;
+            margin-bottom: 20px; /* Reduced margin */
+            font-weight: 600;
+        }
+
+        p {
+            font-size: 1.1rem;
+            line-height: 1.5; /* Slightly tighter line height */
+            margin-bottom: 12px; /* Reduced margin */
+            color: #2c2c2c; /* Much darker for contrast */
+            font-weight: 400; /* Ensure it's not too thin */
+        }
+
+        /* Review Stars */
+        .stars {
+            color: #C46E5A;
+            font-size: 1.8rem;
+            margin-bottom: 15px; /* Reduced margin */
+        }
+        
+        strong {
+            color: #000; /* Pitch black for emphasis */
+            font-weight: 700;
+        }
+
+        .highlight-box {
+            background: rgba(196, 110, 90, 0.12); /* Slightly stronger tint */
+            padding: 25px; /* Reduced padding */
+            border-radius: 16px;
+            border-left: 6px solid #C46E5A;
+            margin: 20px 0; /* Reduced margin */
+        }
+
+        .highlight-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.5rem;
+            color: #C46E5A;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .footer-note {
+            font-size: 1.05rem;
+            color: #555; /* Darker grey */
+            font-style: italic;
+            margin-top: 25px;
+            border-top: 2px solid rgba(0,0,0,0.05); /* Thicker but lighter line */
+            padding-top: 20px;
+            line-height: 1.5;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- Text Side -->
+        <div class="text-side">
+            <h1>Vous avez le pouvoir de changer 🧘🏻... Notre moyenne !</h1>
+            
+            <p>Si vous avez apprécié votre séjour, un joli <strong>5/5</strong> serait la cerise sur le gâteau. Ça nous dit que vous avez passé un bon moment, et ça nous fait chaud au cœur !</p>
+
+            <div class="highlight-box">
+                <div class="highlight-title">🤫 Petit secret entre nous :</div>
+                <p style="margin-bottom: 12px;">On pourrait croire qu'un <strong>4/5</strong> est une bonne note... mais pour l'algorithme Airbnb, c'est une petite claque !</p>
+                <p style="margin-bottom: 0;">Il nous faut environ <strong>10 notes parfaites</strong> pour rattraper un seul 4/5. En dessous d'une certaine moyenne, on disparaît des radars... <em>Bye bye visibilité, bye bye Ohana Home...</em></p>
+            </div>
+
+            <p>Alors, si tout s'est bien passé, un 5/5 est le meilleur moyen de nous soutenir.</p>
+
+            <div class="footer-note">
+                💡 <strong>Et bien sur, vos suggestions sont toujours les bienvenues pour qu'on s'améliore encore et encore pour vous chouchouter ! Merci, vous êtes des voyageurs au top 🙏</strong>
+            </div>
+        </div>
+
+        <!-- Image Side -->
+        <div class="image-side">
+            <img src="assets/img/story/ohana_review.jpg" alt="Ohana Dog">
+        </div>
+    </div>
+
+</body>
+</html>

@@ -635,94 +635,6 @@ button {
     margin-top: 5px;
 }
 
-/* --- STORY EDITORAL LAYOUT --- */
-.story-overlay-layout {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-    background: black;
-}
-
-.story-bg {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center;
-    /* or center right to focus on Ben */
-    opacity: 0.9;
-    /* Slight dim for text pop */
-    transition: transform 10s ease;
-    /* Gentle built-in zoom? */
-}
-
-/* Float content on the LEFT (where the dark wall is) */
-.story-content-box {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 45%;
-    /* Occupy left half */
-    height: 100%;
-    padding: 60px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    background: linear-gradient(to right, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0) 100%);
-    /* Subtle shadow backing */
-}
-
-.back-btn.white-btn {
-    position: absolute;
-    top: 40px;
-    left: 40px;
-    color: white;
-    border-color: rgba(255, 255, 255, 0.3);
-}
-
-.story-logo {
-    margin-bottom: 40px;
-    color: rgba(255, 255, 255, 0.9);
-    filter: drop-shadow(0 2px 10px rgba(0, 0, 0, 0.3));
-}
-
-.story-text {
-    color: white;
-}
-
-.story-text .quote {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 2.2rem;
-    font-weight: 300;
-    font-style: italic;
-    line-height: 1.4;
-    margin-bottom: 40px;
-    text-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
-}
-
-.story-text .signature {
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-}
-
-.sign-name {
-    font-family: 'Raleway', sans-serif;
-    font-weight: 700;
-    font-size: 1.2rem;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    color: var(--color-accent-terracotta);
-    /* Accent pop */
-}
-
-.sign-role {
-    font-family: 'Raleway', sans-serif;
-    font-weight: 400;
-    font-size: 0.9rem;
-    color: rgba(255, 255, 255, 0.8);
-}
-
 
 /* Mantra Container (Refined Apple Style) */
 .screensaver-mantra-container {
@@ -2122,4 +2034,221 @@ button {
 .place-qr-text strong {
     display: block;
     color: var(--color-text);
+}
+
+/* --- Story Section (Vertical Scroll V5) --- */
+.story-scroller {
+    width: 100%;
+    /* Ensure it takes full viewport */
+    height: 100vh;
+    min-height: 100vh;
+    /* Force height */
+    overflow-y: scroll;
+    scroll-behavior: smooth;
+    scroll-snap-type: y mandatory;
+
+    /* Ensure visibility */
+    position: relative;
+    z-index: 50;
+    /* Above regular content */
+    display: block;
+
+    /* Hide scrollbar */
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+.story-scroller::-webkit-scrollbar {
+    display: none;
+}
+
+.story-section {
+    height: 100vh;
+    width: 100vw;
+    scroll-snap-align: start;
+    display: flex;
+    position: relative;
+    overflow: hidden;
+    background: #fdfbf7;
+    /* Explicit bg */
+}
+
+/* Visibility fix for parent view */
+/* Visibility fix for parent view */
+#view-story.active {
+    display: block !important;
+    position: fixed !important;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 9999 !important;
+    /* Force brutally on top */
+    background: #fdfbf7;
+    /* Ensure background covers everything */
+    opacity: 1 !important;
+    overflow: hidden;
+    /* Scroller handles scroll */
+}
+
+/* Base Layout (Desktop/Landscape) */
+.story-image-side {
+    flex: 1;
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+}
+
+.story-image-side img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 1s ease;
+}
+
+.story-text-side {
+    flex: 1;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 60px 80px;
+    box-sizing: border-box;
+    background: #fffcf8;
+    /* Warm paper */
+    position: relative;
+    z-index: 2;
+}
+
+/* Typography Overrides */
+.story-text-side h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 4rem;
+    /* Big editorial title */
+    color: var(--color-accent-terracotta);
+    margin-bottom: 30px;
+    line-height: 1;
+    font-style: italic;
+}
+
+.story-body {
+    font-family: 'Raleway', sans-serif;
+    font-size: 1.15rem;
+    line-height: 1.7;
+    color: #4a4a4a;
+    max-width: 650px;
+}
+
+/* Navigation Fixed Override */
+.story-nav .back-btn {
+    transition: all 0.3s ease;
+}
+
+.story-nav .back-btn:hover {
+    background: rgba(255, 255, 255, 0.3) !important;
+}
+
+/* Bounce Animation */
+@keyframes bounce {
+
+    0%,
+    20%,
+    50%,
+    80%,
+    100% {
+        transform: translateY(0);
+    }
+
+    40% {
+        transform: translateY(-10px);
+    }
+
+    60% {
+        transform: translateY(-5px);
+    }
+}
+
+/* RESPONSIVE: Mobile/Portrait Stacking */
+@media (max-width: 1024px) or (orientation: portrait) {
+    .story-section {
+        flex-direction: column !important;
+        /* Force stack */
+    }
+
+    .story-image-side {
+        flex: none;
+        /* Don't grow */
+        height: 50vh;
+        /* Half screen */
+        width: 100%;
+    }
+
+    .story-text-side {
+        flex: none;
+        height: 50vh;
+        /* Half screen text */
+        width: 100%;
+        padding: 40px 30px;
+        justify-content: flex-start;
+        /* Align top of text area */
+        overflow-y: auto;
+        /* Allow text scroll if too long */
+    }
+
+    .story-text-side h2 {
+        font-size: 3rem;
+        margin-bottom: 15px;
+    }
+
+    .story-body {
+        font-size: 1rem;
+    }
+}
+
+/* --- Global Navigation (Home Button) --- */
+.global-home-btn {
+    position: fixed;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%) translateY(100px);
+    /* Hidden by default */
+    background: var(--color-white);
+    color: var(--color-text);
+    padding: 12px 24px;
+    border-radius: 50px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    z-index: 900;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-size: 0.9rem;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* Show when NOT in Hub */
+body:not(.on-hub) .global-home-btn {
+    transform: translateX(-50%) translateY(0);
+    opacity: 1;
+    pointer-events: auto;
+}
+
+/* Specific overrides for viewing Story (ensure high contrast) */
+#view-story.active~.global-home-btn {
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(10px);
+}
+
+.global-home-btn:active {
+    transform: translateX(-50%) scale(0.95);
+}
+
+.global-home-btn .icon-home {
+    font-size: 1.2rem;
 }

@@ -91,18 +91,18 @@
                     </nav>
                     <footer class="hub-footer">
                         <div class="wifi-card">
-                            <div class="qr-container">
-                                <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=WIFI:S:Julienetben;T:WPA;P:Welcome57100!;;;color=3D3A35&bgcolor=FFFFFF" alt="Scan for WiFi" class="qr-code-img">
-                                <div class="scan-label">Scanner pour rejoindre</div>
+                            <div class="qr-container" style="border: none; background: transparent; padding: 0; box-shadow: none;">
+                                <div style="font-size: 3.5rem; color: var(--color-accent-terracotta);">🛜</div>
+                                <div class="scan-label" style="font-size: 1.2rem; font-weight: bold; margin-top: 5px; color: var(--color-text);">WIFI</div>
                             </div>
                             <div class="wifi-details-row">
                                 <div class="wifi-pill">
                                     <span class="pill-icon">📡</span>
-                                    <span class="pill-text">Julienetben</span>
+                                    <span class="pill-text" style="font-weight: 700; font-size: 1.1rem;">Julienetben</span>
                                 </div>
                                 <div class="wifi-pill">
                                     <span class="pill-icon">🔐</span>
-                                    <span class="pill-text">Welcome57100!</span>
+                                    <span class="pill-text" style="font-weight: 700; font-size: 1.1rem;">Welcome57100!</span>
                                 </div>
                             </div>
                         </div>
@@ -182,16 +182,16 @@
                         
                         <!-- WiFi Card -->
                         <div class="wifi-card" style="padding: 25px; flex:1; justify-content:center;">
-                             <div class="qr-container" style="padding: 15px;">
-                                <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=WIFI:S:Julienetben;T:WPA;P:Welcome57100!;;;color=3D3A35&bgcolor=FFFFFF" alt="Scan for WiFi" class="qr-code-img" style="width:140px; height:140px;">
-                                <div class="scan-label" style="font-size:0.9rem; margin-top:5px;">Scanner pour rejoindre</div>
+                             <div class="qr-container" style="border: none; background: transparent; padding: 0; box-shadow: none;">
+                                <div style="font-size: 4rem; color: var(--color-accent-terracotta);">🛜</div>
+                                <div class="scan-label" style="font-size: 1.5rem; font-weight: bold; margin-top: 10px; color: var(--color-text);">WIFI</div>
                             </div>
-                            <div class="wifi-details-row" style="margin-top:10px;">
-                                <div class="wifi-pill" style="padding: 12px 20px;">
-                                    <span class="pill-text" style="font-size:1.1rem;">Julienetben</span>
+                            <div class="wifi-details-row" style="margin-top:20px;">
+                                <div class="wifi-pill" style="padding: 15px 25px;">
+                                    <span class="pill-text" style="font-size:1.3rem; font-weight: 700;">Julienetben</span>
                                 </div>
-                                <div class="wifi-pill" style="padding: 12px 20px;">
-                                    <span class="pill-text" style="font-size:1.1rem;">Welcome57100!</span>
+                                <div class="wifi-pill" style="padding: 15px 25px;">
+                                    <span class="pill-text" style="font-size:1.3rem; font-weight: 700;">Welcome57100!</span>
                                 </div>
                             </div>
                         </div>
@@ -550,39 +550,70 @@
                             </div>
                         </div>
                     </div>
-
-        <!-- View: NOTRE HISTOIRE -->
-<section id="view-story" class="view">
-    <div class="story-overlay-layout">
-        <!-- Fullscreen Background Image -->
-         <img src="assets/img/story/benjamin_story.jpg" class="story-bg" alt="Benjamin, Hôte Ohana">
-         
-         <div class="story-content-box">
-            <button class="back-btn white-btn" onclick="goBack()">
-                <span class="icon-back">←</span> Retour
-            </button>
-
-            <!-- Storytelling Icon (Simple Feather/Quill SVG) -->
-            <div class="story-logo">
-                <svg width="60" height="60" viewBox="0 0 24 24" fill="none" class="feather-icon">
-                    <path d="M20.24 12.24a6 6 0 0 0-8.49-8.49L5 10.5V19h8.5zM16 8L2 22" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-            </div>
-
-            <div class="story-text">
-                <p class="quote">
-                    "J'ai mis 9 ans à enfin écouter la petite voix en moi. <br><br>
-                    Aujourd'hui j'ai quitté la Gendarmerie, je vis de ma passion et je me sens 100% aligné."
-                </p>
-                
-                <div class="signature">
-                    <span class="sign-name">Benjamin</span>
-                    <span class="sign-role">Votre Hôte Airbnb</span>
                 </div>
             </div>
-         </div>
-    </div>
-</section>
+        </section>
+
+        <!-- View: NOTRE HISTOIRE (V5 Editorial Design) -->
+        <section id="view-story" class="view">
+            <div class="story-scroller" style="scroll-snap-type: y mandatory; overflow-y: scroll; height: 100vh; scroll-behavior: smooth;">
+                
+                <!-- Fixed Navigation (Overlays everything) -->
+                <div class="story-nav" style="position: fixed; top: 40px; left: 40px; z-index: 100;">
+                     <button class="back-btn" onclick="goBack()" style="color: white; border: 1px solid rgba(255,255,255,0.25); background: rgba(0,0,0,0.2); backdrop-filter: blur(4px);">
+                        <span class="icon-back">←</span> Retour
+                    </button>
+                </div>
+
+                <!-- SLIDE 1: BENJAMIN -->
+                <div class="story-section" style="height: 100vh; width: 100vw; scroll-snap-align: start; display: flex; position: relative; background: #fdfbf7;">
+                    
+                    <!-- Left: Image (50%) -->
+                    <div class="story-image-side" style="flex: 1; height: 100%; position: relative;">
+                        <img src="assets/img/story/benjamin_profile.jpg" alt="Benjamin" style="width: 100%; height: 100%; object-fit: cover;">
+                        <div style="position: absolute; bottom: 0; left: 0; right: 0; height: 20%; background: linear-gradient(to top, rgba(0,0,0,0.4), transparent);"></div>
+                    </div>
+
+                    <!-- Right: Text (50%) -->
+                    <div class="story-text-side" style="flex: 1; height: 100%; display: flex; flex-direction: column; justify-content: center; padding: 60px; box-sizing: border-box; background: #fffcf8;">
+                        <h2 style="font-family: 'Cormorant Garamond', serif; font-size: 3.5rem; color: var(--color-accent-terracotta); margin-bottom: 20px;">Benjamin</h2>
+                        <div class="story-body" style="font-family: 'Raleway', sans-serif; font-size: 1.1rem; line-height: 1.6; color: #4a4a4a;">
+                            <p style="margin-bottom: 15px;">Hello, je m'appelle Benjamin ! Dans la vie, j'aide les entrepreneurs du bien-être à s'aligner et à trouver leur liberté.</p>
+                            <p style="margin-bottom: 15px;">Pour moi, un lieu de vie doit faire la même chose : apaiser l'esprit pour laisser la place aux belles idées.</p>
+                            <p style="margin-bottom: 15px;">J'ai voulu voir cet appartement comme une bulle hors du temps. Un mélange du mood balinais, de mon amour pour la spiritualité et la nature et d'une touche de 'Good Vibes' !</p>
+                            <p style="font-style: italic; color: #888;">Vous êtes peut-être ici pour travailler, profiter en famille, explorer ou ne rien faire (c'est cool aussi 🙄), j'espère que ce lieu va vous apaiser et vous recharger ! Merci de nous avoir choisi 🙏</p>
+                        </div>
+                        
+                        <!-- Scroll Indicator -->
+                        <div style="margin-top: 40px; display: flex; align-items: center; gap: 10px; color: var(--color-accent-terracotta); opacity: 0.8; animation: bounce 2s infinite;">
+                            <span style="font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px;">Découvrir Ohana</span>
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 13l5 5 5-5M7 6l5 5 5-5"/></svg>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SLIDE 2: OHANA -->
+                <div class="story-section" style="height: 100vh; width: 100vw; scroll-snap-align: start; display: flex; flex-direction: row-reverse; position: relative; background: #fdfbf7;">
+                    
+                    <!-- Right: Image (50%) -->
+                    <div class="story-image-side" style="flex: 1; height: 100%; position: relative;">
+                        <img src="assets/img/story/ohana_profile.jpg" alt="Ohana" style="width: 100%; height: 100%; object-fit: cover;">
+                         <div style="position: absolute; bottom: 0; left: 0; right: 0; height: 20%; background: linear-gradient(to top, rgba(0,0,0,0.4), transparent);"></div>
+                    </div>
+
+                    <!-- Left: Text (50%) -->
+                    <div class="story-text-side" style="flex: 1; height: 100%; display: flex; flex-direction: column; justify-content: center; padding: 60px; box-sizing: border-box; background: #fffcf8;">
+                        <h2 style="font-family: 'Cormorant Garamond', serif; font-size: 3.5rem; color: var(--color-accent-terracotta); margin-bottom: 20px;">Ohana</h2>
+                        <div class="story-body" style="font-family: 'Raleway', sans-serif; font-size: 1.1rem; line-height: 1.6; color: #4a4a4a;">
+                            <p style="margin-bottom: 15px;"><strong>Salut, moi c'est Ohana ! 🐾</strong></p>
+                            <p style="margin-bottom: 15px;">Papa m'a dit d'écrire un petit texte pour vous, mais je ne sais pas trop quoi dire... à part que j'adore les croquettes, jouer avec des bâtons et que j'adooooore nager !</p>
+                            <p style="margin-bottom: 15px;">Ah, et apparemment, mon prénom veut dire 'Famille' en hawaïen. Donc bienvenue dans la famille ! ❤️</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
 
         <!-- Screensaver Overlay -->
         <div id="screensaver" class="hidden">
@@ -603,6 +634,12 @@
                 <p>Touchez l'écran pour commencer</p>
             </div>
         </div>
+
+        <!-- Global Home Button (Visible on all inner pages) -->
+        <button id="global-home-btn" class="global-home-btn" onclick="goBack()" title="Retour à l'accueil">
+            <span class="icon-home">🏠</span>
+            <span class="label">Accueil</span>
+        </button>
 
     </main>
 

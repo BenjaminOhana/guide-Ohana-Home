@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Preview Ben Story</title>
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Damion&family=Raleway:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body, html {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        }
+
+        .preview-container {
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+
+        .background-img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Ensures no black bars, fills screen */
+            z-index: 0;
+        }
+
+        .preview-overlay {
+            position: absolute;
+            top: 50%;
+            left: 5%; 
+            transform: translateY(-50%);
+            width: 500px; /* Wider for more breath */
+            padding: 60px; /* More internal spacing */
+            
+            /* Glass Overlay */
+            background: rgba(0, 0, 0, 0.35);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            color: white;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.25);
+            z-index: 10;
+        }
+
+        .story-logo {
+            width: 50px;
+            height: 50px;
+            margin-bottom: 40px; /* More space below icon */
+            opacity: 1;
+            color: #E07A5F; 
+        }
+
+        .quote {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.35rem; 
+            font-weight: 500; 
+            line-height: 1.8; /* Relaxed leading */
+            margin-bottom: 45px; /* More space below quote */
+            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+        }
+
+        .signature {
+            border-left: 3px solid #E07A5F; 
+            padding-left: 20px; /* More space from line */
+        }
+        
+        .sign-name {
+            display: block;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #E07A5F;
+            margin-bottom: 5px;
+        }
+        
+        .sign-role {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 400;
+            font-size: 0.9rem;
+            color: rgba(255,255,255,0.9);
+            letter-spacing: 1px;
+        }
+    </style>
+</head>
+<body>
+    <div class="preview-container">
+        <!-- Background Image: Full Cover -->
+        <img src="assets/img/story/benjamin_work.jpg" class="background-img" alt="Background">
+        
+        <!-- Overlay Content -->
+        <div class="preview-overlay">
+            <!-- Icon: Sun/Sparkle -->
+            <svg class="story-logo" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="5"></circle>
+                <line x1="12" y1="1" x2="12" y2="3"></line>
+                <line x1="12" y1="21" x2="12" y2="23"></line>
+                <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                <line x1="1" y1="12" x2="3" y2="12"></line>
+                <line x1="21" y1="12" x2="23" y2="12"></line>
+                <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+            </svg>
+
+            <!-- Quote -->
+            <div class="quote" style="margin-bottom: 30px; font-size: 1.55rem;">
+                "Aujourd'hui, mon bureau n'a plus de murs. J'accompagne les entrepreneurs à trouver leur propre liberté.<br><br>
+                J’ai conçu ce lieu pour qu'il vous inspire la vôtre."
+            </div>
+
+            <!-- QR Code Section -->
+            <div class="qr-section" style="margin-bottom: 35px; display: flex; flex-direction: column; align-items: flex-start; gap: 8px;">
+                <span style="font-family: 'Montserrat', sans-serif; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; color: #E07A5F;">Plus d'infos ici</span>
+                <img src="assets/img/story/qr_code_entrepreneur.png" alt="QR Code" style="width: 110px; height: 110px; border-radius: 8px; border: 2px solid rgba(255,255,255,0.15); margin: 5px 0;">
+                <span style="font-family: 'Raleway', sans-serif; font-style: italic; font-size: 0.9rem; color: rgba(255,255,255,0.7);">Et oui, je fais ma pub 😂</span>
+            </div>
+
+            <!-- Signature -->
+            <div class="signature">
+                <span class="sign-name">Benjamin</span>
+                <span class="sign-role">Votre Hôte</span>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
