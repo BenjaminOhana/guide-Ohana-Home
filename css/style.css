@@ -1857,8 +1857,10 @@ button {
 @media (min-width: 1024px) {
     .rules-grid-large {
         grid-template-columns: repeat(3, 1fr);
-        gap: 30px;
-        align-content: center;
+        gap: 25px;
+        /* Slightly tighter gap */
+        align-content: start;
+        /* Align to top */
     }
 }
 
@@ -1958,9 +1960,12 @@ button {
 }
 
 .rule-card-large .icon {
-    font-size: 3.5rem;
-    margin-bottom: 5px;
-    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.1));
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 15px;
+    filter: drop-shadow(0 4px 8px rgba(186, 74, 44, 0.2));
+    /* Terracotta shadow */
 }
 
 .rule-card-large .content h4 {
