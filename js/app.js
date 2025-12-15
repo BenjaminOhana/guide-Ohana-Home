@@ -140,15 +140,31 @@ window.showGuestbookReadMode = showGuestbookReadMode;
 // saveGuestbookEntry is already attached to window above
 
 // Ensure init is called on load
+const screensaver = document.getElementById('screensaver');
+
+// -- Global Exports (for HTML onclicks) --
+window.hideScreensaver = hideScreensaver;
+window.startSlideshow = startSlideshow; // Debug
+
+// Ensure critical listeners are attached after load
 document.addEventListener('DOMContentLoaded', () => {
     initGuestbook();
     updateGuestbookQR();
-});
-const screensaver = document.getElementById('screensaver');
 
-// Direct interaction listener to ensure dismissal
-screensaver.addEventListener('click', hideScreensaver);
-screensaver.addEventListener('touchstart', hideScreensaver, { passive: true });
+    // Screensaver Dismissal (Critical)
+    if (screensaver) {
+        screensaver.addEventListener('click', hideScreensaver);
+        screensaver.addEventListener('touchstart', hideScreensaver, { passive: true });
+        console.log("Screensaver listeners attached.");
+    } else {
+        console.error("CRITICAL: Screensaver element not found for listeners.");
+    }
+
+    // iPad Optimization: Delay preload slightly
+    setTimeout(() => {
+        preloadScreensaverImages();
+    }, 2000);
+});
 
 const screensaverPrompt = document.querySelector('.screensaver-prompt');
 const slides = document.querySelectorAll('.slide');
