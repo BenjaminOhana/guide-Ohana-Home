@@ -86,8 +86,7 @@ function preloadScreensaverImages() {
 // New Screensaver Images (Local)
 // New Screensaver Images (Local)
 const screensaverImages = [
-    // Review Slide (10 minutes duration) - PRIORITY
-    'assets/img/screensaver/slide_review_ohana.png',
+
 
     // Story Slide (Custom)
     'assets/img/screensaver/slide_story_benjamin.png',
@@ -97,6 +96,10 @@ const screensaverImages = [
     'assets/img/screensaver/slide_gen_2.png',
     'assets/img/screensaver/slide_gen_3.png',
     'assets/img/screensaver/slide_gen_4.png',
+
+    // Review Slide (10 minutes duration) - Moved to Position 5
+    'assets/img/screensaver/slide_review_ohana.png',
+
     'assets/img/screensaver/slide_gen_5.png',
     'assets/img/screensaver/slide_gen_6.png',
     'assets/img/screensaver/slide_gen_7.png',
