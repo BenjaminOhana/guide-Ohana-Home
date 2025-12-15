@@ -549,7 +549,7 @@ setInterval(fetchWeather, 1800000); // Every 30 mins
 const discoverData = {
     'regaler': {
         title: 'Se Régaler',
-        img: 'assets/img/hero/hero_1.jpg', // Placeholder
+        img: 'assets/img/adresses/regaler_main.png', // New Generated Image
         places: [
             {
                 name: 'La Kaza',
@@ -573,7 +573,7 @@ const discoverData = {
     },
     'respirer': {
         title: 'Respirer',
-        img: 'assets/img/hero/hero_3.jpg',
+        img: 'assets/img/adresses/respirer_main.jpg',
         places: [
             {
                 name: 'Parc Napoléon',
