@@ -1653,10 +1653,17 @@ button {
 }
 
 .hero-desc {
-    font-size: 1rem;
-    color: var(--color-text-light);
-    margin-top: 10px;
-    max-width: 80%;
+    font-size: 1.2rem;
+    /* Was 1rem */
+    color: var(--color-text);
+    /* Was light */
+    margin-top: 15px;
+    max-width: 90%;
+    line-height: 1.5;
+    background: rgba(255, 255, 255, 0.7);
+    padding: 15px;
+    border-radius: var(--radius-md);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
 }
 
 /* Equipment Grid Optimization */
