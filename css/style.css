@@ -1669,12 +1669,21 @@ button {
 
 .equip-card {
     background: white;
-    padding: 20px 25px;
+    padding: 25px 30px;
     border-radius: var(--radius-md);
-    border: 1px solid rgba(0, 0, 0, 0.04);
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+    /* Added shadow for visibility */
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 15px;
+    /* Increased gap */
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.equip-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.06);
 }
 
 .equip-header {
@@ -1682,12 +1691,18 @@ button {
     align-items: center;
     gap: 15px;
     margin-bottom: 5px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    /* Separator line */
 }
 
 .equip-header h4 {
-    font-size: 1.2rem;
+    font-size: 1.3rem;
+    /* Larger title */
+    font-weight: 600;
     margin: 0;
     color: var(--color-accent-terracotta);
+    letter-spacing: 0.5px;
 }
 
 .equip-list li {
