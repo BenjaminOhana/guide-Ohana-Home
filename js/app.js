@@ -309,17 +309,32 @@ function initScreensaverSlides() {
         slide.classList.add('slide');
         if (index === 0) slide.classList.add('active');
 
-        // Layer 1: Blurred Background (Full Cover)
-        const bgLayer = document.createElement('div');
-        bgLayer.classList.add('slide-bg');
-        bgLayer.style.backgroundImage = `url('${imgSrc}')`;
-        slide.appendChild(bgLayer);
+        // Check if this is the Special "Review" Slide (Airbnb note)
+        // We use 'includes' because the path might differ slightly
+        const isReviewSlide = imgSrc.includes('slide_review_ohana.png');
 
-        // Layer 2: Sharp Image (Contain)
-        const imgLayer = document.createElement('div');
-        imgLayer.classList.add('slide-img');
-        imgLayer.style.backgroundImage = `url('${imgSrc}')`;
-        slide.appendChild(imgLayer);
+        if (isReviewSlide) {
+            // -- SPECIAL LAYOUT: Blur Background + Sharp Image --
+
+            // Layer 1: Blurred Background (Full Cover)
+            const bgLayer = document.createElement('div');
+            bgLayer.classList.add('slide-bg');
+            bgLayer.style.backgroundImage = `url('${imgSrc}')`;
+            slide.appendChild(bgLayer);
+
+            // Layer 2: Sharp Image (Contain)
+            const imgLayer = document.createElement('div');
+            imgLayer.classList.add('slide-img');
+            imgLayer.style.backgroundImage = `url('${imgSrc}')`;
+            slide.appendChild(imgLayer);
+
+        } else {
+            // -- STANDARD PLAYOUT: Full Screen Cover --
+            slide.style.backgroundImage = `url('${imgSrc}')`;
+            slide.style.backgroundSize = 'cover';
+            slide.style.backgroundPosition = 'center';
+            slide.style.backgroundRepeat = 'no-repeat';
+        }
 
         container.appendChild(slide);
     });
@@ -339,6 +354,8 @@ function resetIdleTimer() {
         hideScreensaver();
     }
 
+    // 5 Minutes Idle Trigger (as requested previously, or keep usage?)
+    // Let's stick to a reasonable idle time before screensaver starts
     idleTimer = setTimeout(showScreensaver, IDLE_TIMEOUT);
 }
 
@@ -367,9 +384,6 @@ function startSlideshow() {
     // Also start clock tick
     updateScreensaverClock();
     if (!clockInterval) clockInterval = setInterval(updateScreensaverClock, 1000);
-
-    // Schedule the 5-minute reload
-    scheduleAutoReload();
 }
 
 let clockInterval;
@@ -389,11 +403,13 @@ function scheduleNextSlide() {
 
     // Get current image source to determine duration
     const currentImg = screensaverImages[currentSlide];
-    let duration = 120000; // Default 2 minutes (User preference)
+
+    // DEFAULT DURATION: 3 Minutes
+    let duration = 180000;
 
     // Custom Durations
-    if (currentImg.includes('slide_review_ohana.png')) {
-        duration = 600000; // 10 minutes
+    if (currentImg && currentImg.includes('slide_review_ohana.png')) {
+        duration = 600000; // 10 minutes for the Note
     }
 
     slideTimeout = setTimeout(() => {
