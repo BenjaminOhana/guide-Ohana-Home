@@ -209,24 +209,44 @@
 
     <script>
         function submitMobile() {
-            const name = document.getElementById('m-name').value.trim();
-            const msg = document.getElementById('m-msg').value.trim();
+            const nameInput = document.getElementById('m-name');
+            const msgInput = document.getElementById('m-msg');
+            
+            const name = nameInput.value.trim();
+            const msg = msgInput.value.trim();
 
             if (!name || !msg) {
                 alert('Oups ! Il manque votre prénom ou votre message.');
                 return;
             }
 
-            // In a real app, this would POST to a backend.
-            // For now, we simulate success.
-            
+            // --- SAVE TO LOCALSTORAGE (Mimic Sync for same-browser testing) ---
+            const GUESTBOOK_KEY = 'ohana_guestbook_entries';
+            const newEntry = {
+                id: Date.now(),
+                name: name,
+                text: msg,
+                date: new Date().toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' })
+            };
+
+            // Get existing
+            let entries = JSON.parse(localStorage.getItem(GUESTBOOK_KEY) || '[]');
+            entries.unshift(newEntry);
+            localStorage.setItem(GUESTBOOK_KEY, JSON.stringify(entries));
+            // ------------------------------------------------------------------
+
             const btn = document.querySelector('.btn-submit');
             btn.innerHTML = 'Gravure en cours...';
             btn.style.opacity = '0.7';
 
             setTimeout(() => {
                 document.getElementById('success-view').classList.add('active');
-            }, 1000);
+                // Optional: Clear inputs if they go back
+                nameInput.value = '';
+                msgInput.value = '';
+                btn.innerHTML = 'Graver le message';
+                btn.style.opacity = '1';
+            }, 800);
         }
     </script>
 </body>

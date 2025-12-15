@@ -894,3 +894,10 @@ document.addEventListener('DOMContentLoaded', () => {
     initGuestbook();
     updateGuestbookQR(); // Init QR
 });
+
+// Auto-Sync across tabs (if user opens mobile page on same device or tests)
+window.addEventListener('storage', (e) => {
+    if (e.key === GUESTBOOK_KEY) {
+        renderGuestbook();
+    }
+});
