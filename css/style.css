@@ -572,6 +572,8 @@ button {
     background: black;
     opacity: 1;
     transition: opacity 1s ease;
+    pointer-events: auto;
+    /* Ensure it captures clicks */
 }
 
 #screensaver.hidden {

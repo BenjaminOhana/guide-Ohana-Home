@@ -1,6 +1,11 @@
 // DOM Elements
 const app = document.getElementById('app');
 const screensaver = document.getElementById('screensaver');
+
+// Direct interaction listener to ensure dismissal
+screensaver.addEventListener('click', hideScreensaver);
+screensaver.addEventListener('touchstart', hideScreensaver, { passive: true });
+
 const screensaverPrompt = document.querySelector('.screensaver-prompt');
 const slides = document.querySelectorAll('.slide');
 
