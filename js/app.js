@@ -60,7 +60,24 @@ function createTempSection(id) {
 // Initial State
 document.addEventListener('DOMContentLoaded', () => {
     document.body.classList.add('on-hub');
+
+    // iPad Optimization: Delay preload slightly to prioritize UI rendering
+    setTimeout(() => {
+        preloadScreensaverImages();
+    }, 2000);
 });
+
+// Optimized Image Preloader for Kiosk Mode
+function preloadScreensaverImages() {
+    console.log('Starting background image preload...');
+    if (typeof screensaverImages !== 'undefined' && Array.isArray(screensaverImages)) {
+        screensaverImages.forEach(src => {
+            const img = new Image();
+            img.src = src;
+        });
+        console.log(`Preloading ${screensaverImages.length} screensaver images.`);
+    }
+}
 
 
 // -- Screensaver Logic --
