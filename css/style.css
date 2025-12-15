@@ -2427,3 +2427,46 @@ body:not(.on-hub) .global-home-btn {
     background-position: center;
     z-index: 2;
 }
+/* Step Numbering */
+.step-number {
+    position: absolute;
+    top: 50%;
+    right: 15px;
+    transform: translateY(-50%);
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: rgba(0,0,0,0.08); /* Watermark style */
+    pointer-events: none;
+}
+
+/* Ensure content doesn't overlap number */
+.departure-card .card-content {
+    padding-right: 30px;
+}
+
+/* Selected state update for numbers */
+.departure-card.completed .step-number {
+    color: var(--color-accent-terracotta);
+    opacity: 0.3;
+}
+
+/* Final Step Specifics */
+.departure-card.final-step .step-number {
+    position: static;
+    transform: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    font-size: 0.9rem;
+    margin-right: 0;
+    margin-bottom: 0;
+}
+
+.departure-card.final-step {
+    flex-direction: row;
+    align-items: center;
+    gap: 15px;
+}
