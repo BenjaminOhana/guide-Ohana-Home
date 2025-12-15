@@ -3,7 +3,7 @@
     --color-bg: #F5F0E8;
     --color-text: #3D3A35;
     --color-text-light: #6e6b66;
-    --color-accent-terracotta: #C4A484;
+    --color-accent-terracotta: #BA4A2C;
     --color-accent-sage: #8B9A7D;
     --color-white: #ffffff;
     --color-shadow: rgba(61, 58, 53, 0.08);
@@ -1852,8 +1852,10 @@ button {
 .card-icon-svg svg {
     width: 100%;
     height: 100%;
-    filter: drop-shadow(0 4px 6px rgba(196, 110, 90, 0.2));
-    /* Subtle colored shadow matches Terracotta */
+    stroke-width: 2px;
+    /* Thicker stroke */
+    filter: drop-shadow(0 4px 6px rgba(186, 74, 44, 0.2));
+    /* Updated shadow color */
 }
 
 .nav-card:hover .card-icon,
@@ -2321,6 +2323,17 @@ body:not(.on-hub) .global-home-btn {
     transform: translateX(-50%) scale(0.95);
 }
 
+/* Global Home Icon */
 .global-home-btn .icon-home {
     font-size: 1.2rem;
+}
+
+/* Fix Screensaver Scaling (Prevent Zoom/Crop) */
+#screensaver .slide {
+    background-size: contain !important;
+    /* Force full image visibility */
+    background-repeat: no-repeat !important;
+    background-position: center !important;
+    background-color: black;
+    /* Fill empty space with black */
 }
