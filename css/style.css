@@ -111,9 +111,12 @@ button {
     /* Remove padding to allow split screen full bleed */
     padding: 0;
     opacity: 0;
+    visibility: hidden;
+    /* Fix: Ensure it doesn't block clicks even if children have pointer-events:auto */
     pointer-events: none;
     transform: scale(0.98);
-    transition: opacity var(--anim-smooth), transform var(--anim-smooth);
+    transition: opacity var(--anim-smooth), transform var(--anim-smooth), visibility 0s linear var(--anim-smooth);
+    /* Delay visibility hide */
     display: flex;
     flex-direction: column;
     /* Ensure content views have bg if not split */
@@ -122,8 +125,11 @@ button {
 
 .view.active {
     opacity: 1;
+    visibility: visible;
     pointer-events: auto;
     transform: scale(1);
+    transition: opacity var(--anim-smooth), transform var(--anim-smooth), visibility 0s linear 0s;
+    /* Immediate visibility show */
 }
 
 /* Utility to force no scroll */
