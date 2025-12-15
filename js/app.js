@@ -751,7 +751,7 @@ const discoverData = {
     },
     'explorer': {
         title: 'Explorer',
-        img: 'assets/img/hero/hero_4.jpg',
+        img: 'assets/img/adresses/explorer_main.jpg',
         places: [
             {
                 name: 'Château de Malbrouck',
