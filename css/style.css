@@ -147,6 +147,30 @@ button {
     background: #000;
 }
 
+/* Natural Blur/Fade Transition Overlay */
+.split-left-panel::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 150px;
+    /* Transition zone width */
+    height: 100%;
+    /* Gradient from transparent to the content background color */
+    background: linear-gradient(to right,
+            rgba(245, 240, 232, 0) 0%,
+            var(--color-bg) 100%);
+    /* Subtle blur to soften the pixels behind */
+    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(2px);
+    /* Mask the blur so it doesn't have a hard start line */
+    -webkit-mask-image: linear-gradient(to right, transparent, black);
+    mask-image: linear-gradient(to right, transparent, black);
+
+    pointer-events: none;
+    z-index: 10;
+}
+
 .split-left-panel img {
     width: 100%;
     height: 100%;
