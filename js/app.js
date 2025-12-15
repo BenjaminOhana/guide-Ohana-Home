@@ -244,45 +244,33 @@ function preloadScreensaverImages() {
 
 // New Screensaver Images (Local)
 // New Screensaver Images (Local)
-// New Screensaver Images (Local)
 const screensaverImages = [
-
-
-    // Story Slide (Custom)
+    // Top Priority (Story & Review)
     'assets/img/screensaver/slide_story_benjamin.png',
-
-    // Gemini Generated Imports (New)
-    'assets/img/screensaver/slide_gen_1.png',
-    'assets/img/screensaver/slide_gen_2.png',
-    'assets/img/screensaver/slide_gen_3.png',
-    'assets/img/screensaver/slide_gen_4.png',
-
-    // Review Slide (10 minutes duration) - Moved to Position 5
     'assets/img/screensaver/slide_review_ohana.png',
 
-    'assets/img/screensaver/slide_gen_5.png',
-    'assets/img/screensaver/slide_gen_6.png',
-    'assets/img/screensaver/slide_gen_7.png',
-
+    // High Quality (HQ)
     'assets/img/screensaver/slide_hq_1.png',
     'assets/img/screensaver/slide_hq_3.png',
     'assets/img/screensaver/slide_hq_4.png',
     'assets/img/screensaver/slide_hq_5.png',
     'assets/img/screensaver/slide_hq_6.png',
     'assets/img/screensaver/slide_hq_7.png',
-    'assets/img/screensaver/slide_hq_8.png',
     'assets/img/screensaver/slide_hq_9.png',
     'assets/img/screensaver/slide_hq_10.png',
-    'assets/img/screensaver/slide_hq_11.png',
     'assets/img/screensaver/slide_hq_12.png',
 
-    // --- TIER 2: STANDARD (Existing) ---
-    'assets/img/screensaver/slide_3.png',
-    'assets/img/screensaver/slide_4.png',
+    // Generated (AI)
+    'assets/img/screensaver/slide_gen_1.png',
+    'assets/img/screensaver/slide_gen_2.png',
+    'assets/img/screensaver/slide_gen_4.png',
+    'assets/img/screensaver/slide_gen_5.png',
+    'assets/img/screensaver/slide_gen_6.png',
+    'assets/img/screensaver/slide_gen_7.png',
+
+    // Standard (Existing)
     'assets/img/screensaver/slide_8.png',
-    'assets/img/screensaver/slide_12.png',
     'assets/img/screensaver/slide_13.png',
-    'assets/img/screensaver/slide_14.png',
     'assets/img/screensaver/slide_17.png',
     'assets/img/screensaver/slide_18.png',
     'assets/img/screensaver/slide_19.png',
