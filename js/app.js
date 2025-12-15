@@ -746,7 +746,118 @@ window.addEventListener('load', () => {
 });
 
 
+
 // -- Global exports for HTML onclicks
 window.openDiscoverCategory = openDiscoverCategory;
 window.closeDiscoverCategory = closeDiscoverCategory;
+
+// -- GUESTBOOK LOGIC (LocalStorage) --
+
+const GUESTBOOK_KEY = 'ohana_guestbook_entries';
+
+// Initial Mock Data (if empty)
+const initialGuestbookData = [
+    {
+        id: 1,
+        name: 'Sophie & Marc',
+        date: '12 Décembre 2024',
+        text: "Un séjour inoubliable ! L'appartement est magnifique et très bien situé. Merci pour tout."
+    },
+    {
+        id: 2,
+        name: 'Famille Durant',
+        date: '30 Novembre 2024',
+        text: "On a adoré le petit déj' chez 'Le Ptit Déj', merci pour l'adresse ! On reviendra."
+    }
+];
+
+function initGuestbook() {
+    // Check if data exists
+    if (!localStorage.getItem(GUESTBOOK_KEY)) {
+        localStorage.setItem(GUESTBOOK_KEY, JSON.stringify(initialGuestbookData));
+    }
+    renderGuestbook();
+}
+
+function toggleGuestbookForm() {
+    const wrapper = document.getElementById('guestbook-form-container');
+    const btn = document.getElementById('btn-write-guestbook');
+
+    if (wrapper.classList.contains('hidden')) {
+        wrapper.classList.remove('hidden');
+        btn.style.opacity = '0.5';
+        btn.style.pointerEvents = 'none'; // Disable btn while writing
+    } else {
+        wrapper.classList.add('hidden');
+        btn.style.opacity = '1';
+        btn.style.pointerEvents = 'auto'; // Re-enable
+        // Clear inputs
+        document.getElementById('guest-name').value = '';
+        document.getElementById('guest-message').value = '';
+    }
+}
+
+function saveGuestbookEntry() {
+    const nameInput = document.getElementById('guest-name');
+    const msgInput = document.getElementById('guest-message');
+
+    const name = nameInput.value.trim();
+    const text = msgInput.value.trim();
+
+    if (!name || !text) {
+        alert("Un petit nom et un message, s'il vous plaît ! 😊");
+        return;
+    }
+
+    // Create Entry Object
+    const newEntry = {
+        id: Date.now(),
+        name: name,
+        text: text,
+        date: new Date().toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' })
+    };
+
+    // Get current list
+    let entries = JSON.parse(localStorage.getItem(GUESTBOOK_KEY) || '[]');
+
+    // Add new to TOP
+    entries.unshift(newEntry);
+
+    // Save
+    localStorage.setItem(GUESTBOOK_KEY, JSON.stringify(entries));
+
+    // Render
+    renderGuestbook();
+
+    // Close and Clear
+    toggleGuestbookForm();
+}
+
+function renderGuestbook() {
+    const listContainer = document.getElementById('guestbook-entries');
+    if (!listContainer) return;
+
+    const entries = JSON.parse(localStorage.getItem(GUESTBOOK_KEY) || '[]');
+    listContainer.innerHTML = ''; // Clear
+
+    entries.forEach(entry => {
+        const card = document.createElement('div');
+        card.className = 'guestbook-entry';
+        card.innerHTML = `
+            <div class="entry-date">${entry.date}</div>
+            <p class="entry-text">"${entry.text}"</p>
+            <div class="entry-signature">- ${entry.name}</div>
+        `;
+        listContainer.appendChild(card);
+    });
+}
+
+// Global Exports
+window.toggleGuestbookForm = toggleGuestbookForm;
+window.saveGuestbookEntry = saveGuestbookEntry;
+
+// Ensure init is called on load
+document.addEventListener('DOMContentLoaded', () => {
+    initGuestbook();
+});
 

@@ -103,7 +103,18 @@
                             <span class="card-label">Nos adresses</span>
                         </button>
                         <!-- Empty Slot 1 -->
-                        <div class="nav-card" style="visibility: hidden; pointer-events: none;"></div>
+                        <!-- Guestbook Tile -->
+                        <button class="nav-card" onclick="openSection('guestbook')">
+                            <div class="card-icon-svg">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
+                                    <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
+                                    <path d="M12 7l0 .01"></path>
+                                    <path d="M16 11l-3.5 3.5"></path> 
+                                </svg>
+                            </div>
+                            <span class="card-label">Livre d'or</span>
+                        </button>
                         
                         <!-- Story Tile -->
                         <button class="nav-card" onclick="openSection('story')">
@@ -592,6 +603,63 @@
                                     <p style="font-size: 1rem;">Signalez-nous <strong>tout souci ou dégât</strong>, même petit. Pas de stress, ça arrive — on préfère juste savoir.</p>
                                 </div>
                             </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- View: GUESTBOOK (Livre d'or) -->
+        <section id="view-guestbook" class="view no-scroll">
+            <div class="split-page-layout">
+                <!-- Left Panel: Context -->
+                <div class="split-left-panel" style="background-image: url('assets/img/screensaver/slide_review_ohana.png');">
+                    <div class="panel-overlay-content">
+                        <h2>Une trace de votre passage</h2>
+                        <p>Partagez vos impressions, un petit mot doux ou un souvenir marquant de votre séjour.</p>
+                    </div>
+                </div>
+
+                <!-- Right Panel: The Book -->
+                <div class="split-right-panel" style="background: #F9F7F2;">
+                    <header class="section-header">
+                        <button class="back-btn" onclick="goBack()">
+                            <span class="icon-back">←</span> Retour
+                        </button>
+                        <h2 class="section-title">Livre d'Or</h2>
+                        <div class="header-spacer"></div>
+                    </header>
+
+                    <div class="guestbook-container">
+                        <!-- Write Action -->
+                        <div class="guestbook-write-area">
+                            <button id="btn-write-guestbook" class="action-btn-primary" onclick="toggleGuestbookForm()">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                                Écrire un mot
+                            </button>
+                        </div>
+                        
+                        <!-- Form (Hidden by default) -->
+                        <div id="guestbook-form-container" class="guestbook-form-wrapper hidden">
+                            <div class="guestbook-paper-form">
+                                <h3>À vous la plume... des doigts ✍️</h3>
+                                <input type="text" id="guest-name" placeholder="Votre Prénom" maxlength="30">
+                                <textarea id="guest-message" placeholder="Votre message..." rows="4" maxlength="300"></textarea>
+                                <div class="form-actions">
+                                    <button class="btn-cancel" onclick="toggleGuestbookForm()">Annuler</button>
+                                    <button class="btn-save" onclick="saveGuestbookEntry()">Publier</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Messages List -->
+                        <div id="guestbook-entries" class="guestbook-entries-list">
+                            <!-- JS will populate this -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
 
                             <!-- 6. Sécurité -->
                             <div class="rule-card-large">
