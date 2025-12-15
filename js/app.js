@@ -1,5 +1,149 @@
+import { db } from './firebase-config.js';
+import { collection, addDoc, onSnapshot, query, orderBy, limit } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
 // DOM Elements
 const app = document.getElementById('app');
+// ... (rest of imports)
+
+// -- GUESTBOOK LOGIC (Firebase Real-Time) --
+
+function initGuestbook() {
+    console.log("Initializing Guestbook (Firebase Mode)...");
+
+    // Listen for real-time updates
+    const q = query(collection(db, "guestbook"), orderBy("timestamp", "desc"), limit(50));
+
+    onSnapshot(q, (snapshot) => {
+        const entries = [];
+        snapshot.forEach((doc) => {
+            entries.push({ id: doc.id, ...doc.data() });
+        });
+        renderGuestbook(entries);
+    }, (error) => {
+        console.error("Error getting guestbook updates:", error);
+        // Fallback or alert? For now silent log.
+    });
+}
+
+// State Management
+function showGuestbookWriteMode() {
+    document.getElementById('guestbook-state-read').classList.remove('active');
+    document.getElementById('guestbook-state-read').classList.add('hidden');
+
+    setTimeout(() => {
+        document.getElementById('guestbook-state-write').classList.remove('hidden');
+        document.getElementById('guestbook-state-write').classList.add('active');
+    }, 300); // Wait for fade out
+}
+
+function showGuestbookReadMode() {
+    document.getElementById('guestbook-state-write').classList.remove('active');
+    document.getElementById('guestbook-state-write').classList.add('hidden');
+
+    setTimeout(() => {
+        document.getElementById('guestbook-state-read').classList.remove('hidden');
+        document.getElementById('guestbook-state-read').classList.add('active');
+    }, 300);
+}
+
+// Generate Dynamic QR Code (Fix for Netlify/Custom Domains)
+function updateGuestbookQR() {
+    const img = document.getElementById('guestbook-qr-img');
+    if (!img) return;
+
+    let baseUrl = window.location.href;
+    if (baseUrl.includes('index.html')) {
+        baseUrl = baseUrl.substring(0, baseUrl.lastIndexOf('index.html'));
+    }
+    if (!baseUrl.endsWith('/')) {
+        baseUrl += '/';
+    }
+
+    const mobileUrl = baseUrl + 'guestbook_mobile.html';
+    const qrApi = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(mobileUrl)}`;
+
+    img.src = qrApi;
+}
+
+window.saveGuestbookEntry = async function () {
+    const nameInput = document.getElementById('guest-name');
+    const msgInput = document.getElementById('guest-message');
+    const btn = document.querySelector('.btn-engrave');
+
+    const name = nameInput.value.trim();
+    const text = msgInput.value.trim();
+
+    if (!name || !text) {
+        alert("Un petit nom et un message, s'il vous plaît ! 😊");
+        return;
+    }
+
+    // UI Feedback
+    const originalBtnText = btn.innerHTML;
+    btn.innerHTML = 'Gravure en cours...';
+    btn.style.opacity = '0.7';
+
+    try {
+        // Save to Cloud
+        await addDoc(collection(db, "guestbook"), {
+            name: name,
+            text: text,
+            date: new Date().toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' }),
+            timestamp: Date.now()
+        });
+
+        // Clear Inputs
+        nameInput.value = '';
+        msgInput.value = '';
+
+        // Reset Btn
+        btn.innerHTML = originalBtnText;
+        btn.style.opacity = '1';
+
+        // Switch to Read Mode
+        showGuestbookReadMode();
+
+    } catch (e) {
+        console.error("Error saving entry: ", e);
+        alert("Oups, une erreur est survenue lors de la sauvegarde.");
+        btn.innerHTML = originalBtnText;
+        btn.style.opacity = '1';
+    }
+}
+
+function renderGuestbook(entries) {
+    const listContainer = document.getElementById('guestbook-entries');
+    if (!listContainer) return;
+
+    listContainer.innerHTML = ''; // Clear
+
+    if (entries.length === 0) {
+        listContainer.innerHTML = '<div style="text-align:center; width:100%; opacity:0.5; font-style:italic;">Soyez le premier à écrire !</div>';
+        return;
+    }
+
+    entries.forEach(entry => {
+        const card = document.createElement('div');
+        card.className = 'guest-note-card';
+        card.innerHTML = `
+            <div class="note-date">${entry.date}</div>
+            <p class="note-message">"${entry.text}"</p>
+            <div class="note-author">- ${entry.name}</div>
+        `;
+        listContainer.appendChild(card);
+    });
+}
+
+// Global Exports
+window.showGuestbookWriteMode = showGuestbookWriteMode;
+window.showGuestbookReadMode = showGuestbookReadMode;
+// saveGuestbookEntry is already attached to window above
+
+// Ensure init is called on load
+document.addEventListener('DOMContentLoaded', () => {
+    initGuestbook();
+    updateGuestbookQR();
+});
 const screensaver = document.getElementById('screensaver');
 
 // Direct interaction listener to ensure dismissal
