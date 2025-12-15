@@ -767,7 +767,7 @@ button {
 .section-header h2 {
     font-family: 'Montserrat', sans-serif;
     font-size: 1.8rem;
-    color: var(--color-text);
+    color: var(--color-accent-terracotta);
     flex-grow: 1;
     text-align: center;
     text-transform: uppercase;
