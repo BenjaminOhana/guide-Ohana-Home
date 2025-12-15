@@ -592,22 +592,36 @@ button {
     background-position: center;
 }
 
+/* Base Slide (Container) - No Transform here to prefer cropping */
 .slide {
     opacity: 0;
-    transform: scale(1) translateZ(0);
-    /* HW acceleration */
-    transition: opacity 3s ease, transform 130s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    will-change: transform, opacity;
-    backface-visibility: hidden;
-    perspective: 1000px;
-    image-rendering: -webkit-optimize-contrast;
-    /* Try to force sharpness */
+    transition: opacity 3s ease;
+    will-change: opacity;
 }
 
 .slide.active {
     opacity: 1;
-    transform: scale(1.15);
-    /* Slow zoom */
+}
+
+/* Layer 1: Background - The Zoomer */
+/* This layer is larger (120%) and blurred, so we can zoom/pan it freely */
+.slide-bg {
+    transform: scale(1);
+    transition: transform 120s linear;
+    /* Constant slow movement */
+    will-change: transform;
+}
+
+.slide.active .slide-bg {
+    transform: scale(1.3);
+    /* Slow zoom in background only */
+}
+
+/* Layer 2: Foreground - The Sharp One */
+/* FIXED: No transform on this layer to prevent cropping */
+.slide-img {
+    transform: scale(1);
+    /* Ensure it stays perfectly contained */
 }
 
 /* Discrete Clock (Top Right) */
