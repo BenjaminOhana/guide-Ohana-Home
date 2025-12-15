@@ -348,49 +348,66 @@
 
                             <!-- Tasks Grid -->
                             <div class="departure-grid" style="width:100%; gap: 10px;">
-                                <!-- Simple Toggle Cards -->
-                                <div class="departure-card" onclick="toggleTask(this)" style="padding: 12px;">
+                                <!-- 1. Linge Sale -->
+                                <div class="departure-card" onclick="toggleTask(this)" style="padding: 12px; position: relative;">
+                                    <div class="step-number">1</div>
                                     <div class="card-status-indicator"></div>
                                     <div style="font-size:1.5rem;">🧺</div>
                                     <div class="card-content"><strong>Linge Sale</strong><br><span style="font-size:0.8rem;">Draps/Serviettes au sol (Cuisine)</span></div>
                                 </div>
-                                <div class="departure-card" onclick="toggleTask(this)" style="padding: 12px;">
+                                
+                                <!-- 2. Poubelles -->
+                                <div class="departure-card" onclick="toggleTask(this)" style="padding: 12px; position: relative;">
+                                    <div class="step-number">2</div>
                                     <div class="card-status-indicator"></div>
                                     <div style="font-size:1.5rem;">🗑️</div>
                                     <div class="card-content"><strong>Poubelles</strong><br><span style="font-size:0.8rem;">Sortir (Face garage)</span></div>
                                 </div>
-                                <div class="departure-card" onclick="toggleTask(this)" style="padding: 12px;">
+                                
+                                <!-- 3. Frigo -->
+                                <div class="departure-card" onclick="toggleTask(this)" style="padding: 12px; position: relative;">
+                                    <div class="step-number">3</div>
                                     <div class="card-status-indicator"></div>
                                     <div style="font-size:1.5rem;">❄️</div>
                                     <div class="card-content"><strong>Frigo</strong><br><span style="font-size:0.8rem;">Vider (Laisser non-périssables)</span></div>
                                 </div>
-                                <div class="departure-card" onclick="toggleTask(this)" style="padding: 12px;">
+                                
+                                <!-- 4. Vaisselle -->
+                                <div class="departure-card" onclick="toggleTask(this)" style="padding: 12px; position: relative;">
+                                    <div class="step-number">4</div>
                                     <div class="card-status-indicator"></div>
                                     <div style="font-size:1.5rem;">🍽️</div>
                                     <div class="card-content"><strong>Vaisselle</strong><br><span style="font-size:0.8rem;">Lancer lave-vaisselle</span></div>
                                 </div>
-                                <div class="departure-card" onclick="toggleTask(this)" style="padding: 12px;">
+                                
+                                <!-- 5. Électricité -->
+                                <div class="departure-card" onclick="toggleTask(this)" style="padding: 12px; position: relative;">
+                                    <div class="step-number">5</div>
                                     <div class="card-status-indicator"></div>
                                     <div style="font-size:1.5rem;">⚡</div>
                                     <div class="card-content"><strong>Électricité</strong><br><span style="font-size:0.8rem;">Tout éteindre</span></div>
                                 </div>
-                                <div class="departure-card" onclick="toggleTask(this)" style="padding: 12px;">
+                                
+                                <!-- 6. Fermer -->
+                                <div class="departure-card" onclick="toggleTask(this)" style="padding: 12px; position: relative;">
+                                    <div class="step-number">6</div>
                                     <div class="card-status-indicator"></div>
                                     <div style="font-size:1.5rem;">🪟</div>
                                     <div class="card-content"><strong>Fermer</strong><br><span style="font-size:0.8rem;">Fenêtres & Portes</span></div>
                                 </div>
                                 
-                                <!-- Final Step -->
-                            <div class="departure-card final-step urgent-keys" onclick="toggleTask(this)" style="padding: 15px; gap: 15px;">
-                                <div class="card-status-indicator"></div>
-                                <div class="card-icon-large" style="font-size:2.5rem;">🔑</div>
-                                <div class="card-content">
-                                    <h4 style="font-size:1.1rem; margin:0;">⚠️ NE PAS OUBLIER</h4>
-                                    <p style="font-size:1rem; font-weight:bold; color:#333; margin-top:2px;">CLÉS + BADGE DANS LA BOÎTE</p>
-                                    <p style="font-size:0.85rem; margin-top:2px;">Boîte n°2 – "POULET Benjamin"</p>
+                                <!-- 7. Final Step (Redesigned) -->
+                                <div class="departure-card final-step" onclick="toggleTask(this)" style="padding: 15px; position: relative; border: 2px solid var(--color-accent-terracotta); background: rgba(186, 74, 44, 0.05);">
+                                    <div class="step-number" style="background: var(--color-accent-terracotta); color: white;">7</div>
+                                    <div class="card-status-indicator"></div>
+                                    <div style="font-size:2rem;">🔑</div>
+                                    <div class="card-content">
+                                        <strong style="color: var(--color-accent-terracotta); font-size: 1.1rem; text-transform: uppercase;">Clés + Badge</strong>
+                                        <div style="font-size:0.9rem; font-weight: 500;">Dans la boîte n°2</div>
+                                        <span style="font-size:0.8rem; color: #666;">Code ou Clé "POULET Benjamin"</span>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
                     </div>
                 </div>
             </div>
