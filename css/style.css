@@ -3063,3 +3063,60 @@ body:not(.on-hub) .global-home-btn {
     color: var(--color-accent-terracotta);
     text-align: right;
 }
+
+/* --- iPad Landscape Optimization for Guestbook --- */
+@media only screen and (min-width: 1024px) and (orientation: landscape) {
+    .guestbook-state.active {
+        flex-direction: row;
+        /* Side-by-side layout */
+        align-items: center;
+        justify-content: center;
+        gap: 40px;
+        /* Space between form and QR */
+        padding: 0 40px;
+        /* Use horizontal padding instead */
+        overflow-y: hidden;
+        /* Should fit without scroll now */
+    }
+
+    /* Adjust Form container */
+    .form-card-centered {
+        margin: 0;
+        max-width: 500px;
+        flex: 1;
+        /* Allow it to take space */
+    }
+
+    /* Transform QR strip into a Side Card */
+    .guestbook-qr-option {
+        flex-direction: column;
+        /* Vertical stack */
+        width: 300px;
+        /* Fixed width side panel */
+        max-width: 300px;
+        margin: 0;
+        /* Remove old margins */
+        text-align: center;
+        padding: 30px;
+        background: rgba(255, 255, 255, 0.8);
+        backdrop-filter: blur(10px);
+        box-shadow: 0 20px 40px rgba(186, 74, 44, 0.05);
+        height: auto;
+        /* Let it fit content */
+        justify-content: center;
+        border-radius: var(--radius-lg);
+    }
+
+    .guestbook-qr-option .qr-text {
+        text-align: center;
+        margin-top: 15px;
+        font-size: 1rem;
+    }
+
+    .qr-code-img {
+        width: 160px;
+        /* Slightly larger for side view */
+        height: 160px;
+        margin-bottom: 0;
+    }
+}
