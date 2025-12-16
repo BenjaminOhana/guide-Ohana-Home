@@ -2715,19 +2715,7 @@ body:not(.on-hub) #view-story.active~.global-home-btn {
     /* Pop out */
 }
 
-/* Screensaver Scrim Gradient (For Text Readability) */
-#screensaver::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 40%;
-    background: linear-gradient(to top, rgba(0, 0, 0, 0.7) 0%, transparent 100%);
-    pointer-events: none;
-    z-index: 10;
-    /* Behind text, above images */
-}
+/* Remove Scrim/Overlay "Parasite" - Text Only */
 
 .screensaver-mantra-container {
     position: absolute;
@@ -2745,21 +2733,21 @@ body:not(.on-hub) #view-story.active~.global-home-btn {
     font-family: 'Caveat', cursive;
     font-size: 4.5rem;
     /* Larger, more cinematic */
-    color: rgba(255, 255, 255, 0.95);
+    color: rgba(255, 255, 255, 1);
+    /* Pure white */
     line-height: 1.1;
 
-    /* Clean Text Style (No Box) */
+    /* PURE TEXT - Zero Backgrounds */
     background: transparent;
-    backdrop-filter: none;
-    -webkit-backdrop-filter: none;
     padding: 0;
-    border-radius: 0;
     border: none;
     box-shadow: none;
-    width: auto;
 
-    text-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
-    /* Strong shadow for pop */
+    /* Stronger Shadow for readability without scrim */
+    text-shadow:
+        0 2px 4px rgba(0, 0, 0, 0.5),
+        0 8px 16px rgba(0, 0, 0, 0.4);
+
     transform-origin: left bottom;
 }
 
