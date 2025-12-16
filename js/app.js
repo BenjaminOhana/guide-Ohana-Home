@@ -288,9 +288,20 @@ const screensaverImages = [
     'assets/img/screensaver/slide_32.png'
 ];
 
+// Utility: Shuffle Array
+function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+}
+
 function initScreensaverSlides() {
     const container = document.querySelector('.slideshow');
     container.innerHTML = ''; // Clear existing
+
+    // SHUFFLE: Randomize order on every init (load/reload)
+    shuffleArray(screensaverImages);
 
     screensaverImages.forEach((imgSrc, index) => {
         const slide = document.createElement('div');
@@ -298,24 +309,19 @@ function initScreensaverSlides() {
         if (index === 0) slide.classList.add('active');
 
         // Check if this is the Special "Review" Slide (Airbnb note)
-        // We use 'includes' because the path might differ slightly
         const isReviewSlide = imgSrc.includes('slide_review_ohana.png');
 
         if (isReviewSlide) {
             // -- SPECIAL LAYOUT: Blur Background + Sharp Image --
-
-            // Layer 1: Blurred Background (Full Cover)
             const bgLayer = document.createElement('div');
             bgLayer.classList.add('slide-bg');
             bgLayer.style.backgroundImage = `url('${imgSrc}')`;
             slide.appendChild(bgLayer);
 
-            // Layer 2: Sharp Image (Contain)
             const imgLayer = document.createElement('div');
             imgLayer.classList.add('slide-img');
             imgLayer.style.backgroundImage = `url('${imgSrc}')`;
             slide.appendChild(imgLayer);
-
         } else {
             // -- STANDARD PLAYOUT: Full Screen Cover --
             slide.style.backgroundImage = `url('${imgSrc}')`;
@@ -329,7 +335,13 @@ function initScreensaverSlides() {
 
     // Reset state
     currentSlide = 0;
-    slidesNodeList = document.querySelectorAll('.slideshow .slide'); // Update ref
+    slidesNodeList = document.querySelectorAll('.slideshow .slide');
+
+    // RESTORE STATE: If we just reloaded while screensaver was on, show it immediately
+    if (sessionStorage.getItem('wasScreensaver') === 'true') {
+        showScreensaver();
+        sessionStorage.removeItem('wasScreensaver');
+    }
 }
 
 let slidesNodeList = []; // Will hold DOM elements
@@ -342,8 +354,6 @@ function resetIdleTimer() {
         hideScreensaver();
     }
 
-    // 5 Minutes Idle Trigger (as requested previously, or keep usage?)
-    // Let's stick to a reasonable idle time before screensaver starts
     idleTimer = setTimeout(showScreensaver, IDLE_TIMEOUT);
 }
 
@@ -356,7 +366,6 @@ function hideScreensaver() {
     screensaver.classList.add('hidden');
     stopSlideshow();
     // Reset Navigation to Hub when waking up?
-    // User request: "Dès que quelqu'un touche l'écran, le site revient au hub"
     goBack();
 }
 
@@ -366,16 +375,28 @@ let slideTimeout;
 function startSlideshow() {
     if (slideTimeout) clearTimeout(slideTimeout);
 
-    // Start cycle - determine how long strictly based on CURRENT slide
+    // Start cycle 
     scheduleNextSlide();
 
-    // Also start clock tick
+    // Start clock 
     updateScreensaverClock();
     if (!clockInterval) clockInterval = setInterval(updateScreensaverClock, 1000);
+
+    // Start Auto-Reload Timer (Check every 10 mins)
+    if (!reloadTimer) reloadTimer = setInterval(checkAndReload, 600000); // 10 mins
 }
 
 let clockInterval;
-let reloadTimer; // Smart Auto-Reload
+let reloadTimer; // Smart Auto-Reload Reference
+
+function checkAndReload() {
+    // Only reload if screensaver is CURRENTLY active (safe time)
+    if (!screensaver.classList.contains('hidden')) {
+        console.log('Auto-Reloading for updates...');
+        sessionStorage.setItem('wasScreensaver', 'true');
+        location.reload();
+    }
+}
 
 function stopSlideshow() {
     if (slideTimeout) clearTimeout(slideTimeout);

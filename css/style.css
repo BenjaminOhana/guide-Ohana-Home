@@ -2362,11 +2362,16 @@ button {
 }
 
 /* --- Global Navigation (Home Button) --- */
+/* --- Global Navigation (Home Button) --- */
 .global-home-btn {
     position: fixed;
     bottom: 30px;
-    left: 50%;
-    transform: translateX(-50%) translateY(100px);
+    right: 30px;
+    /* Moved to right */
+    left: auto;
+    /* Reset left */
+    transform: translateY(100px);
+    /* Remove translateX centered */
     /* Hidden by default */
     background: var(--color-white);
     color: var(--color-text);
@@ -2390,14 +2395,15 @@ button {
 
 /* Show when NOT in Hub */
 body:not(.on-hub) .global-home-btn {
-    transform: translateX(-50%) translateY(0);
+    transform: translateY(0);
     opacity: 1;
     pointer-events: auto;
 }
 
 /* Specific overrides for viewing Story (ensure high contrast) */
-#view-story.active~.global-home-btn {
+body:not(.on-hub) #view-story.active~.global-home-btn {
     background: rgba(255, 255, 255, 0.9);
+
     backdrop-filter: blur(10px);
 }
 
