@@ -178,9 +178,10 @@
         // Logic Helper (Copied from app.js)
         function isTextSlide(src) {
             if (!src) return false;
+            // Specific Whitelist based on Aspect Ratio (> 1.9) & User Input
             return src.includes('slide_story_benjamin.png') || 
                    src.includes('slide_review_ohana.png') || 
-                   src.includes('slide_gen_'); 
+                   src.includes('slide_hq_7.png'); 
         }
 
         // --- PREVIEW LOGIC ---

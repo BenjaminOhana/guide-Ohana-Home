@@ -300,10 +300,11 @@ function shuffleArray(array) {
 // Helper to identify slides containing text (No Mantra, Contain Layout)
 export function isTextSlide(src) {
     if (!src) return false;
-    // Known text slides: Story, Review, Generated Facts ("Le saviez-vous" etc)
+    // Specific Whitelist based on Aspect Ratio (> 1.9) & User Input
+    // These slides have text burned in and should NOT be cropped (Contain + Blur BG)
     return src.includes('slide_story_benjamin.png') ||
         src.includes('slide_review_ohana.png') ||
-        src.includes('slide_gen_'); // Assuming 'gen' slides are facts/text
+        src.includes('slide_hq_7.png'); // Ultra-wide (2.35 ratio) likely "Le Saviez Vous"
 }
 
 function initScreensaverSlides() {
