@@ -474,30 +474,40 @@ const mantras = [
 
 function updateMantra() {
     const mantraEl = document.getElementById('ss-mantra');
-    if (!mantraEl) return;
+    const container = document.querySelector('.screensaver-mantra-container');
+    if (!mantraEl || !container) return;
 
-    // Check if current slide is the story slide (which has its own text)
+    // Check if current slide should hide Mantra (Story or Review)
     const activeSlide = document.querySelector('.slide.active');
-    if (activeSlide && activeSlide.style.backgroundImage.includes('slide_story_benjamin.png')) {
-        mantraEl.style.display = 'none';
-        return;
+    if (activeSlide) {
+        const style = window.getComputedStyle(activeSlide);
+        const bg = activeSlide.style.backgroundImage || '';
+        if (bg.includes('slide_story_benjamin.png') || bg.includes('slide_review_ohana.png')) {
+            container.style.opacity = '0';
+            return;
+        }
     }
 
     // Pick random
     const randomIndex = Math.floor(Math.random() * mantras.length);
     const text = mantras[randomIndex];
 
-    // Reset Animation
-    mantraEl.style.animation = 'none';
-    mantraEl.offsetHeight; /* trigger reflow */
-    mantraEl.style.animation = null;
+    // Smooth Transition: Fade Out -> Change -> Fade In
+    container.style.opacity = '0';
 
-    if (text) {
-        mantraEl.textContent = text;
-        container.style.display = 'block';
-    } else {
-        container.style.display = 'none';
-    }
+    setTimeout(() => {
+        if (text) {
+            mantraEl.textContent = text;
+            container.style.display = 'block';
+            // Small delay to allow display:block to apply before fading in
+            setTimeout(() => {
+                container.style.opacity = '1';
+            }, 50);
+        } else {
+            // Keep hidden if no text
+            container.style.display = 'none';
+        }
+    }, 1000); // Wait for fade out to finish (CSS transition is 1s)
 }
 
 
