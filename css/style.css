@@ -3169,3 +3169,17 @@ body:not(.on-hub) #view-story.active~.global-home-btn {
         margin-bottom: 0;
     }
 }
+/* --- FIXED SCREENSAVER (Black Background Fix) --- */
+#screensaver {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100dvh; /* Dynamic Viewport Height covers safe areas */
+    background: black; /* Hides any white gaps/safe areas */
+    z-index: 9999;
+    overflow: hidden;
+    /* Ensure hardware acceleration */
+    transform: translateZ(0); 
+    -webkit-transform: translateZ(0);
+}
