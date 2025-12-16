@@ -925,7 +925,8 @@ const discoverData = {
     'respirer': {
         title: 'Respirer',
         img: 'assets/img/adresses/respirer_main.jpg',
-        subCategories: {
+        hasSubcategories: true,
+        subcategories: {
             'parc_urbain': {
                 title: 'Parc urbain',
                 img: 'assets/img/adresses/cat_parc_urbain.png',
