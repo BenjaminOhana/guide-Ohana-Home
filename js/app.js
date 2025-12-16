@@ -842,10 +842,25 @@ const discoverData = {
                 // icon: removed as per request
                 places: [
                     {
-                        name: 'La Kaza',
-                        type: 'Restaurant',
-                        review: 'Une ambiance incroyable et des plats raffinés.',
-                        img: 'assets/img/hero/hero_6.png'
+                        name: 'Les Moulins Bleus',
+                        type: 'Italien',
+                        review: 'Un cadre splendide en cour intérieure pour déguster la meilleure lasagne de votre vie, une véritable escapade italienne au cœur de Thionville.',
+                        img: 'assets/img/adresses/resto_moulins_bleus.png',
+                        maps_url: 'https://www.google.com/maps/place/Les+Moulins+Bleus+-+Thionville/@49.358979,6.1659631,17z/data=!3m1!4b1!4m6!3m5!1s0x479524d5e4a210f3:0x6a5191fb268d09c4!8m2!3d49.358979!4d6.168538!16s%2Fg%2F1tf2wr1s?entry=ttu'
+                    },
+                    {
+                        name: 'Arsène & Clara',
+                        type: 'Terrasse & Vins',
+                        review: 'La terrasse incontournable pour un apéro dînatoire au coucher du soleil, où le stress de la journée s\'évapore instantanément.',
+                        img: 'assets/img/adresses/resto_arsene_clara.png',
+                        maps_url: 'https://www.google.com/maps/place/Restaurant+Ars%C3%A8ne+%26+Clara/@49.355,6.16897,17z/data=!3m1!4b1!4m6!3m5!1s0x47952509c1fd9b1d:0xec243f0e0955dfaa!8m2!3d49.355!4d6.16897!16s%2Fg%2F11ll5t9f06?entry=ttu'
+                    },
+                    {
+                        name: 'Le P\'tit Bistro d\'Ethan',
+                        type: 'Bistrot Lorrain',
+                        review: 'Un peu de gastronomie dans un cadre bistrot : cuisine lorraine revisitée et carte renouvelée tous les deux mois.',
+                        img: 'assets/img/adresses/resto_ptit_bistro.png',
+                        maps_url: 'https://www.google.com/maps/search/?api=1&query=Le+P%27tit+Bistro+d%27Ethan+Thionville'
                     }
                 ]
             },
@@ -1032,7 +1047,7 @@ function populateDiscoverDetails(title, img, places, isSub = false) {
                 <div class="place-review">"${place.review}"</div>
                 
                 <div class="place-qr-zone">
-                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=Maps:${place.name}" class="place-qr-placeholder" alt="QR">
+                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=${place.maps_url ? encodeURIComponent(place.maps_url) : 'Maps:' + place.name}" class="place-qr-placeholder" alt="QR">
                     <div class="place-qr-text">Scanner pour<br><strong>L'Itinéraire</strong></div>
                 </div>
             </div>
