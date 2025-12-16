@@ -247,6 +247,7 @@ function preloadScreensaverImages() {
 // New Screensaver Images (Local)
 export const screensaverImages = [
     // Top Priority (Story & Review)
+    'assets/img/screensaver/slide_story_benjamin.png',
     'assets/img/screensaver/slide_review_ohana.png',
 
     // High Quality (HQ)
@@ -302,7 +303,8 @@ export function isTextSlide(src) {
     // Specific Whitelist based on Aspect Ratio (> 1.9) & User Input
     // These slides have text burned in and should NOT be cropped (Contain + Blur BG)
     return src.includes('slide_review_ohana.png') ||
-        src.includes('slide_hq_7.png'); // Ultra-wide (2.35 ratio) likely "Le Saviez Vous"
+        src.includes('slide_story_benjamin.png');
+    // Removed slide_hq_7.png to allow it to be Full Screen (Cover) as requested
 }
 
 function initScreensaverSlides() {
@@ -318,20 +320,43 @@ function initScreensaverSlides() {
         if (index === 0) slide.classList.add('active');
 
         if (isTextSlide(imgSrc)) {
-            // -- TEXT SLIDE LAYOUT: Blur Background + Sharp Image (Contain) --
+            // -- SPECIAL CASE: Review Slide (Dog) --
+            // User Request: "Mets un cadre autour pour remplacer le flou" -> Solid Background Color
+            if (imgSrc.includes('slide_review_ohana.png')) {
+                // Layer 1: Solid Background (Frame effect)
+                const bgLayer = document.createElement('div');
+                bgLayer.classList.add('slide-bg');
+                bgLayer.style.backgroundImage = 'none';
+                bgLayer.style.backgroundColor = '#F9F5F0'; // Cream color from slide
+                // Optional: border? User said "cadre".
+                // Let's add a subtle border to the inner image via a container if needed,
+                // but just a solid clean background replaces the "blur" effectively.
+                slide.appendChild(bgLayer);
 
-            // Layer 1: Blurred Background (Full Cover)
-            const bgLayer = document.createElement('div');
-            bgLayer.classList.add('slide-bg');
-            bgLayer.style.backgroundImage = `url('${imgSrc}')`;
-            bgLayer.style.transform = 'scale(1.1)'; // Overscan to hide blur edges
-            slide.appendChild(bgLayer);
+                // Layer 2: Sharp Image (Contain)
+                const imgLayer = document.createElement('div');
+                imgLayer.classList.add('slide-img');
+                imgLayer.style.backgroundImage = `url('${imgSrc}')`;
+                // Add a border/shadow to "frame" it?
+                imgLayer.style.boxShadow = '0 0 50px rgba(0,0,0,0.1)';
+                slide.appendChild(imgLayer);
 
-            // Layer 2: Sharp Image (Contain)
-            const imgLayer = document.createElement('div');
-            imgLayer.classList.add('slide-img');
-            imgLayer.style.backgroundImage = `url('${imgSrc}')`;
-            slide.appendChild(imgLayer);
+            } else {
+                // -- STANDARD TEXT SLIDE: Blur Background + Sharp Image --
+
+                // Layer 1: Blurred Background (Full Cover)
+                const bgLayer = document.createElement('div');
+                bgLayer.classList.add('slide-bg');
+                bgLayer.style.backgroundImage = `url('${imgSrc}')`;
+                bgLayer.style.transform = 'scale(1.1)'; // Overscan to hide blur edges
+                slide.appendChild(bgLayer);
+
+                // Layer 2: Sharp Image (Contain)
+                const imgLayer = document.createElement('div');
+                imgLayer.classList.add('slide-img');
+                imgLayer.style.backgroundImage = `url('${imgSrc}')`;
+                slide.appendChild(imgLayer);
+            }
 
         } else {
             // -- STANDARD PHOTO LAYOUT: Full Screen Cover --
@@ -393,6 +418,17 @@ function startSlideshow() {
     updateScreensaverClock();
     if (!clockInterval) clockInterval = setInterval(updateScreensaverClock, 1000);
 
+    // Initial Clock Visibility Check (in case first slide is Review)
+    const currentImg = screensaverImages[currentSlide];
+    const clockEl = document.querySelector('.screensaver-clock');
+    if (clockEl) {
+        if (currentImg && currentImg.includes('slide_review_ohana.png')) {
+            clockEl.style.opacity = '0';
+        } else {
+            clockEl.style.opacity = '1';
+        }
+    }
+
     // Start Auto-Reload Timer (Check every 10 mins)
     if (!reloadTimer) reloadTimer = setInterval(checkAndReload, 600000); // 10 mins
 }
@@ -445,6 +481,19 @@ function nextSlide() {
     currentSlide = (currentSlide + 1) % slidesNodeList.length;
     slidesNodeList[currentSlide].classList.add('active');
 
+    // -- CLOCK VISIBILITY LOGIC --
+    // User Request: "Quand cette slide passe, l'heure ne doit pas s'afficher"
+    const currentImg = screensaverImages[currentSlide];
+    const clockEl = document.querySelector('.screensaver-clock');
+    if (clockEl) {
+        if (currentImg.includes('slide_review_ohana.png')) {
+            clockEl.style.opacity = '0';
+            clockEl.style.transition = 'opacity 0.5s ease';
+        } else {
+            clockEl.style.opacity = '1';
+        }
+    }
+
     // Update Mantra occasionally
     updateMantra();
 }
@@ -470,18 +519,38 @@ function updateScreensaverClock() {
 
 // -- Mantras Logic --
 export const mantras = [
-    "Ici et maintenant.",
     "Respirez. Vous êtes chez vous.",
     "Prenez le temps de ne rien faire.",
     "La simplicité est la sophistication suprême.",
     "Ohana signifie famille.",
     "Écoutez le silence.",
-    "Savourez l'instant.",
-    "Douceur de vivre.",
-    "", // Empty chance
-    "", // Empty chance
-    ""  // Empty chance
+    "Juste respirer.",
+    "Accordez-vous une pause.",
+    "Votre intuition a raison.",
+    "Votre énergie ne ment pas.",
+    "Revenez à vous.",
+    "L'âme sait avant la tête.",
+    "Tout commence à l'intérieur.",
+    "Ce qui vous fait vibrer compte.",
+    "Votre histoire s'écrit maintenant.",
+    "Vous êtes plus fort que vos peurs.",
+    "Le monde a besoin de votre lumière.",
+    "Ce que vous cherchez vous cherche aussi.",
+    "Faites-le pour vous.",
+    "", "", "", "", "", "", "", "" // Increased empty chance (8 total ~30%)
 ];
+
+let mantraDeck = [];
+
+function getNextMantra() {
+    if (mantraDeck.length === 0) {
+        // Refill and shuffle
+        mantraDeck = [...mantras];
+        shuffleArray(mantraDeck);
+        console.log("Refilled Mantra Deck:", mantraDeck);
+    }
+    return mantraDeck.pop();
+}
 
 function updateMantra() {
     const mantraEl = document.getElementById('ss-mantra-text');
@@ -509,9 +578,8 @@ function updateMantra() {
         }
     }
 
-    // Pick random
-    const randomIndex = Math.floor(Math.random() * mantras.length);
-    const text = mantras[randomIndex];
+    // Get next unique mantra from deck
+    const text = getNextMantra();
 
     // Smooth Transition: Fade Out -> Change -> Fade In
     container.style.opacity = '0';
@@ -528,7 +596,7 @@ function updateMantra() {
             // Keep hidden if no text
             container.style.display = 'none';
         }
-    }, 1000); // Wait for fade out to finish (CSS transition is 1s)
+    }, 1000); // Wait for fade out to finish
 }
 
 
@@ -765,27 +833,55 @@ setInterval(fetchWeather, 1800000); // Every 30 mins
 const discoverData = {
     'regaler': {
         title: 'Se Régaler',
-        img: 'assets/img/adresses/regaler_main.png', // New Generated Image
-        places: [
-            {
-                name: 'La Kaza',
-                type: 'Restaurant',
-                review: 'Une ambiance incroyable et des plats raffinés.',
-                img: 'assets/img/hero/hero_6.png'
+        img: 'assets/img/adresses/regaler_main.png',
+        hasSubcategories: true,
+        subcategories: {
+            'restaurants': {
+                title: 'Restaurants',
+                img: 'assets/img/hero/hero_6.png',
+                icon: '<img src="assets/img/adresses/icon_restaurant.png" style="width:40px; vertical-align:middle; margin-right:10px;">', // Custom Icon
+                places: [
+                    {
+                        name: 'La Kaza',
+                        type: 'Restaurant',
+                        review: 'Une ambiance incroyable et des plats raffinés.',
+                        img: 'assets/img/hero/hero_6.png'
+                    }
+                ]
             },
-            {
-                name: 'Le Ptit Déj',
-                type: 'Brunch',
-                review: 'Les meilleurs pancakes de la ville, sans hésitation.',
-                img: 'assets/img/hero/hero_2.jpg'
+            'street_food': {
+                title: 'Street Food',
+                img: 'assets/img/hero/hero_5.jpg',
+                icon: '<img src="assets/img/adresses/icon_street_food.png" style="width:40px; vertical-align:middle; margin-right:10px;">', // Custom Icon
+                places: [
+                    {
+                        name: 'Le Ptit Déj',
+                        type: 'Brunch',
+                        review: 'Les meilleurs pancakes de la ville, sans hésitation.',
+                        img: 'assets/img/hero/hero_2.jpg'
+                    },
+                    {
+                        name: 'Sushi Zen',
+                        type: 'Japonais',
+                        review: 'Frais, rapide et délicieux.',
+                        img: 'assets/img/hero/hero_5.jpg'
+                    }
+                ]
             },
-            {
-                name: 'Sushi Zen',
-                type: 'Japonais',
-                review: 'Frais, rapide et délicieux.',
-                img: 'assets/img/hero/hero_5.jpg'
+            'boulangerie': {
+                title: 'Boulangerie',
+                img: 'assets/img/hero/hero_1.jpg', // Placeholder
+                icon: '<img src="assets/img/adresses/icon_boulangerie.png" style="width:40px; vertical-align:middle; margin-right:10px;">', // Custom Icon
+                places: [
+                    {
+                        name: 'Moulin du Centre',
+                        type: 'Boulangerie',
+                        review: 'Baguette tradition au top et croissants pur beurre.',
+                        img: 'assets/img/hero/hero_1.jpg'
+                    }
+                ]
             }
-        ]
+        }
     },
     'respirer': {
         title: 'Respirer',
@@ -839,7 +935,16 @@ const discoverData = {
 
 function renderDiscoverMenu() {
     const container = document.querySelector('.discover-categories-grid');
-    if (!container || container.children.length > 0) return; // Prevent re-render
+    if (!container) return;
+
+    // Reset Header logic in case we came back from Sub-menu
+    const headerTitle = document.querySelector('#discover-menu h2');
+    if (headerTitle) headerTitle.textContent = 'Nos Adresses';
+
+    const backBtn = document.querySelector('#discover-menu .back-btn');
+    backBtn.onclick = goBack; // Reset to Hub navigation
+
+    container.innerHTML = ''; // Verify clean state
 
     Object.keys(discoverData).forEach(key => {
         const cat = discoverData[key];
@@ -860,8 +965,49 @@ function openDiscoverCategory(catKey) {
     const cat = discoverData[catKey];
     if (!cat) return;
 
+    // Handle Sub-categories Logic
+    if (cat.hasSubcategories) {
+        renderSubMenu(cat);
+        return;
+    }
+
     // Populate Details
-    document.getElementById('discover-cat-title').textContent = cat.title;
+    populateDiscoverDetails(cat.title, cat.img, cat.places);
+}
+
+function renderSubMenu(parentCat) {
+    // Re-use the main menu container but populate it with sub-categories
+    const container = document.querySelector('.discover-categories-grid');
+    container.innerHTML = ''; // Clear main menu
+
+    // Update Header Title to Parent Category
+    const headerTitle = document.querySelector('#discover-menu h2');
+    if (headerTitle) headerTitle.textContent = parentCat.title;
+
+    // Change "Retour" behavior to go back to Main Menu
+    const backBtn = document.querySelector('#discover-menu .back-btn');
+    backBtn.onclick = () => renderDiscoverMenu(); // Reset to top level
+
+    Object.keys(parentCat.subcategories).forEach(subKey => {
+        const sub = parentCat.subcategories[subKey];
+        const tile = document.createElement('div');
+        tile.className = 'category-tile';
+        tile.onclick = () => populateDiscoverDetails(sub.title, sub.img, sub.places, true); // True = isSubCategory
+        tile.innerHTML = `
+            <img src="${sub.img}" alt="${sub.title}">
+            <div class="category-overlay">
+                <!-- Icon is now HTML string (img tag) -->
+                <h3>${sub.icon} ${sub.title}</h3> 
+            </div>
+        `;
+        // Optional: Animate in?
+        container.appendChild(tile);
+    });
+}
+
+// Helper to render the final list
+function populateDiscoverDetails(title, img, places, isSub = false) {
+    document.getElementById('discover-cat-title').textContent = title;
     const listContainer = document.getElementById('discover-list');
     listContainer.innerHTML = ''; // Clear
 
@@ -869,13 +1015,12 @@ function openDiscoverCategory(catKey) {
     const heroImg = document.getElementById('discover-hero-img');
     heroImg.style.opacity = '0';
     setTimeout(() => {
-        heroImg.src = cat.img;
+        heroImg.src = img;
         heroImg.style.opacity = '1';
     }, 300);
 
-
     // Render Cards
-    cat.places.forEach(place => {
+    places.forEach(place => {
         const card = document.createElement('div');
         card.className = 'place-card';
         card.innerHTML = `
@@ -896,12 +1041,32 @@ function openDiscoverCategory(catKey) {
         listContainer.appendChild(card);
     });
 
+    // Sub-category back button logic
+    const detailBackBtn = document.querySelector('#discover-details .back-btn');
+    if (isSub) {
+        // Go back to Sub-Menu (which is technically the 'menu' view active with sub-items)
+        detailBackBtn.onclick = closeDiscoverDetailsToSubMenu;
+        // We need to know WHICH parent to go back to. 
+        // Simplification: Go back to 'display menu view', which currently holds the sub-menu.
+    } else {
+        detailBackBtn.onclick = closeDiscoverCategory; // Standard back to root
+    }
+
     // Switch Views
     document.getElementById('discover-menu').classList.remove('active');
     document.getElementById('discover-menu').classList.add('hidden');
 
     document.getElementById('discover-details').classList.remove('hidden');
     document.getElementById('discover-details').classList.add('active');
+}
+
+function closeDiscoverDetailsToSubMenu() {
+    // Just switch view back to menu (which is currently populated with sub-categories)
+    document.getElementById('discover-details').classList.remove('active');
+    document.getElementById('discover-details').classList.add('hidden');
+
+    document.getElementById('discover-menu').classList.remove('hidden');
+    document.getElementById('discover-menu').classList.add('active');
 }
 
 function closeDiscoverCategory() {
