@@ -244,7 +244,8 @@ function preloadScreensaverImages() {
 
 // New Screensaver Images (Local)
 // New Screensaver Images (Local)
-const screensaverImages = [
+// New Screensaver Images (Local)
+export const screensaverImages = [
     // Top Priority (Story & Review)
     'assets/img/screensaver/slide_story_benjamin.png',
     'assets/img/screensaver/slide_review_ohana.png',
@@ -297,7 +298,7 @@ function shuffleArray(array) {
 }
 
 // Helper to identify slides containing text (No Mantra, Contain Layout)
-function isTextSlide(src) {
+export function isTextSlide(src) {
     if (!src) return false;
     // Known text slides: Story, Review, Generated Facts ("Le saviez-vous" etc)
     return src.includes('slide_story_benjamin.png') ||
@@ -468,7 +469,7 @@ function updateScreensaverClock() {
 }
 
 // -- Mantras Logic --
-const mantras = [
+export const mantras = [
     "Ici et maintenant.",
     "Respirez. Vous êtes chez vous.",
     "Prenez le temps de ne rien faire.",
