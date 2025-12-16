@@ -898,10 +898,25 @@ const discoverData = {
                 // icon: removed
                 places: [
                     {
-                        name: 'Moulin du Centre',
-                        type: 'Boulangerie',
-                        review: 'Baguette tradition au top et croissants pur beurre.',
-                        img: 'assets/img/hero/hero_1.jpg'
+                        name: 'Boulangerie Parisienne BERNS',
+                        type: 'Artisan',
+                        review: 'Succombez à la brioche faite maison et au savoir-faire artisanal d\'une boulangerie qui vit au rythme de la ville.',
+                        img: 'assets/img/hero/hero_1.jpg', // Placeholder
+                        maps_url: 'https://www.google.com/maps/place/Boulangerie+Parisienne+BERNS/@49.3618842,6.1706326,16.83z/data=!4m6!3m5!1s0x479524d5171fd4ef:0xb2db1d585fe4b653!8m2!3d49.3619922!4d6.1701664!16s%2Fg%2F1v44cxc_?entry=ttu'
+                    },
+                    {
+                        name: 'La Fabrik des Pains Vagabonds',
+                        type: 'Bio & Éthique',
+                        review: 'Plus qu\'une boulangerie, un lieu de vie bio et éthique où le pain au levain naturel côtoie un café de spécialité d\'exception.',
+                        img: 'assets/img/hero/hero_1.jpg', // Placeholder
+                        maps_url: 'https://www.google.com/maps/place/La+Fabrik+des+Pains+Vagabonds%E2%80%93+Boulangerie+%26+Caf%C3%A9+de+sp%C3%A9cialit%C3%A9/@49.3601055,6.1646082,17z/data=!3m1!4b1!4m6!3m5!1s0x4795258254b8231b:0xfcea6b29f9f43788!8m2!3d49.3601055!4d6.1646082!16s%2Fg%2F11tp30c52k?entry=ttu'
+                    },
+                    {
+                        name: 'Pâtisserie FISCHER',
+                        type: 'Viennoiserie',
+                        review: 'Profitez d\'une pause douce en terrasse sur la place principale avec des viennoiseries d\'une fraîcheur garantie.',
+                        img: 'assets/img/hero/hero_1.jpg', // Placeholder
+                        maps_url: 'https://www.google.com/maps/place/P%C3%A2tisserie+FISCHER/@49.3582503,6.1676219,17z/data=!3m1!4b1!4m6!3m5!1s0x479524d605a163ef:0x3bd838bfc57a5779!8m2!3d49.3582503!4d6.1676219!16s%2Fg%2F1tfb0y1t?entry=ttu'
                     }
                 ]
             }
