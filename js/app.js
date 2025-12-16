@@ -870,16 +870,25 @@ const discoverData = {
                 // icon: removed
                 places: [
                     {
-                        name: 'Le Ptit Déj',
-                        type: 'Brunch',
-                        review: 'Les meilleurs pancakes de la ville, sans hésitation.',
-                        img: 'assets/img/hero/hero_2.jpg'
+                        name: 'Pollux',
+                        type: 'Smash Burger',
+                        review: 'Le meilleur smash burger de Thionville avec du bœuf français et du cheddar maturé, pour une explosion de saveurs street-food authentique.',
+                        img: 'assets/img/hero/hero_1.jpg', // Placeholder
+                        maps_url: 'https://www.google.com/maps/place/POLLUX/@49.3598728,6.1644123,7z/data=!4m10!1m2!2m1!1spollux!3m6!1s0x4795255cd9314d97:0xf1de455566d4ce04!8m2!3d49.3601049!4d6.1647188!15sCgZwb2xsdXhaCCIGcG9sbHV4kgEUaGFtYnVyZ2VyX3Jlc3RhdXJhbnSaASNDaFpEU1VoTk1HOW5TMFZKUTBGblNVTTVNRnA2YkVWUkVBReABAPoBBAgAEEA!16s%2Fg%2F11l5tps7x6?entry=ttu'
                     },
                     {
-                        name: 'Sushi Zen',
-                        type: 'Japonais',
-                        review: 'Frais, rapide et délicieux.',
-                        img: 'assets/img/hero/hero_5.jpg'
+                        name: 'Le Class',
+                        type: 'Snack',
+                        review: 'Sans doute l\'un des meilleurs snacks de la région : des portions généreuses, des produits frais et un accueil au top.',
+                        img: 'assets/img/hero/hero_1.jpg', // Placeholder
+                        maps_url: 'https://www.google.com/maps/place/LE+CLASS/@49.3647733,6.1623457,3a,75y,90t/data=!3m8!1e2!3m6!1sAF1QipN6eVUy1ya-tlAXOe4kYC-dZh7O4rI-Hi-uyC9i!2e10!3e12!6shttps:%2F%2Flh3.googleusercontent.com%2Fp%2FAF1QipN6eVUy1ya-tlAXOe4kYC-dZh7O4rI-Hi-uyC9i%3Dw152-h86-k-no!7i3264!8i1836!4m7!3m6!1s0x47953ad4a82e54a5:0xed538aaf16b9e574!8m2!3d49.3646366!4d6.1623423!10e5!16s%2Fg%2F11c2lbptfs?entry=ttu'
+                    },
+                    {
+                        name: 'Simply Good',
+                        type: 'Snack',
+                        review: 'Simplement l\'un des meilleurs snacks du coin : des recettes maîtrisées, de la fraîcheur dans l\'assiette et une convivialité qui ne déçoit jamais.',
+                        img: 'assets/img/hero/hero_1.jpg', // Placeholder
+                        maps_url: 'https://www.google.com/maps/place/Simply+Good/@49.3577117,6.1631986,17z/data=!3m1!4b1!4m6!3m5!1s0x479525839063699d:0xc09fbb114f5b2453!8m2!3d49.3577117!4d6.1657735!16s%2Fg%2F11q35k1ppz?entry=ttu'
                     }
                 ]
             },
