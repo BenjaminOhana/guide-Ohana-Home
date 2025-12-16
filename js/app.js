@@ -925,20 +925,32 @@ const discoverData = {
     'respirer': {
         title: 'Respirer',
         img: 'assets/img/adresses/respirer_main.jpg',
-        places: [
-            {
-                name: 'Parc Napoléon',
-                type: 'Nature',
-                review: 'Idéal pour un jogging matinal au calme.',
-                img: 'assets/img/hero/hero_3.jpg'
+        subCategories: {
+            'parc_urbain': {
+                title: 'Parc urbain',
+                img: 'assets/img/adresses/cat_parc_urbain.png',
+                places: [
+                    {
+                        name: 'Parc Napoléon',
+                        type: 'Nature',
+                        review: 'Idéal pour un jogging matinal au calme.',
+                        img: 'assets/img/hero/hero_3.jpg'
+                    }
+                ]
             },
-            {
-                name: 'Bords de Moselle',
-                type: 'Promenade',
-                review: 'Un coucher de soleil magnifique sur l\'eau.',
-                img: 'assets/img/hero/hero_8.jpg'
+            'promenade_nature': {
+                title: 'Promenade en nature',
+                img: 'assets/img/adresses/cat_promenade_nature.png',
+                places: [
+                    {
+                        name: 'Bords de Moselle',
+                        type: 'Promenade',
+                        review: 'Un coucher de soleil magnifique sur l\'eau.',
+                        img: 'assets/img/hero/hero_8.jpg'
+                    }
+                ]
             }
-        ]
+        }
     },
     'explorer': {
         title: 'Explorer',
