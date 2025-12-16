@@ -326,6 +326,7 @@ function initScreensaverSlides() {
             const bgLayer = document.createElement('div');
             bgLayer.classList.add('slide-bg');
             bgLayer.style.backgroundImage = `url('${imgSrc}')`;
+            bgLayer.style.transform = 'scale(1.1)'; // Overscan to hide blur edges
             slide.appendChild(bgLayer);
 
             // Layer 2: Sharp Image (Contain)

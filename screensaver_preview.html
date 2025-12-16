@@ -47,6 +47,12 @@
         button:active { transform: translateY(0); }
 
         /* iPad Simulator Frame (Optimized for iPad Air 10.9" - 2360x1640 / 2) */
+        #preview-slideshow {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            background: black; /* Prevent white gaps */
+        }
         .ipad-frame {
             width: 1180px; 
             height: 820px;
@@ -230,6 +236,7 @@
                 const bgLayer = document.createElement('div');
                 bgLayer.className = 'slide-bg';
                 bgLayer.style.backgroundImage = `url('${imgSrc}')`;
+                bgLayer.style.transform = 'scale(1.1)'; // Overscan to hide blur edges
                 slide.appendChild(bgLayer);
 
                 const imgLayer = document.createElement('div');
