@@ -296,6 +296,15 @@ function shuffleArray(array) {
     }
 }
 
+// Helper to identify slides containing text (No Mantra, Contain Layout)
+function isTextSlide(src) {
+    if (!src) return false;
+    // Known text slides: Story, Review, Generated Facts ("Le saviez-vous" etc)
+    return src.includes('slide_story_benjamin.png') ||
+        src.includes('slide_review_ohana.png') ||
+        src.includes('slide_gen_'); // Assuming 'gen' slides are facts/text
+}
+
 function initScreensaverSlides() {
     const container = document.querySelector('.slideshow');
     container.innerHTML = ''; // Clear existing
@@ -308,22 +317,23 @@ function initScreensaverSlides() {
         slide.classList.add('slide');
         if (index === 0) slide.classList.add('active');
 
-        // Check if this is the Special "Review" Slide (Airbnb note)
-        const isReviewSlide = imgSrc.includes('slide_review_ohana.png');
+        if (isTextSlide(imgSrc)) {
+            // -- TEXT SLIDE LAYOUT: Blur Background + Sharp Image (Contain) --
 
-        if (isReviewSlide) {
-            // -- SPECIAL LAYOUT: Blur Background + Sharp Image --
+            // Layer 1: Blurred Background (Full Cover)
             const bgLayer = document.createElement('div');
             bgLayer.classList.add('slide-bg');
             bgLayer.style.backgroundImage = `url('${imgSrc}')`;
             slide.appendChild(bgLayer);
 
+            // Layer 2: Sharp Image (Contain)
             const imgLayer = document.createElement('div');
             imgLayer.classList.add('slide-img');
             imgLayer.style.backgroundImage = `url('${imgSrc}')`;
             slide.appendChild(imgLayer);
+
         } else {
-            // -- STANDARD PLAYOUT: Full Screen Cover --
+            // -- STANDARD PHOTO LAYOUT: Full Screen Cover --
             slide.style.backgroundImage = `url('${imgSrc}')`;
             slide.style.backgroundSize = 'cover';
             slide.style.backgroundPosition = 'center';
@@ -410,15 +420,15 @@ function stopSlideshow() {
 function scheduleNextSlide() {
     if (!slidesNodeList.length) return;
 
-    // Get current image source to determine duration
+    // Get current image source
     const currentImg = screensaverImages[currentSlide];
 
     // DEFAULT DURATION: 3 Minutes
     let duration = 180000;
 
-    // Custom Durations
-    if (currentImg && currentImg.includes('slide_review_ohana.png')) {
-        duration = 600000; // 10 minutes for the Note
+    // Long duration for Text/Read slides
+    if (isTextSlide(currentImg)) {
+        duration = 600000; // 10 minutes for text
     }
 
     slideTimeout = setTimeout(() => {
@@ -477,12 +487,22 @@ function updateMantra() {
     const container = document.querySelector('.screensaver-mantra-container');
     if (!mantraEl || !container) return;
 
-    // Check if current slide should hide Mantra (Story or Review)
+    // Check if current slide should hide Mantra (Text Slides)
     const activeSlide = document.querySelector('.slide.active');
     if (activeSlide) {
+        // Check inline background image to match filename
         const style = window.getComputedStyle(activeSlide);
-        const bg = activeSlide.style.backgroundImage || '';
-        if (bg.includes('slide_story_benjamin.png') || bg.includes('slide_review_ohana.png')) {
+        let bg = activeSlide.style.backgroundImage || ''; // Inline style preferred
+
+        // Fix: If inline is empty, try to find child with class slide-img
+        if (!bg || bg === 'none') {
+            const imgLayer = activeSlide.querySelector('.slide-img');
+            if (imgLayer) {
+                bg = imgLayer.style.backgroundImage || '';
+            }
+        }
+
+        if (isTextSlide(bg)) {
             container.style.opacity = '0';
             return;
         }
