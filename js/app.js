@@ -838,8 +838,8 @@ const discoverData = {
         subcategories: {
             'restaurants': {
                 title: 'Restaurants',
-                img: 'assets/img/hero/hero_6.png',
-                icon: '<img src="assets/img/adresses/icon_restaurant.png" style="width:40px; vertical-align:middle; margin-right:10px;">', // Custom Icon
+                img: 'assets/img/adresses/cat_restaurant.png',
+                // icon: removed as per request
                 places: [
                     {
                         name: 'La Kaza',
@@ -851,8 +851,8 @@ const discoverData = {
             },
             'street_food': {
                 title: 'Street Food',
-                img: 'assets/img/hero/hero_5.jpg',
-                icon: '<img src="assets/img/adresses/icon_street_food.png" style="width:40px; vertical-align:middle; margin-right:10px;">', // Custom Icon
+                img: 'assets/img/adresses/cat_street_food.png',
+                // icon: removed
                 places: [
                     {
                         name: 'Le Ptit Déj',
@@ -870,8 +870,8 @@ const discoverData = {
             },
             'boulangerie': {
                 title: 'Boulangerie',
-                img: 'assets/img/hero/hero_1.jpg', // Placeholder
-                icon: '<img src="assets/img/adresses/icon_boulangerie.png" style="width:40px; vertical-align:middle; margin-right:10px;">', // Custom Icon
+                img: 'assets/img/adresses/cat_boulangerie.png',
+                // icon: removed
                 places: [
                     {
                         name: 'Moulin du Centre',
@@ -996,8 +996,7 @@ function renderSubMenu(parentCat) {
         tile.innerHTML = `
             <img src="${sub.img}" alt="${sub.title}">
             <div class="category-overlay">
-                <!-- Icon is now HTML string (img tag) -->
-                <h3>${sub.icon} ${sub.title}</h3> 
+                <h3>${sub.title}</h3> 
             </div>
         `;
         // Optional: Animate in?
