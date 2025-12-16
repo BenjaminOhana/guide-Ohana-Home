@@ -2729,7 +2729,7 @@ body:not(.on-hub) #view-story.active~.global-home-btn {
     /* Slower, smoother fade */
 }
 
-#ss-mantra {
+#ss-mantra-text {
     font-family: 'Caveat', cursive;
     font-size: 4.5rem;
     /* Larger, more cinematic */
@@ -2756,15 +2756,21 @@ body:not(.on-hub) #view-story.active~.global-home-btn {
     bottom: 40px;
     width: 100%;
     text-align: center;
-    color: rgba(255, 255, 255, 0.6);
+    color: rgba(255, 255, 255, 0.9);
+    /* Much brighter */
     font-family: 'Raleway', sans-serif;
-    font-size: 1rem;
-    letter-spacing: 2px;
+    font-size: 1.1rem;
+    /* Slightly larger */
+    letter-spacing: 3px;
+    font-weight: 600;
+    /* Bolder */
     text-transform: uppercase;
-    animation: pulse 3s infinite;
+    animation: pulse 4s infinite;
+    /* Slower pulse */
     z-index: 100;
-    /* Force above background */
     pointer-events: none;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+    /* Readable on white */
 }
 
 /* Guestbook QR Option */

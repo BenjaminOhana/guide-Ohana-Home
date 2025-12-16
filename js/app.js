@@ -473,7 +473,7 @@ const mantras = [
 ];
 
 function updateMantra() {
-    const mantraEl = document.getElementById('ss-mantra');
+    const mantraEl = document.getElementById('ss-mantra-text');
     const container = document.querySelector('.screensaver-mantra-container');
     if (!mantraEl || !container) return;
 
