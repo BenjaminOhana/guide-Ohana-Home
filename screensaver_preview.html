@@ -25,7 +25,6 @@
 
         h1 { margin-bottom: 20px; font-weight: 300; }
 
-        /* Controls */
         .controls {
             margin-bottom: 20px;
             display: flex;
@@ -58,7 +57,6 @@
             position: relative;
             overflow: hidden;
             flex-shrink: 0;
-             /* Scale down for smaller screens */
             transform-origin: top center;
         }
         
@@ -94,16 +92,15 @@
 </head>
 <body>
 
-    <h1>iPad Screensaver Preview</h1>
+    <h1>iPad Screensaver Preview (Version Autonome)</h1>
 
     <div class="controls">
         <button id="btn-prev">⬅️ Précédent</button>
         <button id="btn-next">Suivant ➡️</button>
-        <button id="btn-refresh">🔄 Recharger Données</button>
+        <button id="btn-refresh">🔄 Recharger</button>
     </div>
 
     <div class="ipad-frame">
-        <!-- Replicating the index.html structure exactly -->
         <div id="screensaver">
             <div class="slideshow" id="preview-slideshow"></div>
             
@@ -129,20 +126,74 @@
         <div class="debug-row"><span>Layout :</span> <span id="info-layout">...</span></div>
     </div>
 
-    <script type="module">
-        import { screensaverImages, isTextSlide, mantras } from './js/app.js';
+    <script>
+        // --- EMBEDDED DATA & LOGIC (Pour contourner la sécurité locale) ---
+
+        // List of Images (Copied from app.js)
+        const screensaverImages = [
+            'assets/img/screensaver/slide_story_benjamin.png',
+            'assets/img/screensaver/slide_review_ohana.png',
+            'assets/img/screensaver/slide_hq_1.png',
+            'assets/img/screensaver/slide_hq_3.png',
+            'assets/img/screensaver/slide_hq_4.png',
+            'assets/img/screensaver/slide_hq_5.png',
+            'assets/img/screensaver/slide_hq_6.png',
+            'assets/img/screensaver/slide_hq_7.png',
+            'assets/img/screensaver/slide_hq_9.png',
+            'assets/img/screensaver/slide_hq_10.png',
+            'assets/img/screensaver/slide_hq_12.png',
+            'assets/img/screensaver/slide_gen_1.png',
+            'assets/img/screensaver/slide_gen_2.png',
+            'assets/img/screensaver/slide_gen_4.png',
+            'assets/img/screensaver/slide_gen_5.png',
+            'assets/img/screensaver/slide_gen_6.png',
+            'assets/img/screensaver/slide_gen_7.png',
+            'assets/img/screensaver/slide_8.png',
+            'assets/img/screensaver/slide_13.png',
+            'assets/img/screensaver/slide_17.png',
+            'assets/img/screensaver/slide_18.png',
+            'assets/img/screensaver/slide_19.png',
+            'assets/img/screensaver/slide_20.png',
+            'assets/img/screensaver/slide_21.png',
+            'assets/img/screensaver/slide_22.png',
+            'assets/img/screensaver/slide_23.png',
+            'assets/img/screensaver/slide_24.png',
+            'assets/img/screensaver/slide_26.png',
+            'assets/img/screensaver/slide_27.png',
+            'assets/img/screensaver/slide_28.png',
+            'assets/img/screensaver/slide_29.png',
+            'assets/img/screensaver/slide_30.png',
+            'assets/img/screensaver/slide_31.png',
+            'assets/img/screensaver/slide_32.png'
+        ];
+
+        const mantras = [
+            "Ici et maintenant.",
+            "Respirez. Vous êtes chez vous.",
+            "Prenez le temps de ne rien faire.",
+            "La simplicité est la sophistication suprême.",
+            "Ohana signifie famille."
+        ];
+
+        // Logic Helper (Copied from app.js)
+        function isTextSlide(src) {
+            if (!src) return false;
+            return src.includes('slide_story_benjamin.png') || 
+                   src.includes('slide_review_ohana.png') || 
+                   src.includes('slide_gen_'); 
+        }
+
+        // --- PREVIEW LOGIC ---
 
         let currentIndex = 0;
         const container = document.getElementById('preview-slideshow');
         const mantraEl = document.getElementById('ss-mantra-text');
         const mantraContainer = document.querySelector('.screensaver-mantra-container');
 
-        // Initial Mantra Test Text
-        mantraEl.textContent = "Ceci est un test de mantra.";
-        mantraContainer.style.display = 'block';
+        // Initial Mantra
+        mantraEl.textContent = "Test Mantra";
         
         function renderSlide(index) {
-            // Bounds check
             if (index < 0) index = screensaverImages.length - 1;
             if (index >= screensaverImages.length) index = 0;
             currentIndex = index;
@@ -150,24 +201,31 @@
             const imgSrc = screensaverImages[currentIndex];
             const isText = isTextSlide(imgSrc);
 
-            // Update Debug Info
+            // Update Debug UI
             document.getElementById('info-filename').textContent = imgSrc.split('/').pop();
-            document.getElementById('info-type').textContent = isText ? "TEXT SLIDE (Protected)" : "PHOTO (Standard)";
-            document.getElementById('info-type').className = isText ? "tag-false" : "tag-true"; // Red for text (protected), Green for photo
             
-            document.getElementById('info-mantra').textContent = isText ? "NON (Force Hide)" : "OUI (Visible)";
-            document.getElementById('info-mantra').className = isText ? "tag-false" : "tag-true";
-            
-            document.getElementById('info-layout').textContent = isText ? "CONTAIN (No Cut)" : "COVER (Full)";
+            if (isText) {
+                 document.getElementById('info-type').textContent = "TEXT SLIDE (Protected)";
+                 document.getElementById('info-type').className = "tag-false"; 
+                 document.getElementById('info-mantra').textContent = "NON (Hidden)";
+                 document.getElementById('info-mantra').className = "tag-false";
+                 document.getElementById('info-layout').textContent = "CONTAIN (Safe)";
+            } else {
+                 document.getElementById('info-type').textContent = "PHOTO (Standard)";
+                 document.getElementById('info-type').className = "tag-true"; 
+                 document.getElementById('info-mantra').textContent = "OUI (Visible)";
+                 document.getElementById('info-mantra').className = "tag-true";
+                 document.getElementById('info-layout').textContent = "COVER (Full)";
+            }
 
-            // DOM Construction (Exact replica of app.js)
+            // Render
             container.innerHTML = '';
             
             const slide = document.createElement('div');
-            slide.className = 'slide active'; // Force active
+            slide.className = 'slide active'; 
 
             if (isText) {
-                // -- TEXT SLIDE LAYOUT --
+                // TEXT LAYOUT
                 const bgLayer = document.createElement('div');
                 bgLayer.className = 'slide-bg';
                 bgLayer.style.backgroundImage = `url('${imgSrc}')`;
@@ -181,31 +239,26 @@
                 // Hide Mantra
                 mantraContainer.style.opacity = '0';
             } else {
-                // -- STANDARD LAYOUT --
+                // PHOTO LAYOUT
                 slide.style.backgroundImage = `url('${imgSrc}')`;
                 slide.style.backgroundSize = 'cover';
                 slide.style.backgroundPosition = 'center';
                 slide.style.backgroundRepeat = 'no-repeat';
 
-                // Show Mantra (if we want to simulate it appearing)
+                // Show Mantra
                 mantraContainer.style.opacity = '1';
-                mantraEl.textContent = mantras[Math.floor(Math.random() * mantras.length)] || "Mantra Test";
+                mantraEl.textContent = mantras[Math.floor(Math.random() * mantras.length)];
                 mantraContainer.style.display = 'block';
             }
 
             container.appendChild(slide);
         }
 
-        // Controls
         document.getElementById('btn-prev').addEventListener('click', () => renderSlide(currentIndex - 1));
         document.getElementById('btn-next').addEventListener('click', () => renderSlide(currentIndex + 1));
-        document.getElementById('btn-refresh').addEventListener('click', () => {
-            location.reload();
-        });
+        document.getElementById('btn-refresh').addEventListener('click', () => location.reload());
 
-        // Init
         renderSlide(0);
-
     </script>
 </body>
 </html>
