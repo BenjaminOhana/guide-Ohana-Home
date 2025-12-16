@@ -46,12 +46,12 @@
         button:hover { background: #666; transform: translateY(-2px); }
         button:active { transform: translateY(0); }
 
-        /* iPad Simulator Frame */
+        /* iPad Simulator Frame (Optimized for iPad Air 10.9" - 2360x1640 / 2) */
         .ipad-frame {
-            width: 1024px;
-            height: 768px;
+            width: 1180px; 
+            height: 820px;
             background: black;
-            border-radius: 30px;
+            border-radius: 40px;
             border: 40px solid #111; /* Bezel */
             box-shadow: 0 50px 100px rgba(0,0,0,0.5), inset 0 0 0 2px #333;
             position: relative;
@@ -109,7 +109,7 @@
                 <div id="ss-date">Mardi 16 Décembre</div>
             </div>
 
-            <div class="screensaver-mantra-container">
+            <div class="screensaver-mantra-wrapper">
                 <div id="ss-mantra-text"></div>
             </div>
 
@@ -188,7 +188,7 @@
         let currentIndex = 0;
         const container = document.getElementById('preview-slideshow');
         const mantraEl = document.getElementById('ss-mantra-text');
-        const mantraContainer = document.querySelector('.screensaver-mantra-container');
+        const mantraContainer = document.querySelector('.screensaver-mantra-wrapper');
 
         // Initial Mantra
         mantraEl.textContent = "Test Mantra";

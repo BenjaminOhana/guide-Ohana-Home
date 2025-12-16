@@ -485,7 +485,7 @@ export const mantras = [
 
 function updateMantra() {
     const mantraEl = document.getElementById('ss-mantra-text');
-    const container = document.querySelector('.screensaver-mantra-container');
+    const container = document.querySelector('.screensaver-mantra-wrapper');
     if (!mantraEl || !container) return;
 
     // Check if current slide should hide Mantra (Text Slides)

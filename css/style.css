@@ -2716,16 +2716,21 @@ body:not(.on-hub) #view-story.active~.global-home-btn {
 
 /* Remove Scrim/Overlay "Parasite" - Text Only */
 
-.screensaver-mantra-container {
+.screensaver-mantra-wrapper {
     position: absolute;
     bottom: 120px;
     left: 60px;
     max-width: 800px;
-    /* Wider allow */
     z-index: 100;
     pointer-events: none;
     transition: opacity 1s ease;
-    /* Slower, smoother fade */
+
+    /* NUCLEAR CLEANUP */
+    background: transparent !important;
+    background-image: none !important;
+    box-shadow: none !important;
+    backdrop-filter: none !important;
+    border: none !important;
 }
 
 #ss-mantra-text {
