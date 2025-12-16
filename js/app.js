@@ -247,7 +247,6 @@ function preloadScreensaverImages() {
 // New Screensaver Images (Local)
 export const screensaverImages = [
     // Top Priority (Story & Review)
-    'assets/img/screensaver/slide_story_benjamin.png',
     'assets/img/screensaver/slide_review_ohana.png',
 
     // High Quality (HQ)
@@ -302,8 +301,7 @@ export function isTextSlide(src) {
     if (!src) return false;
     // Specific Whitelist based on Aspect Ratio (> 1.9) & User Input
     // These slides have text burned in and should NOT be cropped (Contain + Blur BG)
-    return src.includes('slide_story_benjamin.png') ||
-        src.includes('slide_review_ohana.png') ||
+    return src.includes('slide_review_ohana.png') ||
         src.includes('slide_hq_7.png'); // Ultra-wide (2.35 ratio) likely "Le Saviez Vous"
 }
 

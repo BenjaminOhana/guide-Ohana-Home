@@ -137,7 +137,6 @@
 
         // List of Images (Copied from app.js)
         const screensaverImages = [
-            'assets/img/screensaver/slide_story_benjamin.png',
             'assets/img/screensaver/slide_review_ohana.png',
             'assets/img/screensaver/slide_hq_1.png',
             'assets/img/screensaver/slide_hq_3.png',
@@ -185,8 +184,7 @@
         function isTextSlide(src) {
             if (!src) return false;
             // Specific Whitelist based on Aspect Ratio (> 1.9) & User Input
-            return src.includes('slide_story_benjamin.png') || 
-                   src.includes('slide_review_ohana.png') || 
+            return src.includes('slide_review_ohana.png') || 
                    src.includes('slide_hq_7.png'); 
         }
 
