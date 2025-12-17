@@ -342,7 +342,7 @@ function preloadScreensaverImages() {
 export const screensaverImages = [
     // Top Priority (Story & Review)
     'assets/img/screensaver/slide_story_benjamin.png',
-    'assets/img/screensaver/slide_review_ohana.png',
+    'assets/img/screensaver/slide_review_ohana.jpg',
 
     // High Quality (HQ) - Optimized
     'assets/img/screensaver/slide_hq_1.png.jpg',
