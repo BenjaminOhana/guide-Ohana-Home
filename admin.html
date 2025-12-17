@@ -149,6 +149,11 @@
                 Mettre à jour
             </button>
 
+            <!-- Remote Refresh Button -->
+            <button id="refresh-btn" onclick="triggerRemoteRefresh()" style="margin-top: 15px; background: white; border: 2px solid var(--color-accent-terracotta); color: var(--color-accent-terracotta);">
+                 🔄 Rafraîchir les iPads
+            </button>
+
             <div id="app-msg" class="status-msg"></div>
         </div>
 
@@ -221,6 +226,37 @@
                 console.error("Error writing document: ", error);
                 btn.textContent = "Erreur";
                 msg.textContent = "Problème de connexion...";
+                msg.className = "status-msg status-error";
+                btn.disabled = false;
+            }
+        };
+
+        // Trigger Remote Refresh
+        window.triggerRemoteRefresh = async () => {
+            const btn = document.getElementById('refresh-btn');
+            const msg = document.getElementById('app-msg');
+
+            btn.disabled = true;
+            btn.textContent = "Envoi...";
+
+            try {
+                await setDoc(doc(db, "guest_settings", "home"), {
+                    refreshTrigger: Date.now()
+                }, { merge: true });
+
+                btn.textContent = "Ordre envoyé !";
+                msg.textContent = "Les iPads vont se rafraîchir 🔄";
+                msg.className = "status-msg status-success";
+
+                setTimeout(() => {
+                    btn.disabled = false;
+                    btn.textContent = "🔄 Rafraîchir les iPads";
+                }, 2000);
+
+            } catch (error) {
+                console.error("Error triggering refresh: ", error);
+                btn.textContent = "Erreur";
+                msg.textContent = "Problème connexion...";
                 msg.className = "status-msg status-error";
                 btn.disabled = false;
             }

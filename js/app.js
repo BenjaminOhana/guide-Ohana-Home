@@ -26,6 +26,20 @@ function initGuestNameListener() {
                 // If it's a person, show "Bienvenue à Ohana Home" (or keep standard)
                 welcomeEl.textContent = "Bienvenue à Ohana Home";
             }
+
+            // -- REMOTE REFRESH LOGIC --
+            // If admin triggers a refresh, reload page
+            if (data.refreshTrigger) {
+                const lastRefresh = sessionStorage.getItem('lastRefreshTimestamp');
+                if (lastRefresh && data.refreshTrigger > lastRefresh) {
+                    console.log("Remote refresh received. Reloading...");
+                    sessionStorage.setItem('lastRefreshTimestamp', Date.now());
+                    window.location.reload(true);
+                } else if (!lastRefresh) {
+                    // First load, just set the timestamp so we don't reload immediately loop
+                    sessionStorage.setItem('lastRefreshTimestamp', Date.now());
+                }
+            }
         }
     });
 }
@@ -455,8 +469,8 @@ function startSlideshow() {
         }
     }
 
-    // Start Auto-Reload Timer (Check every 10 mins)
-    if (!reloadTimer) reloadTimer = setInterval(checkAndReload, 600000); // 10 mins
+    // Auto-Reload Timer REMOVED (Replaced by Remote Refresh)
+    // if (!reloadTimer) reloadTimer = setInterval(checkAndReload, 600000);
 }
 
 let clockInterval;
