@@ -96,7 +96,11 @@ button {
     height: var(--vh, 100dvh);
     position: relative;
     overflow: hidden;
-    padding: var(--gap-lg);
+
+    /* iPad/PWA Centering & Safe Area Fix */
+    /* Applied directly here since .main-wrapper is missing in HTML */
+    padding: max(var(--gap-lg), env(safe-area-inset-top) + 20px) max(var(--gap-lg), env(safe-area-inset-right)) max(var(--gap-lg), env(safe-area-inset-bottom) + 20px) max(var(--gap-lg), env(safe-area-inset-left));
+
     display: flex;
     flex-direction: column;
 }
@@ -207,8 +211,8 @@ button {
 #view-hub {
     display: flex;
     /* Override grid */
-    padding: var(--gap-lg);
-    /* Manual padding for Hub only */
+    padding: 0;
+    /* Padding is now handled by #app to ensure global safe-area compliance */
     background: transparent;
     /* Let body bg show through */
 }
