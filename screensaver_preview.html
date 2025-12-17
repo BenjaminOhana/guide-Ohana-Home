@@ -137,16 +137,17 @@
 
         // List of Images (Copied from app.js)
         const screensaverImages = [
-            'assets/img/screensaver/slide_review_ohana.png',
-            'assets/img/screensaver/slide_hq_1.png',
-            'assets/img/screensaver/slide_hq_3.png',
-            'assets/img/screensaver/slide_hq_4.png',
-            'assets/img/screensaver/slide_hq_5.png',
-            'assets/img/screensaver/slide_hq_6.png',
-            'assets/img/screensaver/slide_hq_7.png',
-            'assets/img/screensaver/slide_hq_9.png',
-            'assets/img/screensaver/slide_hq_10.png',
-            'assets/img/screensaver/slide_hq_12.png',
+            'assets/img/screensaver/slide_ben_overlay.jpg',
+            'assets/img/screensaver/slide_review_ohana.jpg',
+            'assets/img/screensaver/slide_hq_1.png.jpg',
+            'assets/img/screensaver/slide_hq_3.png.jpg',
+            'assets/img/screensaver/slide_hq_4.png.jpg',
+            'assets/img/screensaver/slide_hq_5.png.jpg',
+            'assets/img/screensaver/slide_hq_6.png.jpg',
+            'assets/img/screensaver/slide_hq_7.png.jpg',
+            'assets/img/screensaver/slide_hq_9.png.jpg',
+            'assets/img/screensaver/slide_hq_10.png.jpg',
+            'assets/img/screensaver/slide_hq_12.png.jpg',
             'assets/img/screensaver/slide_gen_1.png',
             'assets/img/screensaver/slide_gen_2.png',
             'assets/img/screensaver/slide_gen_4.png',
@@ -185,6 +186,7 @@
             if (!src) return false;
             // Specific Whitelist based on Aspect Ratio (> 1.9) & User Input
             return src.includes('slide_review_ohana.png') || 
+                   src.includes('slide_ben_overlay.jpg') ||
                    src.includes('slide_hq_7.png'); 
         }
 
@@ -229,7 +231,82 @@
             const slide = document.createElement('div');
             slide.className = 'slide active'; 
 
-            if (isText) {
+            if (imgSrc.includes('slide_ben_overlay.jpg')) {
+                // -- BEN OVERLAY SIMULATION --
+                slide.style.backgroundImage = `url('${imgSrc}')`;
+                slide.style.backgroundSize = 'cover';
+                slide.style.backgroundPosition = 'center';
+
+                // Overlay
+                const overlay = document.createElement('div');
+                overlay.style.position = 'absolute';
+                overlay.style.left = '0';
+                overlay.style.top = '0';
+                overlay.style.width = '55%';
+                overlay.style.height = '100%';
+                overlay.style.background = 'linear-gradient(to right, rgba(26,26,26,0.95) 0%, rgba(26,26,26,0.8) 60%, transparent 100%)';
+                overlay.style.display = 'flex';
+                overlay.style.flexDirection = 'column';
+                overlay.style.justifyContent = 'center';
+                overlay.style.paddingLeft = '60px'; // scaled down bit for preview
+                overlay.style.zIndex = '10';
+
+                // Text
+                const textHTML = `
+                    <p style="color: white; font-size: 1.5rem; line-height: 1.3; margin-bottom: 20px; font-family: 'Cormorant Garamond', serif;">Aujourd'hui, mon bureau n'a plus de murs.</p>
+                    <p style="color: white; font-size: 1.5rem; line-height: 1.3; margin-bottom: 20px; font-family: 'Cormorant Garamond', serif;">J'accompagne les entrepreneurs à trouver leur propre liberté.</p>
+                    <p style="color: white; font-size: 1.5rem; line-height: 1.3; margin-bottom: 30px; font-family: 'Cormorant Garamond', serif;">J'ai conçu ce lieu pour qu'il vous inspire la vôtre.</p>
+                `;
+                const textContainer = document.createElement('div');
+                textContainer.innerHTML = textHTML;
+                textContainer.style.maxWidth = '400px';
+                overlay.appendChild(textContainer);
+
+                // Signature
+                const signature = document.createElement('div');
+                signature.textContent = "Benjamin - Votre Hôte";
+                signature.style.color = '#C17B5F';
+                signature.style.fontSize = '1.2rem';
+                signature.style.fontWeight = 'bold';
+                signature.style.fontFamily = "'Plus Jakarta Sans', sans-serif";
+                signature.style.marginBottom = '40px';
+                overlay.appendChild(signature);
+
+                // QR Wrapper
+                const qrWrapper = document.createElement('div');
+                qrWrapper.style.display = 'inline-flex';
+                qrWrapper.style.alignItems = 'center';
+                qrWrapper.style.gap = '15px';
+                qrWrapper.style.background = 'rgba(255, 255, 255, 0.1)';
+                qrWrapper.style.padding = '12px 20px';
+                qrWrapper.style.borderRadius = '12px';
+                qrWrapper.style.backdropFilter = 'blur(10px)';
+                qrWrapper.style.border = '1px solid rgba(255, 255, 255, 0.15)';
+                qrWrapper.style.maxWidth = 'fit-content';
+
+                const qrImg = document.createElement('img');
+                qrImg.src = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&bgcolor=255-255-255&data=${encodeURIComponent("https://entrepreneuraligne.fr")}`;
+                qrImg.style.width = '80px';
+                qrImg.style.height = '80px';
+                qrImg.style.borderRadius = '6px';
+                qrWrapper.appendChild(qrImg);
+
+                const qrInfo = document.createElement('div');
+                qrInfo.style.display = 'flex';
+                qrInfo.style.flexDirection = 'column';
+                qrInfo.innerHTML = `
+                    <span style="color:white; font-size: 0.9rem; font-weight: 600; letter-spacing: 1px; text-transform: uppercase;">En savoir plus</span>
+                    <span style="color:white; font-size: 0.8rem; font-style: italic; opacity: 0.8;">Et oui, je fais ma pub 😂</span>
+                `;
+                qrWrapper.appendChild(qrInfo);
+                
+                overlay.appendChild(qrWrapper);
+                slide.appendChild(overlay);
+
+                // Hide Mantra
+                mantraContainer.style.opacity = '0';
+
+            } else if (isText) {
                 // TEXT LAYOUT
                 const bgLayer = document.createElement('div');
                 bgLayer.className = 'slide-bg';

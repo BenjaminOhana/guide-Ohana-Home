@@ -340,8 +340,9 @@ function preloadScreensaverImages() {
 // New Screensaver Images (Local)
 // New Screensaver Images (Local)
 export const screensaverImages = [
-    // Top Priority (Story & Review)
-    'assets/img/screensaver/slide_story_benjamin.png',
+    // Top Priority (Story & Review & Ben Overlay)
+    // 'assets/img/screensaver/slide_story_benjamin.png', // REMOVED: File missing
+    'assets/img/screensaver/slide_ben_overlay.jpg',
     'assets/img/screensaver/slide_review_ohana.jpg',
 
     // High Quality (HQ) - Optimized
@@ -351,8 +352,10 @@ export const screensaverImages = [
     'assets/img/screensaver/slide_hq_5.png.jpg',
     'assets/img/screensaver/slide_hq_6.png.jpg',
     'assets/img/screensaver/slide_hq_7.png.jpg',
+    'assets/img/screensaver/slide_hq_8.png.jpg',
     'assets/img/screensaver/slide_hq_9.png.jpg',
     'assets/img/screensaver/slide_hq_10.png.jpg',
+    'assets/img/screensaver/slide_hq_11.png.jpg',
     'assets/img/screensaver/slide_hq_12.png.jpg',
 
     // Generated (AI)
@@ -365,6 +368,7 @@ export const screensaverImages = [
 
     // Standard (Existing)
     'assets/img/screensaver/slide_8.png',
+    'assets/img/screensaver/slide_12.png',
     'assets/img/screensaver/slide_13.png',
     'assets/img/screensaver/slide_17.png',
     'assets/img/screensaver/slide_18.png',
@@ -396,8 +400,8 @@ export function isTextSlide(src) {
     if (!src) return false;
     // Specific Whitelist based on Aspect Ratio (> 1.9) & User Input
     // These slides have text burned in and should NOT be cropped (Contain + Blur BG)
-    return src.includes('slide_review_ohana.png') ||
-        src.includes('slide_story_benjamin.png');
+    return src.includes('slide_review_ohana.jpg') ||
+        src.includes('slide_ben_overlay.jpg');
     // Removed slide_hq_7.png to allow it to be Full Screen (Cover) as requested
 }
 
@@ -416,7 +420,7 @@ function initScreensaverSlides() {
         if (isTextSlide(imgSrc)) {
             // -- SPECIAL CASE: Review Slide (Dog) --
             // User Request: "Mets un cadre autour pour remplacer le flou" -> Solid Background Color
-            if (imgSrc.includes('slide_review_ohana.png')) {
+            if (imgSrc.includes('slide_review_ohana.jpg')) {
                 // Layer 1: Solid Background (Frame effect)
                 const bgLayer = document.createElement('div');
                 bgLayer.classList.add('slide-bg');
@@ -434,6 +438,84 @@ function initScreensaverSlides() {
                 // Add a border/shadow to "frame" it?
                 imgLayer.style.boxShadow = '0 0 50px rgba(0,0,0,0.1)';
                 slide.appendChild(imgLayer);
+
+            } else if (imgSrc.includes('slide_ben_overlay.jpg')) {
+                // -- SPECIAL CASE: Ben's Photo + Overlay Text + QR (User Request) --
+                slide.style.display = 'flex';
+                slide.style.flexDirection = 'row';
+                slide.style.backgroundColor = '#1a1a1a'; // Dark bg base
+
+                // Left Panel: Text + QR
+                const leftPanel = document.createElement('div');
+                leftPanel.style.flex = '1';
+                leftPanel.style.padding = '60px';
+                leftPanel.style.display = 'flex';
+                leftPanel.style.flexDirection = 'column';
+                leftPanel.style.justifyContent = 'center';
+                leftPanel.style.alignItems = 'flex-start';
+                leftPanel.style.color = 'white';
+                leftPanel.style.zIndex = '10';
+
+                // Title
+                const title = document.createElement('h2');
+                title.setAttribute('data-i18n', 'screensaver.ben_slide.title');
+                title.textContent = getTranslation(currentLang, 'screensaver.ben_slide.title');
+                title.style.fontSize = '3rem';
+                title.style.marginBottom = '20px';
+                title.style.fontFamily = "'Cormorant Garamond', serif";
+                leftPanel.appendChild(title);
+
+                // Subtitle
+                const sub = document.createElement('p');
+                sub.setAttribute('data-i18n', 'screensaver.ben_slide.subtitle');
+                sub.textContent = getTranslation(currentLang, 'screensaver.ben_slide.subtitle');
+                sub.style.fontSize = '1.5rem';
+                sub.style.opacity = '0.8';
+                sub.style.marginBottom = '40px';
+                leftPanel.appendChild(sub);
+
+                // QR Container
+                const qrContainer = document.createElement('div');
+                qrContainer.style.background = 'white';
+                qrContainer.style.padding = '15px';
+                qrContainer.style.borderRadius = '15px';
+                qrContainer.style.display = 'flex';
+                qrContainer.style.flexDirection = 'column';
+                qrContainer.style.alignItems = 'center';
+                qrContainer.style.gap = '10px';
+
+                // QR Image (Placeholder for now)
+                const qrImg = document.createElement('img');
+                // Use a generic generated QR for now as placeholder or the guestbook one
+                qrImg.src = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(window.location.href)}`;
+                qrImg.style.width = '120px';
+                qrImg.style.height = '120px';
+                qrContainer.appendChild(qrImg);
+
+                // QR Label
+                const qrLabel = document.createElement('span');
+                qrLabel.setAttribute('data-i18n', 'screensaver.ben_slide.qr_label');
+                qrLabel.textContent = getTranslation(currentLang, 'screensaver.ben_slide.qr_label');
+                qrLabel.style.color = '#333';
+                qrLabel.style.fontSize = '0.9rem';
+                qrLabel.style.fontWeight = '600';
+                qrContainer.appendChild(qrLabel);
+
+                leftPanel.appendChild(qrContainer);
+                slide.appendChild(leftPanel);
+
+                // Right Panel: Image
+                const rightPanel = document.createElement('div');
+                rightPanel.style.flex = '1.2'; // Slightly wider image
+                rightPanel.style.backgroundImage = `url('${imgSrc}')`;
+                rightPanel.style.backgroundSize = 'cover';
+                rightPanel.style.backgroundPosition = 'center';
+                rightPanel.style.height = '100%';
+                // Fade effect on the left edge of the image to blend with dark bg
+                rightPanel.style.maskImage = 'linear-gradient(to right, transparent, black 15%)';
+                rightPanel.style.webkitMaskImage = 'linear-gradient(to right, transparent, black 15%)';
+
+                slide.appendChild(rightPanel);
 
             } else {
                 // -- STANDARD TEXT SLIDE: Blur Background + Sharp Image --
@@ -516,7 +598,7 @@ function startSlideshow() {
     const currentImg = screensaverImages[currentSlide];
     const clockEl = document.querySelector('.screensaver-clock');
     if (clockEl) {
-        if (currentImg && currentImg.includes('slide_review_ohana.png')) {
+        if (currentImg && (currentImg.includes('slide_review_ohana.jpg') || currentImg.includes('slide_ben_overlay.jpg'))) {
             clockEl.style.opacity = '0';
         } else {
             clockEl.style.opacity = '1';
@@ -587,7 +669,7 @@ function nextSlide() {
     const currentImg = screensaverImages[currentSlide];
     const clockEl = document.querySelector('.screensaver-clock');
     if (clockEl) {
-        if (currentImg.includes('slide_review_ohana.png')) {
+        if (currentImg.includes('slide_review_ohana.jpg') || currentImg.includes('slide_ben_overlay.jpg')) {
             clockEl.style.opacity = '0';
             clockEl.style.transition = 'opacity 0.5s ease';
         } else {
