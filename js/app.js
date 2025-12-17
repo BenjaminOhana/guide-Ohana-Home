@@ -935,21 +935,21 @@ const discoverData = {
                         name: 'Parc Wilson',
                         type: 'Parc & Kiosque',
                         review: 'Un écrin de verdure de 1,4 hectares longeant la Moselle, idéal pour une flânerie au bord de l\'eau ou écouter un concert au kiosque en été.',
-                        img: 'assets/img/hero/hero_3.jpg', // Placeholder
+                        img: 'assets/img/adresses/respirer_wilson.jpg',
                         maps_url: 'https://www.google.com/maps/place/Parc+Wilson/@49.3552561,6.1644774,17z/data=!3m1!4b1!4m6!3m5!1s0x4795252845201383:0x89da63412b1db38e!8m2!3d49.3552561!4d6.1644774!16s%2Fg%2F11ckvfjrn7?entry=ttu'
                     },
                     {
                         name: 'Parc Napoléon',
                         type: 'Roseraie & Arbres Rares',
                         review: 'L\'un des parcs préférés des Thionvillois : perdez-vous dans la roseraie aux mille senteurs et admirez des arbres aux essences rares.',
-                        img: 'assets/img/hero/hero_3.jpg', // Placeholder
+                        img: 'assets/img/adresses/respirer_napoleon.jpg',
                         maps_url: 'https://www.google.com/maps/search/?api=1&query=Parc+Napoleon+Thionville'
                     },
                     {
                         name: 'Aéroparc Yutz',
                         type: 'Loisirs & Nature',
                         review: 'Un immense poumon vert de 42 ha avec lac, jardins et aires de jeux. Le spot parfait pour un pique-nique, un barbecue ou une séance de sport en plein air.',
-                        img: 'assets/img/hero/hero_3.jpg', // Placeholder
+                        img: 'assets/img/adresses/respirer_aeroparc.png',
                         maps_url: 'https://www.google.com/maps/place/A%C3%A9roparc+Yutz/@49.3541068,6.20192,17z/data=!3m1!4b1!4m6!3m5!1s0x479525f50d700541:0x3614f994bbd44c39!8m2!3d49.3541069!4d6.2067909!16s%2Fg%2F11rr4slrlb?entry=ttu'
                     }
                 ]
@@ -962,14 +962,14 @@ const discoverData = {
                         name: 'Les Berges de la Moselle',
                         type: 'Balade & Vélo',
                         review: 'Promenez-vous sur des km en pleine nature jusqu\'au Luxembourg ! Le départ est visible depuis votre fenêtre, il suffit de suivre l\'horizon.',
-                        img: 'assets/img/hero/hero_8.jpg', // Placeholder
+                        img: 'assets/img/adresses/respirer_berges.jpg',
                         maps_url: 'https://www.google.com/maps/place/57100+Thionville/@49.3620331,6.178503,17.46z/data=!3m1!5s0x479524d00fa676db:0x3333a570d9bfe8fc!4m14!1m7!3m6!1s0x47952511ab21e71b:0x9a254d0268d15c09!2sGare+de+Thionville!8m2!3d49.3538603!4d6.1697235!16s%2Fg%2F11vcbq5p5h!3m5!1s0x47953b32ae6623fd:0xd8e852674f8d23ba!8m2!3d49.3637712!4d6.1820603!16s%2Fg%2F11y676vjxy?entry=ttu'
                     },
                     {
                         name: 'Base de loisirs de Nautic\'Ham',
                         type: 'Détente & Jeux',
                         review: 'Envie d’une ambiance vacances ? Plage, jeux pour enfants et verre au bord de l\'étang : le lieu idéal pour déconnecter à quelques minutes d\'ici.',
-                        img: 'assets/img/hero/hero_8.jpg', // Placeholder
+                        img: 'assets/img/adresses/respirer_nauticham.jpg',
                         maps_url: 'https://www.google.com/maps/place/Base+de+loisirs+de+Nautic\'Ham/@49.3821784,6.2032547,14z/data=!4m10!1m2!2m1!1scentre+de+loisir+bass+ham!3m6!1s0x47953d002ddbe597:0xec3d25d5678fc84e!8m2!3d49.384392!4d6.222812!15sChljZW50cmUgZGUgbG9pc2lyIGJhc3MgaGFtWhsiGWNlbnRyZSBkZSBsb2lzaXIgYmFzcyBoYW2SARBhbXVzZW1lbnRfY2VudGVymgFEQ2k5RFFVbFJRVU52WkVOb2RIbGpSamx2VDJ0YVdscFdiRFpUZW1SSVdsVjRNMkZxU2xoUmJYaEtZakowYVZSR1JSQULgAQD6AQQIABBK!16s%2Fg%2F11zj5tz7j_?entry=ttu'
                     }
                 ]
