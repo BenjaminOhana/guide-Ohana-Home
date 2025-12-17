@@ -36,6 +36,17 @@ function updateLanguage(lang) {
     document.querySelectorAll('.lang-btn').forEach(btn => {
         btn.classList.toggle('active', btn.dataset.lang === lang);
     });
+
+    // Reset Mantra Deck on lang change so it switches immediately
+    mantraDeck = [];
+
+    // Re-render dynamic content that depends on translations
+    // Use setTimeout to ensure DOM is ready after static updates
+    setTimeout(() => {
+        if (typeof renderDiscoverMenu === 'function') {
+            renderDiscoverMenu();
+        }
+    }, 0);
 }
 
 // Expose to window
@@ -60,7 +71,7 @@ function initGuestNameListener() {
             if (welcomeEl) {
                 // If it's the default "Ohana Home", show standard welcome
                 // If it's a person, show "Bienvenue à Ohana Home" (or keep standard)
-                welcomeEl.textContent = "Bienvenue à Ohana Home";
+                welcomeEl.textContent = getTranslation(currentLang, 'hub.greeting_pre');
             }
 
             // -- REMOTE REFRESH LOGIC --
@@ -239,7 +250,10 @@ document.addEventListener('DOMContentLoaded', () => {
         console.error("CRITICAL: Screensaver element not found for listeners.");
     }
 
-    // iPad Optimization: Delay preload slightly
+    initScreensaverSlides(); // CRITICAL: Start slides init
+    initWeather();
+    initClock();
+
     setTimeout(() => {
         preloadScreensaverImages();
     }, 2000);
@@ -294,7 +308,13 @@ function createTempSection(id) {
     // For prototype phase, if a section is missing in HTML, alert or log
     alert(`Section "${id}" en construction!`);
     goBack();
+    goBack();
 }
+
+// -- EXPOSE TO WINDOW (CRITICAL FOR HTML ONCLICK) --
+window.openSection = openSection;
+window.goBack = goBack;
+window.updateLanguage = updateLanguage; // Ensure this is available too
 
 // Initial State
 document.addEventListener('DOMContentLoaded', () => {
@@ -724,7 +744,11 @@ function scheduleNextSlide() {
 
     // Long duration for Text/Read slides
     if (isTextSlide(currentImg)) {
-        duration = 600000; // 10 minutes for text
+        if (currentImg.includes('slide_dog_message.png')) {
+            duration = 420000; // 7 minutes for Dog Message
+        } else {
+            duration = 600000; // 10 minutes for other text slides
+        }
     }
 
     slideTimeout = setTimeout(() => {
@@ -752,7 +776,9 @@ function nextSlide() {
     const currentImg = screensaverImages[currentSlide];
     const clockEl = document.querySelector('.screensaver-clock');
     if (clockEl) {
-        if (currentImg.includes('slide_review_ohana.jpg') || currentImg.includes('slide_ben_overlay.jpg')) {
+        if (currentImg.includes('slide_review_ohana.jpg') ||
+            currentImg.includes('slide_ben_overlay.jpg') ||
+            currentImg.includes('slide_dog_message.png')) {
             clockEl.style.opacity = '0';
             clockEl.style.transition = 'opacity 0.5s ease';
         } else {
@@ -762,6 +788,63 @@ function nextSlide() {
 
     // Update Mantra occasionally
     updateMantra();
+}
+
+// -- WEATHER & TIME --
+function initClock() {
+    const timeEl = document.getElementById('current-time');
+
+    function update() {
+        const now = new Date();
+        if (timeEl) {
+            timeEl.textContent = now.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' });
+        }
+    }
+
+    update(); // Immediate
+    setInterval(update, 1000);
+}
+
+async function initWeather() {
+    // Thionville Coordinates
+    const lat = 49.359;
+    const lon = 6.169;
+
+    const iconMap = {
+        0: '☀️', 1: '🌤️', 2: '⛅', 3: '☁️',
+        45: '🌫️', 48: '🌫️',
+        51: '🌧️', 53: '🌧️', 55: '🌧️',
+        61: '🌧️', 63: '🌧️', 65: '🌧️',
+        71: '❄️', 73: '❄️', 75: '❄️',
+        95: '⚡', 96: '⚡', 99: '⚡'
+    };
+
+    async function fetchWeather() {
+        try {
+            const res = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,relative_humidity_2m,weather_code,wind_speed_10m&timezone=Europe%2FParis`);
+            const data = await res.json();
+            const current = data.current;
+
+            const tempEl = document.getElementById('weather-temp');
+            const windEl = document.getElementById('weather-wind');
+            const humEl = document.getElementById('weather-humidity');
+            const iconEl = document.getElementById('weather-icon');
+
+            if (tempEl) tempEl.textContent = Math.round(current.temperature_2m) + '°';
+            if (windEl) windEl.textContent = Math.round(current.wind_speed_10m) + ' km/h';
+            if (humEl) humEl.textContent = current.relative_humidity_2m + '%';
+
+            // Map code to icon
+            const icon = iconMap[current.weather_code] || '⛅';
+            if (iconEl) iconEl.textContent = icon;
+
+        } catch (e) {
+            console.error("Weather fetch failed:", e);
+        }
+    }
+
+    fetchWeather();
+    setInterval(fetchWeather, 3600000); // Every hour
 }
 
 // -- Screensaver Clock --
@@ -787,36 +870,17 @@ function updateScreensaverClock() {
 }
 
 // -- Mantras Logic --
-export const mantras = [
-    "Respirez. Vous êtes chez vous.",
-    "Prenez le temps de ne rien faire.",
-    "La simplicité est la sophistication suprême.",
-    "Ohana signifie famille.",
-    "Écoutez le silence.",
-    "Juste respirer.",
-    "Accordez-vous une pause.",
-    "Votre intuition a raison.",
-    "Votre énergie ne ment pas.",
-    "Revenez à vous.",
-    "L'âme sait avant la tête.",
-    "Tout commence à l'intérieur.",
-    "Ce qui vous fait vibrer compte.",
-    "Votre histoire s'écrit maintenant.",
-    "Vous êtes plus fort que vos peurs.",
-    "Le monde a besoin de votre lumière.",
-    "Ce que vous cherchez vous cherche aussi.",
-    "Faites-le pour vous.",
-    "", "", "", "", "", "", "", "" // Increased empty chance (8 total ~30%)
-];
-
+// -- Mantras Logic --
+// Mantras are now in translations.js
 let mantraDeck = [];
 
 function getNextMantra() {
     if (mantraDeck.length === 0) {
-        // Refill and shuffle
-        mantraDeck = [...mantras];
+        // Refill and shuffle from current language
+        const localizedMantras = getTranslation(currentLang, 'mantras') || [];
+        mantraDeck = [...localizedMantras];
         shuffleArray(mantraDeck);
-        console.log("Refilled Mantra Deck:", mantraDeck);
+        // console.log("Refilled Mantra Deck for lang:", currentLang);
     }
     return mantraDeck.pop();
 }
@@ -1098,256 +1162,19 @@ fetchWeather();
 setInterval(updateTime, 60000); // Every minute
 setInterval(fetchWeather, 1800000); // Every 30 mins
 // -- Discover Section Logic (Refactored) --
+// Data is now in translations.js
 
-const discoverData = {
-    'regaler': {
-        title: 'Se Régaler',
-        img: 'assets/img/adresses/regaler_main.png',
-        hasSubcategories: true,
-        subcategories: {
-            'restaurants': {
-                title: 'Restaurants',
-                img: 'assets/img/adresses/cat_restaurant.png',
-                // icon: removed as per request
-                places: [
-                    {
-                        name: 'Les Moulins Bleus',
-                        type: 'Italien',
-                        review: 'Un cadre splendide en cour intérieure pour déguster la meilleure lasagne de votre vie, une véritable escapade italienne au cœur de Thionville.',
-                        img: 'assets/img/adresses/resto_moulins_bleus.png',
-                        maps_url: 'https://www.google.com/maps/place/Les+Moulins+Bleus+-+Thionville/@49.358979,6.1659631,17z/data=!3m1!4b1!4m6!3m5!1s0x479524d5e4a210f3:0x6a5191fb268d09c4!8m2!3d49.358979!4d6.168538!16s%2Fg%2F1tf2wr1s?entry=ttu'
-                    },
-                    {
-                        name: 'Arsène & Clara',
-                        type: 'Terrasse & Vins',
-                        review: 'La terrasse incontournable pour un apéro dînatoire au coucher du soleil, où le stress de la journée s\'évapore instantanément.',
-                        img: 'assets/img/adresses/resto_arsene_clara.png',
-                        maps_url: 'https://www.google.com/maps/place/Restaurant+Ars%C3%A8ne+%26+Clara/@49.355,6.16897,17z/data=!3m1!4b1!4m6!3m5!1s0x47952509c1fd9b1d:0xec243f0e0955dfaa!8m2!3d49.355!4d6.16897!16s%2Fg%2F11ll5t9f06?entry=ttu'
-                    },
-                    {
-                        name: 'Le P\'tit Bistro d\'Ethan',
-                        type: 'Bistrot Lorrain',
-                        review: 'Un peu de gastronomie dans un cadre bistrot : cuisine lorraine revisitée et carte renouvelée tous les deux mois.',
-                        img: 'assets/img/adresses/resto_ptit_bistro.png',
-                        maps_url: 'https://www.google.com/maps/search/?api=1&query=Le+P%27tit+Bistro+d%27Ethan+Thionville'
-                    }
-                ]
-            },
-            'street_food': {
-                title: 'Street Food',
-                img: 'assets/img/adresses/cat_street_food.png',
-                // icon: removed
-                places: [
-                    {
-                        name: 'Pollux',
-                        type: 'Smash Burger',
-                        review: 'Le meilleur smash burger de Thionville avec du bœuf français et du cheddar maturé, pour une explosion de saveurs street-food authentique.',
-                        img: 'assets/img/adresses/street_pollux.jpg',
-                        maps_url: 'https://www.google.com/maps/place/POLLUX/@49.3598728,6.1644123,7z/data=!4m10!1m2!2m1!1spollux!3m6!1s0x4795255cd9314d97:0xf1de455566d4ce04!8m2!3d49.3601049!4d6.1647188!15sCgZwb2xsdXhaCCIGcG9sbHV4kgEUaGFtYnVyZ2VyX3Jlc3RhdXJhbnSaASNDaFpEU1VoTk1HOW5TMFZKUTBGblNVTTVNRnA2YkVWUkVBReABAPoBBAgAEEA!16s%2Fg%2F11l5tps7x6?entry=ttu'
-                    },
-                    {
-                        name: 'Le Class',
-                        type: 'Snack',
-                        review: 'Sans doute l\'un des meilleurs snacks de la région : des portions généreuses, des produits frais et un accueil au top.',
-                        img: 'assets/img/adresses/street_le_class.jpg',
-                        maps_url: 'https://www.google.com/maps/place/LE+CLASS/@49.3647733,6.1623457,3a,75y,90t/data=!3m8!1e2!3m6!1sAF1QipN6eVUy1ya-tlAXOe4kYC-dZh7O4rI-Hi-uyC9i!2e10!3e12!6shttps:%2F%2Flh3.googleusercontent.com%2Fp%2FAF1QipN6eVUy1ya-tlAXOe4kYC-dZh7O4rI-Hi-uyC9i%3Dw152-h86-k-no!7i3264!8i1836!4m7!3m6!1s0x47953ad4a82e54a5:0xed538aaf16b9e574!8m2!3d49.3646366!4d6.1623423!10e5!16s%2Fg%2F11c2lbptfs?entry=ttu'
-                    },
-                    {
-                        name: 'Simply Good',
-                        type: 'Snack',
-                        review: 'Simplement l\'un des meilleurs snacks du coin : des recettes maîtrisées, de la fraîcheur dans l\'assiette et une convivialité qui ne déçoit jamais.',
-                        img: 'assets/img/adresses/street_simply_good.png',
-                        maps_url: 'https://www.google.com/maps/place/Simply+Good/@49.3577117,6.1631986,17z/data=!3m1!4b1!4m6!3m5!1s0x479525839063699d:0xc09fbb114f5b2453!8m2!3d49.3577117!4d6.1657735!16s%2Fg%2F11q35k1ppz?entry=ttu'
-                    }
-                ]
-            },
-            'boulangerie': {
-                title: 'Boulangerie',
-                img: 'assets/img/adresses/cat_boulangerie.png',
-                // icon: removed
-                places: [
-                    {
-                        name: 'Boulangerie Parisienne BERNS',
-                        type: 'Artisan',
-                        review: 'Succombez à la brioche faite maison et au savoir-faire artisanal d\'une boulangerie qui vit au rythme de la ville.',
-                        img: 'assets/img/adresses/boulangerie_berns.jpg',
-                        maps_url: 'https://www.google.com/maps/place/Boulangerie+Parisienne+BERNS/@49.3618842,6.1706326,16.83z/data=!4m6!3m5!1s0x479524d5171fd4ef:0xb2db1d585fe4b653!8m2!3d49.3619922!4d6.1701664!16s%2Fg%2F1v44cxc_?entry=ttu'
-                    },
-                    {
-                        name: 'La Fabrik des Pains Vagabonds',
-                        type: 'Bio & Éthique',
-                        review: 'Plus qu\'une boulangerie, un lieu de vie bio et éthique où le pain au levain naturel côtoie un café de spécialité d\'exception.',
-                        img: 'assets/img/adresses/boulangerie_la_fabrik.jpg',
-                        maps_url: 'https://www.google.com/maps/place/La+Fabrik+des+Pains+Vagabonds%E2%80%93+Boulangerie+%26+Caf%C3%A9+de+sp%C3%A9cialit%C3%A9/@49.3601055,6.1646082,17z/data=!3m1!4b1!4m6!3m5!1s0x4795258254b8231b:0xfcea6b29f9f43788!8m2!3d49.3601055!4d6.1646082!16s%2Fg%2F11tp30c52k?entry=ttu'
-                    },
-                    {
-                        name: 'Pâtisserie FISCHER',
-                        type: 'Viennoiserie',
-                        review: 'Profitez d\'une pause douce en terrasse sur la place principale avec des viennoiseries d\'une fraîcheur garantie.',
-                        img: 'assets/img/adresses/boulangerie_fischer.jpg',
-                        maps_url: 'https://www.google.com/maps/place/P%C3%A2tisserie+FISCHER/@49.3582503,6.1676219,17z/data=!3m1!4b1!4m6!3m5!1s0x479524d605a163ef:0x3bd838bfc57a5779!8m2!3d49.3582503!4d6.1676219!16s%2Fg%2F1tfb0y1t?entry=ttu'
-                    }
-                ]
-            }
-        }
-    },
-    'respirer': {
-        title: 'Respirer',
-        img: 'assets/img/adresses/respirer_main.jpg',
-        hasSubcategories: true,
-        subcategories: {
-            'parc_urbain': {
-                title: 'Parc urbain',
-                img: 'assets/img/adresses/cat_parc_urbain.png',
-                places: [
-                    {
-                        name: 'Parc Wilson',
-                        type: 'Parc & Kiosque',
-                        review: 'Un écrin de verdure de 1,4 hectares longeant la Moselle, idéal pour une flânerie au bord de l\'eau ou écouter un concert au kiosque en été.',
-                        img: 'assets/img/adresses/respirer_wilson.jpg',
-                        maps_url: 'https://www.google.com/maps/place/Parc+Wilson/@49.3552561,6.1644774,17z/data=!3m1!4b1!4m6!3m5!1s0x4795252845201383:0x89da63412b1db38e!8m2!3d49.3552561!4d6.1644774!16s%2Fg%2F11ckvfjrn7?entry=ttu'
-                    },
-                    {
-                        name: 'Parc Napoléon',
-                        type: 'Roseraie & Arbres Rares',
-                        review: 'L\'un des parcs préférés des Thionvillois : perdez-vous dans la roseraie aux mille senteurs et admirez des arbres aux essences rares.',
-                        img: 'assets/img/adresses/respirer_napoleon.jpg',
-                        maps_url: 'https://www.google.com/maps/search/?api=1&query=Parc+Napoleon+Thionville'
-                    },
-                    {
-                        name: 'Aéroparc Yutz',
-                        type: 'Loisirs & Nature',
-                        review: 'Un immense poumon vert de 42 ha avec lac, jardins et aires de jeux. Le spot parfait pour un pique-nique, un barbecue ou une séance de sport en plein air.',
-                        img: 'assets/img/adresses/respirer_aeroparc.png',
-                        maps_url: 'https://www.google.com/maps/place/A%C3%A9roparc+Yutz/@49.3541068,6.20192,17z/data=!3m1!4b1!4m6!3m5!1s0x479525f50d700541:0x3614f994bbd44c39!8m2!3d49.3541069!4d6.2067909!16s%2Fg%2F11rr4slrlb?entry=ttu'
-                    }
-                ]
-            },
-            'promenade_nature': {
-                title: 'Promenade en nature',
-                img: 'assets/img/adresses/cat_promenade_nature.png',
-                places: [
-                    {
-                        name: 'Les Berges de la Moselle',
-                        type: 'Balade & Vélo',
-                        review: 'Promenez-vous sur des km en pleine nature jusqu\'au Luxembourg ! Le départ est visible depuis votre fenêtre, il suffit de suivre l\'horizon.',
-                        img: 'assets/img/adresses/respirer_berges.jpg',
-                        maps_url: 'https://www.google.com/maps/place/57100+Thionville/@49.3620331,6.178503,17.46z/data=!3m1!5s0x479524d00fa676db:0x3333a570d9bfe8fc!4m14!1m7!3m6!1s0x47952511ab21e71b:0x9a254d0268d15c09!2sGare+de+Thionville!8m2!3d49.3538603!4d6.1697235!16s%2Fg%2F11vcbq5p5h!3m5!1s0x47953b32ae6623fd:0xd8e852674f8d23ba!8m2!3d49.3637712!4d6.1820603!16s%2Fg%2F11y676vjxy?entry=ttu'
-                    },
-                    {
-                        name: 'Base de loisirs de Nautic\'Ham',
-                        type: 'Détente & Jeux',
-                        review: 'Envie d’une ambiance vacances ? Plage, jeux pour enfants et verre au bord de l\'étang : le lieu idéal pour déconnecter à quelques minutes d\'ici.',
-                        img: 'assets/img/adresses/respirer_nauticham.jpg',
-                        maps_url: 'https://www.google.com/maps/place/Base+de+loisirs+de+Nautic\'Ham/@49.3821784,6.2032547,14z/data=!4m10!1m2!2m1!1scentre+de+loisir+bass+ham!3m6!1s0x47953d002ddbe597:0xec3d25d5678fc84e!8m2!3d49.384392!4d6.222812!15sChljZW50cmUgZGUgbG9pc2lyIGJhc3MgaGFtWhsiGWNlbnRyZSBkZSBsb2lzaXIgYmFzcyBoYW2SARBhbXVzZW1lbnRfY2VudGVymgFEQ2k5RFFVbFJRVU52WkVOb2RIbGpSamx2VDJ0YVdscFdiRFpUZW1SSVdsVjRNMkZxU2xoUmJYaEtZakowYVZSR1JSQULgAQD6AQQIABBK!16s%2Fg%2F11zj5tz7j_?entry=ttu'
-                    }
-                ]
-            }
-        }
-    },
-    'explorer': {
-        title: 'Explorer',
-        img: 'assets/img/adresses/explorer_main.jpg',
-        places: [
-            {
-                name: 'Musée de la Tour aux Puces',
-                type: 'Histoire & Archéologie',
-                review: 'Un voyage dans le temps au cœur d\'un ancien donjon médiéval : découvrez les secrets archéologiques du Pays Thionvillois pour un prix tout doux.',
-                img: 'assets/img/adresses/explorer_tour_aux_puces.jpg',
-                maps_url: 'https://www.google.com/maps/place/Mus%C3%A9e+de+la+Tour+aux+Puces/@49.3579136,6.1691047,17z/data=!3m1!4b1!4m6!3m5!1s0x479524d673e53b91:0x1ee545eb451ae07!8m2!3d49.3579136!4d6.1691047!16s%2Fg%2F11bc5fkfm9?entry=ttu'
-            },
-            {
-                name: 'Fort de Guentrange',
-                type: 'Histoire Militaire & Vue',
-                review: 'Perché sur la colline, ce géant de béton offre une vue imprenable sur la vallée et une plongée fascinante dans l\'histoire militaire de la région.',
-                img: 'assets/img/adresses/explorer_fort_guentrange.jpg',
-                maps_url: 'https://www.google.com/maps/search/?api=1&query=Fort+de+Guentrange+Thionville'
-            },
-            {
-                name: 'Escapade à Luxembourg',
-                type: 'Ville & Culture',
-                review: 'Transformez votre séjour en escapade internationale : Luxembourg-Ville et ses trésors UNESCO ne sont qu\'à 25 minutes de train direct.',
-                img: 'assets/img/adresses/explorer_luxembourg.jpg',
-                maps_url: 'https://www.google.com/maps/search/Gare+de+Luxembourg/@49.6012245,6.129576,15z/data=!3m1!4b1?entry=ttu'
-            },
-            {
-                name: 'Château de Malbrouck',
-                type: 'Médiéval & Panorama',
-                review: 'Imposant château médiéval magnifiquement restauré à la frontière (30 min). Architecture fortifiée, vues panoramiques et expositions d\'art dans un cadre d\'exception.',
-                img: 'assets/img/adresses/explorer_malbrouck.jpg',
-                maps_url: 'https://www.google.com/maps/search/?api=1&query=Chateau+de+Malbrouck'
-            }
-        ]
-    },
-    'indispensables': {
-        title: 'Indispensables',
-        img: 'assets/img/adresses/indispensable_main.jpg',
-        hasSubcategories: true,
-        subcategories: {
-            'courses': {
-                title: 'Courses',
-                img: 'assets/img/adresses/cat_courses.png',
-                places: [
-                    {
-                        name: 'Carrefour Market',
-                        type: 'Centre Ville',
-                        review: 'Le supermarché de proximité idéal au cœur du centre commercial, parfait pour des courses complètes avec un large choix de produits frais.',
-                        img: 'assets/img/adresses/indispensable_carrefour.jpg',
-                        maps_url: 'https://www.google.com/maps/search/?api=1&query=Carrefour+Market+Thionville+Cour+des+Capucins'
-                    },
-                    {
-                        name: 'Lidl Gare',
-                        type: 'Rapide & Éco',
-                        review: 'L\'option maligne à deux pas des rails pour des courses rapides, économiques et une boulangerie en libre-service.',
-                        img: 'assets/img/adresses/indispensable_lidl.jpg',
-                        maps_url: 'https://www.google.com/maps/search/?api=1&query=Lidl+5+Rue+de+l+Ancienne+Gare+Thionville'
-                    },
-                    {
-                        name: 'Centre Commercial Geric',
-                        type: 'Shopping & Miam',
-                        review: 'Enorme centre commercial pour faire du shopping, vos courses ou manger dans de nombreux restaurants.',
-                        img: 'assets/img/adresses/indispensable_geric.jpg',
-                        maps_url: 'https://www.google.com/maps/place/Centre+Commercial+Carrefour+Geric/@49.354748,6.1362505,17z/data=!3m1!4b1!4m6!3m5!1s0x47952547dab2f151:0x3050e5bbe5a1a8d!8m2!3d49.3547481!4d6.1411214!16s%2Fg%2F11cftxnlp?entry=ttu'
-                    }
-                ]
-            },
-            'sante': {
-                title: 'Pharmacie et santé',
-                img: 'assets/img/adresses/cat_sante.png',
-                places: [
-                    {
-                        name: 'Pharmacie Lafayette',
-                        type: 'Grande Pharmacie',
-                        review: 'Une grande pharmacie au large choix de parapharmacie à prix bas, avec une équipe disponible pour vos conseils santé.',
-                        img: 'assets/img/adresses/indispensable_pharmacie.jpg',
-                        maps_url: 'https://www.google.com/maps/search/?api=1&query=Pharmacie+Lafayette+des+Arcades+Thionville'
-                    }
-                ]
-            },
-            'mobilite': {
-                title: 'Mobilité',
-                img: 'assets/img/adresses/cat_mobilite.png',
-                places: [
-                    {
-                        name: 'Gare de Thionville',
-                        type: 'Hub Transport',
-                        review: 'Le hub central pour explorer la Grande Région, avec un accès TGV et TER direct vers Luxembourg et Metz.',
-                        img: 'assets/img/adresses/indispensable_gare.png',
-                        maps_url: 'https://www.google.com/maps/search/?api=1&query=Gare+de+Thionville'
-                    }
-                ]
-            }
-        }
-    }
-};
 
 function renderDiscoverMenu() {
     const container = document.querySelector('.discover-categories-grid');
     if (!container) return;
 
+    const discoverData = getTranslation(currentLang, 'discover');
+    if (!discoverData) return;
+
     // Reset Header logic in case we came back from Sub-menu
     const headerTitle = document.querySelector('#discover-menu h2');
-    if (headerTitle) headerTitle.textContent = 'Nos Adresses';
+    if (headerTitle) headerTitle.textContent = getTranslation(currentLang, 'discover.title');
 
     const backBtn = document.querySelector('#discover-menu .back-btn');
     backBtn.onclick = goBack; // Reset to Hub navigation
@@ -1355,7 +1182,13 @@ function renderDiscoverMenu() {
     container.innerHTML = ''; // Verify clean state
 
     Object.keys(discoverData).forEach(key => {
+        if (key === 'title') return; // Skip title key
+
         const cat = discoverData[key];
+        // FIX: Ignore keys that are NOT objects (like "scan_route_1" etc.) or null
+        if (!cat || typeof cat !== 'object') return;
+
+
         const tile = document.createElement('div');
         tile.className = 'category-tile';
         tile.onclick = () => openDiscoverCategory(key);
@@ -1370,7 +1203,8 @@ function renderDiscoverMenu() {
 }
 
 function openDiscoverCategory(catKey) {
-    const cat = discoverData[catKey];
+    const discoverData = getTranslation(currentLang, 'discover');
+    const cat = discoverData && discoverData[catKey];
     if (!cat) return;
 
     // Handle Sub-categories Logic
@@ -1380,6 +1214,8 @@ function openDiscoverCategory(catKey) {
     }
 
     // Populate Details
+    // Using string interpolation for title might have already been done in renderSubMenu/renderDiscoverMenu if we passed objects,
+    // but here we are passing raw strings for 'title' which is fine as they are from localized object.
     populateDiscoverDetails(cat.title, cat.img, cat.places);
 }
 
@@ -1441,7 +1277,7 @@ function populateDiscoverDetails(title, img, places, isSub = false) {
                 
                 <div class="place-qr-zone">
                     <img src="https://api.qrserver.com/v1/create-qr-code/?size=300x300&color=000000&bgcolor=ffffff&data=${place.maps_url ? encodeURIComponent(place.maps_url) : 'Maps:' + place.name}" class="place-qr-placeholder" alt="Scanner pour itinéraire">
-                    <div class="place-qr-text">Scanner pour<br><strong>L'Itinéraire</strong></div>
+                    <div class="place-qr-text">${getTranslation(currentLang, 'discover.scan_route_1')}<br><strong>${getTranslation(currentLang, 'discover.scan_route_2')}</strong></div>
                 </div>
             </div>
         `;

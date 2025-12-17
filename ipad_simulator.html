@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>iPad Air Simulator - Ohana Home</title>
+    <style>
+        body {
+            background: #333;
+            color: white;
+            font-family: system-ui, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+        }
+        .device-frame {
+            width: 1180px;
+            height: 820px;
+            background: #000;
+            border: 20px solid #111;
+            border-radius: 40px;
+            box-shadow: 0 0 100px rgba(0,0,0,0.5);
+            position: relative;
+            overflow: hidden;
+            /* Scale down if screen is small */
+            transform-origin: center;
+            transform: scale(0.8); 
+        }
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            background: white;
+        }
+        .controls {
+            margin-bottom: 20px;
+            text-align: center;
+            z-index: 10;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            background: #555;
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+        button:hover { background: #777; }
+        
+        /* Dynamic Scaling Script */
+        @media (max-width: 1300px) {
+            .device-frame { transform: scale(0.6); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="controls">
+        <h1>iPad Air Simulator (1180x820)</h1>
+        <p>This mimics the exact resolution of your iPad Air.</p>
+        <button onclick="document.querySelector('iframe').contentWindow.location.reload()">Reload Page</button>
+    </div>
+
+    <div class="device-frame">
+        <iframe src="index.html"></iframe>
+    </div>
+
+    <script>
+        // Auto-fit to screen
+        function fit() {
+            const frame = document.querySelector('.device-frame');
+            const scaleX = (window.innerWidth - 40) / 1220; // 1180 + 40 border
+            const scaleY = (window.innerHeight - 150) / 860; // 820 + 40 border
+            const scale = Math.min(Math.min(scaleX, scaleY), 1); // Max scale 1
+            frame.style.transform = `scale(${scale})`;
+        }
+        window.addEventListener('resize', fit);
+        fit();
+    </script>
+
+</body>
+</html>

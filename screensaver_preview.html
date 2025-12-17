@@ -239,8 +239,8 @@
 
                 // Left Panel
                 const leftPanel = document.createElement('div');
-                leftPanel.style.flex = '1.3';
-                leftPanel.style.padding = '40px'; 
+                leftPanel.style.flex = '1.1';
+                leftPanel.style.padding = '40px 40px 40px 100px'; 
                 leftPanel.style.display = 'flex';
                 leftPanel.style.flexDirection = 'column';
                 leftPanel.style.justifyContent = 'center';
@@ -269,11 +269,11 @@
 
                 // Right Panel
                 const rightPanel = document.createElement('div');
-                rightPanel.style.flex = '0.9'; 
+                rightPanel.style.flex = '1.3'; 
                 rightPanel.style.backgroundImage = `url('${imgSrc}')`;
-                rightPanel.style.backgroundSize = 'contain';
+                rightPanel.style.backgroundSize = 'cover';
                 rightPanel.style.backgroundRepeat = 'no-repeat';
-                rightPanel.style.backgroundPosition = 'center bottom';
+                rightPanel.style.backgroundPosition = '70% center';
                 slide.appendChild(rightPanel);
                 
                 // Hide Mantra
