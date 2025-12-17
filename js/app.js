@@ -1,11 +1,47 @@
 import { db } from './firebase-config.js';
 import { collection, addDoc, onSnapshot, query, orderBy, limit, doc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+import { translations } from './translations.js';
 
 // DOM Elements
 const app = document.getElementById('app');
 // ... (rest of imports)
 
 // -- GUESTBOOK LOGIC (Firebase Real-Time) --
+
+// -- INTERNATIONALIZATION LOGIC --
+let currentLang = localStorage.getItem('ohana_lang') || 'fr';
+
+function getTranslation(lang, key) {
+    return key.split('.').reduce((obj, k) => obj && obj[k], translations[lang]);
+}
+
+function updateLanguage(lang) {
+    currentLang = lang;
+    localStorage.setItem('ohana_lang', lang);
+    document.documentElement.lang = lang;
+
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        const val = getTranslation(lang, key);
+        if (val) {
+            if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
+                el.placeholder = val;
+            } else {
+                el.textContent = val;
+            }
+        }
+    });
+
+    // Update active class on flags
+    document.querySelectorAll('.lang-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.lang === lang);
+    });
+}
+
+// Expose to window
+window.changeLanguage = (lang) => {
+    updateLanguage(lang);
+};
 
 // -- GUEST NAME DYNAMIC LOGIC --
 function initGuestNameListener() {
@@ -190,6 +226,9 @@ document.addEventListener('DOMContentLoaded', () => {
     initGuestbook();
     initGuestNameListener();
     updateGuestbookQR();
+
+    // Init Language
+    updateLanguage(currentLang);
 
     // Screensaver Dismissal (Critical)
     if (screensaver) {
@@ -540,21 +579,24 @@ function nextSlide() {
 
 // -- Screensaver Clock --
 function updateScreensaverClock() {
+    const now = new Date();
     const timeEl = document.getElementById('ss-time');
     const dateEl = document.getElementById('ss-date');
-    if (!timeEl || !dateEl) return;
 
-    const now = new Date();
+    // Map 'fr'/'en' to full locale
+    const localeMap = {
+        'fr': 'fr-FR',
+        'en': 'en-GB'
+    };
+    const locale = localeMap[currentLang] || 'fr-FR';
 
-    // Time
-    const hours = String(now.getHours()).padStart(2, '0');
-    const minutes = String(now.getMinutes()).padStart(2, '0');
-    timeEl.textContent = `${hours}:${minutes}`;
-
-    // Date (French)
-    const options = { weekday: 'long', day: 'numeric', month: 'long' };
-    const dateStr = now.toLocaleDateString('fr-FR', options);
-    dateEl.textContent = dateStr;
+    if (timeEl) {
+        timeEl.textContent = now.toLocaleTimeString(locale, { hour: '2-digit', minute: '2-digit' });
+    }
+    if (dateEl) {
+        const options = { weekday: 'long', day: 'numeric', month: 'long' };
+        dateEl.textContent = now.toLocaleDateString(locale, options);
+    }
 }
 
 // -- Mantras Logic --

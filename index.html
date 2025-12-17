@@ -41,9 +41,9 @@
                     <img src="assets/img/hero/hero_3.jpg" alt="Vue sur Bali" class="hero-bg">
                     <div class="hero-overlay">
                         <div class="greeting">
-                            <span class="greeting-pre">Bienvenue à Ohana Home</span>
+                            <span class="greeting-pre" data-i18n="hub.greeting_pre">Bienvenue à Ohana Home</span>
                             <h1>Firas</h1>
-                            <p class="greeting-sub">Votre guide personnel pour un séjour inoubliable</p>
+                            <p class="greeting-sub" data-i18n="hub.greeting_sub">Votre guide personnel pour un séjour inoubliable</p>
                         </div>
                     </div>
                     
@@ -79,6 +79,16 @@
                             <path d="M16 21h5v-5"/>
                         </svg>
                     </div>
+
+                    <!-- Language Switcher -->
+                    <!-- Language Switcher (Moved to Left) -->
+                    <div class="lang-switcher" style="position: absolute; top: 30px; left: 30px; z-index: 50; display: flex; gap: 10px; background: rgba(255,255,255,0.25); backdrop-filter: blur(12px); padding: 5px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.3);">
+                        <button class="lang-btn active" data-lang="fr" onclick="changeLanguage('fr')" style="border: none; background: transparent; color: white; font-weight: 700; cursor: pointer; opacity: 0.6; padding: 5px 10px;">FR</button>
+                        <button class="lang-btn" data-lang="en" onclick="changeLanguage('en')" style="border: none; background: transparent; color: white; font-weight: 700; cursor: pointer; opacity: 0.6; padding: 5px 10px;">EN</button>
+                        <style>
+                            .lang-btn.active { opacity: 1 !important; text-decoration: underline; text-underline-offset: 4px; }
+                        </style>
+                    </div>
                 </div>
 
                 <!-- Right Column: Navigation -->
@@ -91,7 +101,7 @@
                                     <polyline points="9 22 9 12 15 12 15 22"></polyline>
                                 </svg>
                             </div>
-                            <span class="card-label">Votre séjour</span>
+                            <span class="card-label" data-i18n="hub.nav.stay">Votre séjour</span>
                         </button>
                         <button class="nav-card" onclick="openSection('decouvrir')">
                             <div class="card-icon-svg">
@@ -100,7 +110,7 @@
                                     <circle cx="12" cy="10" r="3"></circle>
                                 </svg>
                             </div>
-                            <span class="card-label">Nos adresses</span>
+                            <span class="card-label" data-i18n="hub.nav.addresses">Nos adresses</span>
                         </button>
                         <!-- Empty Slot 1 -->
                         <!-- Guestbook Tile -->
@@ -113,7 +123,7 @@
                                     <path d="M16 11l-3.5 3.5"></path> 
                                 </svg>
                             </div>
-                            <span class="card-label">Livre d'or</span>
+                            <span class="card-label" data-i18n="hub.nav.guestbook">Livre d'or</span>
                         </button>
                         
                         <!-- Story Tile -->
@@ -123,7 +133,7 @@
                                     <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
                                 </svg>
                             </div>
-                            <span class="card-label">Notre histoire</span>
+                            <span class="card-label" data-i18n="hub.nav.story">Notre histoire</span>
                         </button>
                     </nav>
                     <footer class="hub-footer">
@@ -136,7 +146,7 @@
                                     <path d="M8.53 16.11a6 6 0 0 1 6.95 0"></path>
                                     <line x1="12" y1="20" x2="12.01" y2="20"></line>
                                 </svg>
-                                <div class="scan-label" style="font-size: 1.2rem; font-weight: bold; margin-top: 5px; color: var(--color-accen-terracotta);">WIFI</div>
+                                <div class="scan-label" style="font-size: 1.2rem; font-weight: bold; margin-top: 5px; color: var(--color-accen-terracotta);" data-i18n="hub.wifi_label">WIFI</div>
                             </div>
                             <div class="wifi-details-row">
                                 <div class="wifi-pill">
@@ -167,40 +177,40 @@
                 <div class="split-right-panel" style="padding: var(--gap-lg); justify-content: center;">
                     <header class="section-header" style="background:transparent; border:none; margin-bottom: 20px; padding:0;">
                         <button class="back-btn" onclick="goBack()">
-                            <span class="icon-back">←</span> Retour
+                            <span class="icon-back">←</span> <span data-i18n="common.back">Retour</span>
                         </button>
-                        <h2 style="text-align:left; margin-left:20px;">Votre séjour</h2>
+                        <h2 style="text-align:left; margin-left:20px;" data-i18n="stay.title">Votre séjour</h2>
                     </header>
 
                     <div class="vertical-menu-grid">
                         <!-- 1. Consignes de départ (Moved to top) -->
                         <button class="nav-card" onclick="openSection('details-consignes')">
                             <span class="card-icon">🧹</span>
-                            <span class="card-label">Consignes de départ</span>
+                            <span class="card-label" data-i18n="stay.menu.checkout">Consignes de départ</span>
                         </button>
 
                         <!-- 2. Parking & Wi-Fi -->
                         <button class="nav-card" onclick="openSection('details-parking')">
                             <span class="card-icon">🚗</span>
-                            <span class="card-label">Parking & Wi-Fi</span>
+                            <span class="card-label" data-i18n="stay.menu.parking">Parking & Wi-Fi</span>
                         </button>
 
                         <!-- 3. Équipements -->
                         <button class="nav-card" onclick="openSection('details-equipements')">
                             <span class="card-icon">🏠</span>
-                            <span class="card-label">Équipements</span>
+                            <span class="card-label" data-i18n="stay.menu.equip">Équipements</span>
                         </button>
 
                         <!-- 4. Règles de vie -->
                         <button class="nav-card" onclick="openSection('details-regles')">
                             <span class="card-icon">📋</span>
-                            <span class="card-label">Règles de vie</span>
+                            <span class="card-label" data-i18n="stay.menu.rules">Règles de vie</span>
                         </button>
 
                         <!-- 5. Besoin d'aide -->
                         <button class="nav-card" onclick="openSection('details-assistance')">
                             <span class="card-icon">🆘</span>
-                            <span class="card-label">Besoin d'aide ?</span>
+                            <span class="card-label" data-i18n="stay.menu.help">Besoin d'aide ?</span>
                         </button>
                     </div>
                 </div>
@@ -255,12 +265,12 @@
                                     <path d="M9 17h6"></path>
                                 </svg>
                             </div>
-                            <div class="hero-label">Parking Privé</div>
+                            <div class="hero-label" data-i18n="parking.hero_label">Parking Privé</div>
                             <div class="hero-number">N°3</div>
                             <div class="hero-desc">
-                                🎮 Télécommande fournie (⚠️ ne pas perdre)<br>
+                                <span data-i18n="parking.hero_desc_remote">🎮 Télécommande fournie (⚠️ ne pas perdre)</span><br>
                                 <div style="font-size:0.9rem; opacity:0.8; margin-top:8px; padding-top:8px; border-top:1px solid rgba(0,0,0,0.05);">
-                                    <strong>Accès :</strong> Étage -1 → Sortie → Droite → Droite → Porte Orange (clé rouge)
+                                    <span data-i18n="parking.hero_desc_access">Accès : Étage -1 → Sortie → Droite → Droite → Porte Orange (clé rouge)</span>
                                 </div>
                             </div>
                         </div>
@@ -278,9 +288,9 @@
                 <div class="split-right-panel">
                     <header class="section-header">
                         <button class="back-btn" onclick="openSection('maison')">
-                            <span class="icon-back">←</span> Retour
+                            <span class="icon-back">←</span> <span data-i18n="common.back">Retour</span>
                         </button>
-                        <h2>Équipements</h2>
+                        <h2 data-i18n="equip.title">Équipements</h2>
                         <div class="header-spacer"></div>
                     </header>
                     <div class="section-content" style="padding-bottom:10px;">
@@ -289,50 +299,50 @@
                             <div class="equip-card">
                                 <div class="equip-header">
                                     <span style="font-size:1.8rem;">🍽️</span>
-                                    <h4>Cuisine</h4>
+                                    <h4 data-i18n="equip.kitchen.title">Cuisine</h4>
                                 </div>
                                 <ul class="clean-list equip-list">
-                                    <li><strong>Four :</strong> Éteindre et nettoyer après usage</li>
-                                    <li><strong>Lave-vaisselle :</strong> Maintenir Power 3s. Rouge au sol = ON</li>
-                                    <li><strong>Frigo :</strong> Bien fermer, ne pas claquer</li>
-                                    <li><strong>Café :</strong> Nespresso + Dolce Gusto</li>
-                                    <li><strong>Entretien :</strong> Éponges magiques fournies (sur blanc)</li>
+                                    <li data-i18n="equip.kitchen.oven"><strong>Four :</strong> Éteindre et nettoyer après usage</li>
+                                    <li data-i18n="equip.kitchen.dishwasher"><strong>Lave-vaisselle :</strong> Maintenir Power 3s. Rouge au sol = ON</li>
+                                    <li data-i18n="equip.kitchen.fridge"><strong>Frigo :</strong> Bien fermer, ne pas claquer</li>
+                                    <li data-i18n="equip.kitchen.coffee"><strong>Café :</strong> Nespresso + Dolce Gusto</li>
+                                    <li data-i18n="equip.kitchen.cleaning"><strong>Entretien :</strong> Éponges magiques fournies (sur blanc)</li>
                                 </ul>
                             </div>
 
                             <div class="equip-card">
                                 <div class="equip-header">
                                     <span style="font-size:1.8rem;">🚿</span>
-                                    <h4>Salle de Bain</h4>
+                                    <h4 data-i18n="equip.bath.title">Salle de Bain</h4>
                                 </div>
                                 <ul class="clean-list equip-list">
-                                    <li><strong>Condensation :</strong> Ventiler au maximum</li>
-                                    <li>Laisser la porte ouverte pendant la douche si besoin</li>
+                                    <li data-i18n="equip.bath.vent"><strong>Condensation :</strong> Ventiler au maximum</li>
+                                    <li data-i18n="equip.bath.door">Laisser la porte ouverte pendant la douche si besoin</li>
                                 </ul>
                             </div>
 
                             <div class="equip-card">
                                 <div class="equip-header">
                                     <span style="font-size:1.8rem;">🧺</span>
-                                    <h4>Linge</h4>
+                                    <h4 data-i18n="equip.laundry.title">Linge</h4>
                                 </div>
                                 <ul class="clean-list equip-list">
-                                    <li>1 Grande + 1 Petite serviette / pers.</li>
-                                    <li><strong>Lave-linge :</strong> Mode Délicat. Vider bac à eau.</li>
-                                    <li><strong>Sèche-linge :</strong> Au-dessus du lave-linge</li>
-                                    <li><strong>Panier :</strong> SDB, sous le meuble</li>
+                                    <li data-i18n="equip.laundry.towels">1 Grande + 1 Petite serviette / pers.</li>
+                                    <li data-i18n="equip.laundry.washer"><strong>Lave-linge :</strong> Mode Délicat. Vider bac à eau.</li>
+                                    <li data-i18n="equip.laundry.dryer"><strong>Sèche-linge :</strong> Au-dessus du lave-linge</li>
+                                    <li data-i18n="equip.laundry.basket"><strong>Panier :</strong> SDB, sous le meuble</li>
                                 </ul>
                             </div>
 
                              <div class="equip-card">
                                 <div class="equip-header">
                                     <span style="font-size:1.8rem;">🛋️</span>
-                                    <h4>Salon & Fenêtres</h4>
+                                    <h4 data-i18n="equip.living.title">Salon & Fenêtres</h4>
                                 </div>
                                 <ul class="clean-list equip-list">
-                                    <li>Laisser les plaids de protection sur le canapé</li>
-                                    <li><strong>Fenêtres :</strong> Fragiles (simple vitrage). Manipuler avec soin.</li>
-                                    <li><strong>Rideaux :</strong> Isolation phonique + Occultation.</li>
+                                    <li data-i18n="equip.living.sofa">Laisser les plaids de protection sur le canapé</li>
+                                    <li data-i18n="equip.living.windows"><strong>Fenêtres :</strong> Fragiles (simple vitrage). Manipuler avec soin.</li>
+                                    <li data-i18n="equip.living.curtains"><strong>Rideaux :</strong> Isolation phonique + Occultation.</li>
                                 </ul>
                             </div>
 
@@ -375,7 +385,7 @@
                                     <div class="step-number">1</div>
                                     <div class="card-status-indicator"></div>
                                     <div style="font-size:1.5rem;">🧺</div>
-                                    <div class="card-content"><strong>Linge Sale</strong><br><span style="font-size:0.8rem;">Draps/Serviettes au sol (Cuisine)</span></div>
+                                    <div class="card-content"><strong data-i18n="checkout.steps.laundry">Linge Sale</strong><br><span style="font-size:0.8rem;" data-i18n="checkout.steps.laundry_sub">Draps/Serviettes au sol (Cuisine)</span></div>
                                 </div>
                                 
                                 <!-- 2. Poubelles -->
@@ -383,7 +393,7 @@
                                     <div class="step-number">2</div>
                                     <div class="card-status-indicator"></div>
                                     <div style="font-size:1.5rem;">🗑️</div>
-                                    <div class="card-content"><strong>Poubelles</strong><br><span style="font-size:0.8rem;">Sortir (Face garage)</span></div>
+                                    <div class="card-content"><strong data-i18n="checkout.steps.trash">Poubelles</strong><br><span style="font-size:0.8rem;" data-i18n="checkout.steps.trash_sub">Sortir (Face garage)</span></div>
                                 </div>
                                 
                                 <!-- 3. Frigo -->
@@ -391,7 +401,7 @@
                                     <div class="step-number">3</div>
                                     <div class="card-status-indicator"></div>
                                     <div style="font-size:1.5rem;">❄️</div>
-                                    <div class="card-content"><strong>Frigo</strong><br><span style="font-size:0.8rem;">Vider (Laisser non-périssables)</span></div>
+                                    <div class="card-content"><strong data-i18n="checkout.steps.fridge">Frigo</strong><br><span style="font-size:0.8rem;" data-i18n="checkout.steps.fridge_sub">Vider (Laisser non-périssables)</span></div>
                                 </div>
                                 
                                 <!-- 4. Vaisselle -->
@@ -399,7 +409,7 @@
                                     <div class="step-number">4</div>
                                     <div class="card-status-indicator"></div>
                                     <div style="font-size:1.5rem;">🍽️</div>
-                                    <div class="card-content"><strong>Vaisselle</strong><br><span style="font-size:0.8rem;">Lancer lave-vaisselle</span></div>
+                                    <div class="card-content"><strong data-i18n="checkout.steps.dishes">Vaisselle</strong><br><span style="font-size:0.8rem;" data-i18n="checkout.steps.dishes_sub">Lancer lave-vaisselle</span></div>
                                 </div>
                                 
                                 <!-- 5. Électricité -->
@@ -407,7 +417,7 @@
                                     <div class="step-number">5</div>
                                     <div class="card-status-indicator"></div>
                                     <div style="font-size:1.5rem;">⚡</div>
-                                    <div class="card-content"><strong>Électricité</strong><br><span style="font-size:0.8rem;">Tout éteindre</span></div>
+                                    <div class="card-content"><strong data-i18n="checkout.steps.power">Électricité</strong><br><span style="font-size:0.8rem;" data-i18n="checkout.steps.power_sub">Tout éteindre</span></div>
                                 </div>
                                 
                                 <!-- 6. Fermer -->
@@ -415,7 +425,7 @@
                                     <div class="step-number">6</div>
                                     <div class="card-status-indicator"></div>
                                     <div style="font-size:1.5rem;">🪟</div>
-                                    <div class="card-content"><strong>Fermer</strong><br><span style="font-size:0.8rem;">Fenêtres & Portes</span></div>
+                                    <div class="card-content"><strong data-i18n="checkout.steps.windows">Fermer</strong><br><span style="font-size:0.8rem;" data-i18n="checkout.steps.windows_sub">Fenêtres & Portes</span></div>
                                 </div>
                                 
                                 <!-- 7. Final Step (Redesigned) -->
@@ -424,9 +434,9 @@
                                     <div class="card-status-indicator"></div>
                                     <div style="font-size:2rem;">🔑</div>
                                     <div class="card-content">
-                                        <strong style="color: var(--color-accent-terracotta); font-size: 1.1rem; text-transform: uppercase;">Clés + Badge</strong>
-                                        <div style="font-size:0.9rem; font-weight: 500;">Dans la boîte n°2</div>
-                                        <span style="font-size:0.8rem; color: #666;">Code ou Clé "POULET Benjamin"</span>
+                                        <strong style="color: var(--color-accent-terracotta); font-size: 1.1rem; text-transform: uppercase;" data-i18n="checkout.steps.keys">Clés + Badge</strong>
+                                        <div style="font-size:0.9rem; font-weight: 500;" data-i18n="checkout.steps.keys_loc">Dans la boîte n°2</div>
+                                        <span style="font-size:0.8rem; color: #666;" data-i18n="checkout.steps.keys_code">Code ou Clé "POULET Benjamin"</span>
                                     </div>
                                 </div>
                             </div>
@@ -444,9 +454,9 @@
                 <div class="split-right-panel">
                      <header class="section-header">
                         <button class="back-btn" onclick="openSection('maison')">
-                            <span class="icon-back">←</span> Retour
+                            <span class="icon-back">←</span> <span data-i18n="common.back">Retour</span>
                         </button>
-                        <h2>Besoin d'aide ?</h2>
+                        <h2 data-i18n="help.title">Besoin d'aide ?</h2>
                         <div class="header-spacer"></div>
                     </header>
                     
@@ -461,7 +471,7 @@
                                 </div>
                                 <div>
                                     <div style="font-weight: 700; font-size: 1.2rem; color: var(--color-text);">Benjamin</div>
-                                    <div style="font-size: 0.9rem; color: #888;">Votre Hôte</div>
+                                    <div style="font-size: 0.9rem; color: #888;" data-i18n="help.host_role">Votre Hôte</div>
                                 </div>
                                 <a href="tel:0658842511" class="phone-btn" style="background: var(--color-bg); padding: 8px 15px; border-radius: 20px; color: var(--color-accent-terracotta); font-weight: 700; text-decoration: none; margin-top: 5px; font-size: 1.1rem; box-shadow: 0 2px 5px rgba(0,0,0,0.05);">06 58 84 25 11</a>
                             </div>
@@ -473,7 +483,7 @@
                                 </div>
                                 <div>
                                     <div style="font-weight: 700; font-size: 1.2rem; color: var(--color-text);">Sandrine</div>
-                                    <div style="font-size: 0.9rem; color: #888;">Concierge</div>
+                                    <div style="font-size: 0.9rem; color: #888;" data-i18n="help.concierge_role">Concierge</div>
                                 </div>
                                 <a href="tel:0640258477" class="phone-btn" style="background: var(--color-bg); padding: 8px 15px; border-radius: 20px; color: var(--color-accent-terracotta); font-weight: 700; text-decoration: none; margin-top: 5px; font-size: 1.1rem; box-shadow: 0 2px 5px rgba(0,0,0,0.05);">06 40 25 84 77</a>
                             </div>
@@ -486,7 +496,7 @@
                                 <div style="color: #e74c3c;">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.1.2-2.2.5-3.3a9 9 0 0 0 4 5.8z"/></svg>
                                 </div>
-                                <div style="font-size: 0.9rem; color: #666; font-weight: 600;">Pompiers</div>
+                                <div style="font-size: 0.9rem; color: #666; font-weight: 600;" data-i18n="help.fire">Pompiers</div>
                                 <div style="font-size: 1.4rem; color: var(--color-text); font-weight: 800;">18</div>
                             </a>
 
@@ -495,7 +505,7 @@
                                 <div style="color: #3498db;">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/><path d="M12 5 9.04 11h5.92Z"/></svg>
                                 </div>
-                                <div style="font-size: 0.9rem; color: #666; font-weight: 600;">SAMU</div>
+                                <div style="font-size: 0.9rem; color: #666; font-weight: 600;" data-i18n="help.medical">SAMU</div>
                                 <div style="font-size: 1.4rem; color: var(--color-text); font-weight: 800;">15</div>
                             </a>
 
@@ -504,7 +514,7 @@
                                 <div style="color: #2c3e50;">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10"/><path d="m9 12 2 2 4-4"/></svg>
                                 </div>
-                                <div style="font-size: 0.9rem; color: #666; font-weight: 600;">Police</div>
+                                <div style="font-size: 0.9rem; color: #666; font-weight: 600;" data-i18n="help.police">Police</div>
                                 <div style="font-size: 1.4rem; color: var(--color-text); font-weight: 800;">17</div>
                             </a>
                         </div>
@@ -514,7 +524,7 @@
                              <div style="color: var(--color-accent-terracotta);">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
                             </div>
-                            <div style="font-size: 0.9rem; color: #888; text-transform: uppercase; font-weight: 600; letter-spacing: 0.5px;">Adresse du logement</div>
+                            <div style="font-size: 0.9rem; color: #888; text-transform: uppercase; font-weight: 600; letter-spacing: 0.5px;" data-i18n="help.address_label">Adresse du logement</div>
                             <div style="font-weight: 700; font-size: 1.15rem; user-select: text; color: var(--color-text);">2 boulevard Robert Schuman, 57100 Thionville</div>
                         </div>
 
@@ -532,9 +542,9 @@
                 <div class="split-right-panel">
                      <header class="section-header">
                         <button class="back-btn" onclick="openSection('maison')">
-                            <span class="icon-back">←</span> Retour
+                            <span class="icon-back">←</span> <span data-i18n="common.back">Retour</span>
                         </button>
-                        <h2>Règles de vie</h2>
+                        <h2 data-i18n="rules.title">Règles de vie</h2>
                         <div class="header-spacer"></div>
                     </header>
                     
@@ -549,9 +559,9 @@
                                     <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
                                 </div>
                                 <div class="content">
-                                    <h4>CALME APRÈS 22H</h4>
-                                    <div style="font-style: italic; opacity: 0.7; margin-bottom: 8px; font-size: 0.95rem;">Pour le confort de tous</div>
-                                    <p style="font-size: 1rem;">Merci de <strong>baisser le volume après 22h</strong> — nos voisins sont adorables et on aimerait que ça dure 😊</p>
+                                    <h4 data-i18n="rules.quiet.title">CALME APRÈS 22H</h4>
+                                    <div style="font-style: italic; opacity: 0.7; margin-bottom: 8px; font-size: 0.95rem;" data-i18n="rules.quiet.sub">Pour le confort de tous</div>
+                                    <p style="font-size: 1rem;" data-i18n="rules.quiet.text">Merci de <strong>baisser le volume après 22h</strong> — nos voisins sont adorables et on aimerait que ça dure 😊</p>
                                 </div>
                             </div>
 
@@ -561,9 +571,9 @@
                                     <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12a10 10 0 1 0-20 0 10 10 0 0 0 20 0Z"/><path d="m2 2 20 20"/><path d="M2 22 22 2"/></svg>
                                 </div>
                                 <div class="content">
-                                    <h4>ESPACE NON-FUMEUR</h4>
-                                    <div style="font-style: italic; opacity: 0.7; margin-bottom: 8px; font-size: 0.95rem;">On respire mieux</div>
-                                    <p style="font-size: 1rem;">La maison est <strong>non-fumeur</strong>. Si besoin, la fenêtre de la cuisine est OK pour fumer à l'extérieur.</p>
+                                    <h4 data-i18n="rules.smoke.title">ESPACE NON-FUMEUR</h4>
+                                    <div style="font-style: italic; opacity: 0.7; margin-bottom: 8px; font-size: 0.95rem;" data-i18n="rules.smoke.sub">On respire mieux</div>
+                                    <p style="font-size: 1rem;" data-i18n="rules.smoke.text">La maison est <strong>non-fumeur</strong>. Si besoin, la fenêtre de la cuisine est OK pour fumer à l'extérieur.</p>
                                 </div>
                             </div>
 
@@ -573,9 +583,9 @@
                                     <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg>
                                 </div>
                                 <div class="content">
-                                    <h4>SÉJOUR TRANQUILLE</h4>
-                                    <div style="font-style: italic; opacity: 0.7; margin-bottom: 8px; font-size: 0.95rem;">Cocon plutôt que fiesta</div>
-                                    <p style="font-size: 1rem;">Ce logement est pensé pour se ressourcer. Les <strong>fêtes et événements ne sont pas autorisés</strong>.</p>
+                                    <h4 data-i18n="rules.party.title">SÉJOUR TRANQUILLE</h4>
+                                    <div style="font-style: italic; opacity: 0.7; margin-bottom: 8px; font-size: 0.95rem;" data-i18n="rules.party.sub">Cocon plutôt que fiesta</div>
+                                    <p style="font-size: 1rem;" data-i18n="rules.party.text">Ce logement est pensé pour se ressourcer. Les <strong>fêtes et événements ne sont pas autorisés</strong>.</p>
                                 </div>
                             </div>
 
@@ -585,9 +595,9 @@
                                     <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><circle cx="19" cy="5" r="3"/><circle cx="5" cy="5" r="3"/><path d="M12 18.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Z"/></svg>
                                 </div>
                                 <div class="content">
-                                    <h4>ANIMAUX</h4>
-                                    <div style="font-style: italic; opacity: 0.7; margin-bottom: 8px; font-size: 0.95rem;">On en parle d'abord</div>
-                                    <p style="font-size: 1rem;">Les animaux <strong>ne sont pas acceptés</strong> par défaut — mais contactez-nous, on peut parfois s'arranger !</p>
+                                    <h4 data-i18n="rules.pets.title">ANIMAUX</h4>
+                                    <div style="font-style: italic; opacity: 0.7; margin-bottom: 8px; font-size: 0.95rem;" data-i18n="rules.pets.sub">On en parle d'abord</div>
+                                    <p style="font-size: 1rem;" data-i18n="rules.pets.text">Les animaux <strong>ne sont pas acceptés</strong> par défaut — mais contactez-nous, on peut parfois s'arranger !</p>
                                 </div>
                             </div>
 
@@ -597,9 +607,9 @@
                                     <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
                                 </div>
                                 <div class="content">
-                                    <h4>SOIN DES LIEUX</h4>
-                                    <div style="font-style: italic; opacity: 0.7; margin-bottom: 8px; font-size: 0.95rem;">Comme chez vous</div>
-                                    <p style="font-size: 1rem;">Signalez-nous <strong>tout souci ou dégât</strong>, même petit. Pas de stress, ça arrive — on préfère juste savoir.</p>
+                                    <h4 data-i18n="rules.care.title">SOIN DES LIEUX</h4>
+                                    <div style="font-style: italic; opacity: 0.7; margin-bottom: 8px; font-size: 0.95rem;" data-i18n="rules.care.sub">Comme chez vous</div>
+                                    <p style="font-size: 1rem;" data-i18n="rules.care.text">Signalez-nous <strong>tout souci ou dégât</strong>, même petit. Pas de stress, ça arrive — on préfère juste savoir.</p>
                                 </div>
                             </div>
                             <!-- 6. Sécurité -->
@@ -608,9 +618,9 @@
                                     <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/></svg>
                                 </div>
                                 <div class="content">
-                                    <h4>SÉCURITÉ</h4>
-                                    <div style="font-style: italic; opacity: 0.7; margin-bottom: 8px; font-size: 0.95rem;">Petit réflexe avant de partir</div>
-                                    <p style="font-size: 1rem;">Pensez à <strong>éteindre les lumières</strong> et appareils quand vous sortez. La planète (et la facture) vous remercient.</p>
+                                    <h4 data-i18n="rules.security.title">SÉCURITÉ</h4>
+                                    <div style="font-style: italic; opacity: 0.7; margin-bottom: 8px; font-size: 0.95rem;" data-i18n="rules.security.sub">Petit réflexe avant de partir</div>
+                                    <p style="font-size: 1rem;" data-i18n="rules.security.text">Pensez à <strong>éteindre les lumières</strong> et appareils quand vous sortez. La planète (et la facture) vous remercient.</p>
                                 </div>
                             </div>
                         </div>
@@ -636,30 +646,30 @@
 
                 <div class="guestbook-content-wrapper">
                     
-                    <!-- STATE 1: THE FORM (Visible by default) -->
+                        <!-- STATE 1: THE FORM (Visible by default) -->
                     <div id="guestbook-state-write" class="guestbook-state active">
                         <div class="form-card-centered">
-                            <h2 style="font-family: 'Caveat'; font-size: 3rem; color: var(--color-accent-terracotta); margin-bottom: 5px;">Livre d'or Ohana Home</h2>
-                            <div style="font-style: italic; opacity: 0.6; margin-bottom: 30px;">Laissez une trace de votre passage ici 😁</div>
+                            <h2 style="font-family: 'Caveat'; font-size: 3rem; color: var(--color-accent-terracotta); margin-bottom: 5px;" data-i18n="guestbook.title">Livre d'or Ohana Home</h2>
+                            <div style="font-style: italic; opacity: 0.6; margin-bottom: 30px;" data-i18n="guestbook.subtitle">Laissez une trace de votre passage ici 😁</div>
                             
                             <div class="elegant-form">
                                 <div class="input-group">
-                                    <label>Votre Prénom</label>
-                                    <input type="text" id="guest-name" placeholder="Ex: Julien & Marie" maxlength="30" autocomplete="off">
+                                    <label data-i18n="guestbook.form.name_label">Votre Prénom</label>
+                                    <input type="text" id="guest-name" placeholder="Ex: Julien & Marie" maxlength="30" autocomplete="off" data-i18n="guestbook.form.name_placeholder">
                                 </div>
                                 
                                 <div class="input-group">
-                                    <label>Votre Message</label>
-                                    <textarea id="guest-message" placeholder="Racontez-nous votre moment préféré..." rows="4" maxlength="300"></textarea>
+                                    <label data-i18n="guestbook.form.msg_label">Votre Message</label>
+                                    <textarea id="guest-message" placeholder="Racontez-nous votre moment préféré..." rows="4" maxlength="300" data-i18n="guestbook.form.msg_placeholder"></textarea>
                                 </div>
 
                                 <button class="btn-engrave" onclick="saveGuestbookEntry()">
                                     <span class="engrave-icon">✍️</span>
-                                    Graver sur le livre d'or
+                                    <span data-i18n="guestbook.form.submit">Graver sur le livre d'or</span>
                                 </button>
                                 
                                 <div class="form-footer-link">
-                                    <span onclick="showGuestbookReadMode()">Ou lire les messages précédents</span>
+                                    <span onclick="showGuestbookReadMode()" data-i18n="guestbook.form.read_link">Ou lire les messages précédents</span>
                                 </div>
                             </div>
                         </div>
@@ -667,9 +677,9 @@
                         <!-- QR Option (Mobile Entry) -->
                 <div class="guestbook-qr-option">
                     <img id="guestbook-qr-img" class="qr-code-img" src="" alt="QR Code">
-                    <div class="qr-text">
-                        Plus cool avec votre téléphone non ?<br>
-                        Scannez pour écrire avec le clavier de votre mobile.
+                    <div class="qr-text" style="white-space: pre-line;" data-i18n="guestbook.qr_text">
+                        Plus cool avec votre téléphone non ?
+Scannez pour écrire avec le clavier de votre mobile.
                     </div>
                 </div>
                     </div>
@@ -678,8 +688,8 @@
                     <div id="guestbook-state-read" class="guestbook-state hidden">
                         <div class="book-container">
                             <div class="book-header">
-                                <h2 class="handwritten-title-small">Les mots des voyageurs</h2>
-                                <button class="btn-text-action" onclick="showGuestbookWriteMode()">
+                                <h2 class="handwritten-title-small" data-i18n="guestbook.read_title">Les mots des voyageurs</h2>
+                                <button class="btn-text-action" onclick="showGuestbookWriteMode()" data-i18n="guestbook.add_btn">
                                     + Ajouter un mot
                                 </button>
                             </div>
@@ -713,9 +723,9 @@
                     <div id="discover-menu" class="discover-view active">
                         <header class="section-header" style="padding: var(--gap-lg); padding-bottom: 0;">
                             <button class="back-btn" onclick="goBack()">
-                                <span class="icon-back">←</span> Retour
+                                <span class="icon-back">←</span> <span data-i18n="common.back">Retour</span>
                             </button>
-                            <h2>Nos Adresses</h2>
+                            <h2 data-i18n="discover.title">Nos Adresses</h2>
                         </header>
                         
                         <div class="discover-categories-grid">
@@ -765,17 +775,17 @@
 
                     <!-- Right: Text (50%) -->
                     <div class="story-text-side" style="flex: 1; height: 100%; display: flex; flex-direction: column; justify-content: center; padding: 60px; box-sizing: border-box; background: #fffcf8;">
-                        <h2 style="font-family: 'Cormorant Garamond', serif; font-size: 3.5rem; color: var(--color-accent-terracotta); margin-bottom: 20px;">Benjamin</h2>
+                        <h2 style="font-family: 'Cormorant Garamond', serif; font-size: 3.5rem; color: var(--color-accent-terracotta); margin-bottom: 20px;" data-i18n="story.ben.title">Benjamin</h2>
                         <div class="story-body" style="font-family: 'Raleway', sans-serif; font-size: 1.1rem; line-height: 1.6; color: #4a4a4a;">
-                            <p style="margin-bottom: 15px;">Hello, je m'appelle Benjamin ! Dans la vie, j'aide les entrepreneurs du bien-être à s'aligner et à trouver leur liberté.</p>
-                            <p style="margin-bottom: 15px;">Pour moi, un lieu de vie doit faire la même chose : apaiser l'esprit pour laisser la place aux belles idées.</p>
-                            <p style="margin-bottom: 15px;">J'ai voulu voir cet appartement comme une bulle hors du temps. Un mélange du mood balinais, de mon amour pour la spiritualité et la nature et d'une touche de 'Good Vibes' !</p>
-                            <p style="font-style: italic; color: #888;">Vous êtes peut-être ici pour travailler, profiter en famille, explorer ou ne rien faire (c'est cool aussi 🙄), j'espère que ce lieu va vous apaiser et vous recharger ! Merci de nous avoir choisi 🙏</p>
+                            <p style="margin-bottom: 15px;" data-i18n="story.ben.p1">Hello, je m'appelle Benjamin ! Dans la vie, j'aide les entrepreneurs du bien-être à s'aligner et à trouver leur liberté.</p>
+                            <p style="margin-bottom: 15px;" data-i18n="story.ben.p2">Pour moi, un lieu de vie doit faire la même chose : apaiser l'esprit pour laisser la place aux belles idées.</p>
+                            <p style="margin-bottom: 15px;" data-i18n="story.ben.p3">J'ai voulu voir cet appartement comme une bulle hors du temps. Un mélange du mood balinais, de mon amour pour la spiritualité et la nature et d'une touche de 'Good Vibes' !</p>
+                            <p style="font-style: italic; color: #888;" data-i18n="story.ben.p4">Vous êtes peut-être ici pour travailler, profiter en famille, explorer ou ne rien faire (c'est cool aussi 🙄), j'espère que ce lieu va vous apaiser et vous recharger ! Merci de nous avoir choisi 🙏</p>
                         </div>
                         
                         <!-- Scroll Indicator -->
                         <div style="margin-top: 40px; display: flex; align-items: center; gap: 10px; color: var(--color-accent-terracotta); opacity: 0.8; animation: bounce 2s infinite;">
-                            <span style="font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px;">Découvrir Ohana</span>
+                            <span style="font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px;" data-i18n="story.ben.cta">Découvrir Ohana</span>
                             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 13l5 5 5-5M7 6l5 5 5-5"/></svg>
                         </div>
                     </div>
@@ -792,11 +802,11 @@
 
                     <!-- Left: Text (50%) -->
                     <div class="story-text-side" style="flex: 1; height: 100%; display: flex; flex-direction: column; justify-content: center; padding: 60px; box-sizing: border-box; background: #fffcf8;">
-                        <h2 style="font-family: 'Cormorant Garamond', serif; font-size: 3.5rem; color: var(--color-accent-terracotta); margin-bottom: 20px;">Ohana</h2>
+                        <h2 style="font-family: 'Cormorant Garamond', serif; font-size: 3.5rem; color: var(--color-accent-terracotta); margin-bottom: 20px;" data-i18n="story.ohana.title">Ohana</h2>
                         <div class="story-body" style="font-family: 'Raleway', sans-serif; font-size: 1.1rem; line-height: 1.6; color: #4a4a4a;">
-                            <p style="margin-bottom: 15px;"><strong>Salut, moi c'est Ohana ! 🐾</strong></p>
-                            <p style="margin-bottom: 15px;">Papa m'a dit d'écrire un petit texte pour vous, mais je ne sais pas trop quoi dire... à part que j'adore les croquettes, jouer avec des bâtons et que j'adooooore nager !</p>
-                            <p style="margin-bottom: 15px;">Ah, et apparemment, mon prénom veut dire 'Famille' en hawaïen. Donc bienvenue dans la famille ! ❤️</p>
+                            <p style="margin-bottom: 15px;"><strong data-i18n="story.ohana.p1">Salut, moi c'est Ohana ! 🐾</strong></p>
+                            <p style="margin-bottom: 15px;" data-i18n="story.ohana.p2">Papa m'a dit d'écrire un petit texte pour vous, mais je ne sais pas trop quoi dire... à part que j'adore les croquettes, jouer avec des bâtons et que j'adooooore nager !</p>
+                            <p style="margin-bottom: 15px;" data-i18n="story.ohana.p3">Ah, et apparemment, mon prénom veut dire 'Famille' en hawaïen. Donc bienvenue dans la famille ! ❤️</p>
                         </div>
                     </div>
                 </div>
@@ -820,14 +830,14 @@
             </div>
 
             <div class="screensaver-prompt">
-                <p>Touchez l'écran pour commencer</p>
+                <p data-i18n="screensaver.prompt">Touchez l'écran pour commencer</p>
             </div>
         </div>
 
         <!-- Global Home Button (Visible on all inner pages) -->
         <button id="global-home-btn" class="global-home-btn" onclick="goBack()" title="Retour à l'accueil">
             <span class="icon-home">🏠</span>
-            <span class="label">Accueil</span>
+            <span class="label" data-i18n="common.home">Accueil</span>
         </button>
 
     </main>
