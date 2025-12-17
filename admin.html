@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Ohana Admin</title>
+    <!-- Same fonts as main site for consistency -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Raleway:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --color-bg: #fdfbf7;
+            --color-accent-terracotta: #BA4A2C;
+            --color-text: #2c3e50;
+            --radius-lg: 20px;
+        }
+
+        body {
+            background-color: var(--color-bg);
+            font-family: 'Raleway', sans-serif;
+            color: var(--color-text);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .admin-card {
+            background: white;
+            padding: 30px;
+            border-radius: var(--radius-lg);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.05);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
+
+        h1 {
+            font-family: 'Montserrat', sans-serif;
+            color: var(--color-accent-terracotta);
+            margin-bottom: 30px;
+            font-size: 1.8rem;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        input {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #eee;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-family: inherit;
+            box-sizing: border-box;
+            transition: border-color 0.3s;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: var(--color-accent-terracotta);
+        }
+
+        button {
+            background: var(--color-accent-terracotta);
+            color: white;
+            border: none;
+            padding: 16px;
+            width: 100%;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: transform 0.2s, opacity 0.2s;
+        }
+
+        button:active {
+            transform: scale(0.98);
+        }
+
+        button:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+
+        .status-msg {
+            margin-top: 20px;
+            font-weight: 500;
+            min-height: 24px;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .status-success { color: #27ae60; opacity: 1; }
+        .status-error { color: #e74c3c; opacity: 1; }
+
+        #login-screen, #app-screen {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .hidden { display: none !important; }
+    </style>
+</head>
+<body>
+
+    <!-- LOGIN SCREEN -->
+    <div id="login-screen">
+        <div class="admin-card">
+            <h1>🔒 Accès Hôte</h1>
+            <div class="input-group">
+                <label>Code d'accès</label>
+                <input type="password" id="auth-code" inputmode="numeric" placeholder="Entrez le code">
+            </div>
+            <button onclick="checkAuth()">Entrer</button>
+            <div id="login-msg" class="status-msg"></div>
+        </div>
+    </div>
+
+    <!-- APP SCREEN -->
+    <div id="app-screen" class="hidden">
+        <div class="admin-card">
+            <h1>👋 Prochain Voyageur</h1>
+            
+            <div class="input-group">
+                <label>Prénom du voyageur</label>
+                <input type="text" id="guest-name-input" placeholder="Ex: Julie">
+            </div>
+
+            <button id="save-btn" onclick="saveSettings()">
+                Mettre à jour
+            </button>
+
+            <div id="app-msg" class="status-msg"></div>
+        </div>
+
+        <div style="margin-top: 30px; opacity: 0.5; font-size: 0.9rem;">
+            <a href="index.html" style="color: inherit; text-decoration: none;">← Retour au site</a>
+        </div>
+    </div>
+
+    <script type="module">
+        import { db } from './js/firebase-config.js';
+        import { doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+        // Simple client-side auth (NOT SECURE for sensitive data, but fine for this usage)
+        const SECRET_CODE = "57100"; 
+
+        window.checkAuth = () => {
+            const input = document.getElementById('auth-code').value;
+            if (input === SECRET_CODE) {
+                document.getElementById('login-screen').classList.add('hidden');
+                document.getElementById('app-screen').classList.remove('hidden');
+                loadCurrentSettings();
+            } else {
+                const msg = document.getElementById('login-msg');
+                msg.textContent = "Code incorrect";
+                msg.className = "status-msg status-error";
+            }
+        };
+
+        // Load current name from Firestore
+        async function loadCurrentSettings() {
+            const docRef = doc(db, "guest_settings", "home");
+            
+            try {
+                const docSnap = await getDoc(docRef);
+                if (docSnap.exists()) {
+                    document.getElementById('guest-name-input').value = docSnap.data().guestName || "";
+                }
+            } catch (error) {
+                console.error("Error getting document:", error);
+            }
+        }
+
+        // Save to Firestore
+        window.saveSettings = async () => {
+            const btn = document.getElementById('save-btn');
+            const msg = document.getElementById('app-msg');
+            const newName = document.getElementById('guest-name-input').value.trim();
+
+            if (!newName) return;
+
+            btn.disabled = true;
+            btn.textContent = "Enregistrement...";
+
+            try {
+                await setDoc(doc(db, "guest_settings", "home"), {
+                    guestName: newName,
+                    updatedAt: new Date()
+                }, { merge: true });
+
+                btn.textContent = "Succès !";
+                msg.textContent = "Le site a été mis à jour ✨";
+                msg.className = "status-msg status-success";
+
+                setTimeout(() => {
+                    btn.disabled = false;
+                    btn.textContent = "Mettre à jour";
+                }, 2000);
+
+            } catch (error) {
+                console.error("Error writing document: ", error);
+                btn.textContent = "Erreur";
+                msg.textContent = "Problème de connexion...";
+                msg.className = "status-msg status-error";
+                btn.disabled = false;
+            }
+        };
+    </script>
+</body>
+</html>

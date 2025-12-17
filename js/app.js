@@ -1,9 +1,34 @@
 import { db } from './firebase-config.js';
-import { collection, addDoc, onSnapshot, query, orderBy, limit } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+import { collection, addDoc, onSnapshot, query, orderBy, limit, doc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
 // DOM Elements
 const app = document.getElementById('app');
 // ... (rest of imports)
+
+// -- GUESTBOOK LOGIC (Firebase Real-Time) --
+
+// -- GUEST NAME DYNAMIC LOGIC --
+function initGuestNameListener() {
+    // Listen to the 'home' document in 'guest_settings' collection
+    onSnapshot(doc(db, "guest_settings", "home"), (doc) => {
+        if (doc.exists()) {
+            const data = doc.data();
+            const guestName = data.guestName || "Ohana Home"; // Fallback
+
+            // Update Title (Name)
+            const titleEl = document.querySelector('.greeting h1');
+            if (titleEl) titleEl.textContent = guestName;
+
+            // Update Subtitle (Welcome message)
+            const welcomeEl = document.querySelector('.greeting .greeting-pre');
+            if (welcomeEl) {
+                // If it's the default "Ohana Home", show standard welcome
+                // If it's a person, show "Bienvenue à Ohana Home" (or keep standard)
+                welcomeEl.textContent = "Bienvenue à Ohana Home";
+            }
+        }
+    });
+}
 
 // -- GUESTBOOK LOGIC (Firebase Real-Time) --
 
@@ -149,6 +174,7 @@ window.startSlideshow = startSlideshow; // Debug
 // Ensure critical listeners are attached after load
 document.addEventListener('DOMContentLoaded', () => {
     initGuestbook();
+    initGuestNameListener();
     updateGuestbookQR();
 
     // Screensaver Dismissal (Critical)
