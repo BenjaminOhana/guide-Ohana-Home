@@ -1171,7 +1171,7 @@ function populateDiscoverDetails(title, img, places, isSub = false) {
                 <div class="place-review">"${place.review}"</div>
                 
                 <div class="place-qr-zone">
-                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=${place.maps_url ? encodeURIComponent(place.maps_url) : 'Maps:' + place.name}" class="place-qr-placeholder" alt="QR">
+                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=300x300&color=000000&bgcolor=ffffff&data=${place.maps_url ? encodeURIComponent(place.maps_url) : 'Maps:' + place.name}" class="place-qr-placeholder" alt="Scanner pour itinéraire">
                     <div class="place-qr-text">Scanner pour<br><strong>L'Itinéraire</strong></div>
                 </div>
             </div>
