@@ -1023,21 +1023,21 @@ const discoverData = {
                         name: 'Carrefour Market',
                         type: 'Centre Ville',
                         review: 'Le supermarché de proximité idéal au cœur du centre commercial, parfait pour des courses complètes avec un large choix de produits frais.',
-                        img: 'assets/img/hero/hero_9.jpg', // Placeholder
+                        img: 'assets/img/adresses/indispensable_carrefour.jpg',
                         maps_url: 'https://www.google.com/maps/search/?api=1&query=Carrefour+Market+Thionville+Cour+des+Capucins'
                     },
                     {
                         name: 'Lidl Gare',
                         type: 'Rapide & Éco',
                         review: 'L\'option maligne à deux pas des rails pour des courses rapides, économiques et une boulangerie en libre-service.',
-                        img: 'assets/img/hero/hero_9.jpg', // Placeholder
+                        img: 'assets/img/adresses/indispensable_lidl.jpg',
                         maps_url: 'https://www.google.com/maps/search/?api=1&query=Lidl+5+Rue+de+l+Ancienne+Gare+Thionville'
                     },
                     {
                         name: 'Centre Commercial Geric',
                         type: 'Shopping & Miam',
                         review: 'Enorme centre commercial pour faire du shopping, vos courses ou manger dans de nombreux restaurants.',
-                        img: 'assets/img/hero/hero_9.jpg', // Placeholder
+                        img: 'assets/img/adresses/indispensable_geric.jpg',
                         maps_url: 'https://www.google.com/maps/place/Centre+Commercial+Carrefour+Geric/@49.354748,6.1362505,17z/data=!3m1!4b1!4m6!3m5!1s0x47952547dab2f151:0x3050e5bbe5a1a8d!8m2!3d49.3547481!4d6.1411214!16s%2Fg%2F11cftxnlp?entry=ttu'
                     }
                 ]
@@ -1050,7 +1050,7 @@ const discoverData = {
                         name: 'Pharmacie Lafayette',
                         type: 'Grande Pharmacie',
                         review: 'Une grande pharmacie au large choix de parapharmacie à prix bas, avec une équipe disponible pour vos conseils santé.',
-                        img: 'assets/img/hero/hero_7.png', // Placeholder
+                        img: 'assets/img/adresses/indispensable_pharmacie.jpg',
                         maps_url: 'https://www.google.com/maps/search/?api=1&query=Pharmacie+Lafayette+des+Arcades+Thionville'
                     }
                 ]
@@ -1063,7 +1063,7 @@ const discoverData = {
                         name: 'Gare de Thionville',
                         type: 'Hub Transport',
                         review: 'Le hub central pour explorer la Grande Région, avec un accès TGV et TER direct vers Luxembourg et Metz.',
-                        img: 'assets/img/hero/hero_2.jpg', // Placeholder
+                        img: 'assets/img/adresses/indispensable_gare.png',
                         maps_url: 'https://www.google.com/maps/search/?api=1&query=Gare+de+Thionville'
                     }
                 ]
