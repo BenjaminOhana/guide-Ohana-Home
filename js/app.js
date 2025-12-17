@@ -307,14 +307,29 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // Optimized Image Preloader for Kiosk Mode
+// Optimized Image Preloader: Sequential Loading
 function preloadScreensaverImages() {
-    console.log('Starting background image preload...');
+    console.log('Starting gentle background image preload...');
     if (typeof screensaverImages !== 'undefined' && Array.isArray(screensaverImages)) {
-        screensaverImages.forEach(src => {
+        // Only preload the first 3 images immediately to save bandwidth
+        // The rest will be loaded just-in-time by the slideshow logic or a slow background loader
+        const initialBatch = screensaverImages.slice(0, 3);
+        initialBatch.forEach(src => {
             const img = new Image();
             img.src = src;
         });
-        console.log(`Preloading ${screensaverImages.length} screensaver images.`);
+
+        // Background iterator for the rest (very slow, 1 every 5 seconds)
+        let index = 3;
+        const slowLoader = setInterval(() => {
+            if (index >= screensaverImages.length) {
+                clearInterval(slowLoader);
+                return;
+            }
+            const img = new Image();
+            img.src = screensaverImages[index];
+            index++;
+        }, 5000);
     }
 }
 
@@ -550,6 +565,13 @@ function scheduleNextSlide() {
     slideTimeout = setTimeout(() => {
         nextSlide();
         scheduleNextSlide(); // Recursive call
+
+        // Preload next image just-in-time
+        const nextIndex = (currentSlide + 1) % slidesNodeList.length;
+        if (screensaverImages[nextIndex]) {
+            const img = new Image();
+            img.src = screensaverImages[nextIndex];
+        }
     }, duration);
 }
 
@@ -1173,7 +1195,7 @@ function renderDiscoverMenu() {
         tile.className = 'category-tile';
         tile.onclick = () => openDiscoverCategory(key);
         tile.innerHTML = `
-            <img src="${cat.img}" alt="${cat.title}">
+            <img src="${cat.img}" alt="${cat.title}" loading="lazy" decoding="async">
             <div class="category-overlay">
                 <h3>${cat.title}</h3>
             </div>
@@ -1215,7 +1237,7 @@ function renderSubMenu(parentCat) {
         tile.className = 'category-tile';
         tile.onclick = () => populateDiscoverDetails(sub.title, sub.img, sub.places, true); // True = isSubCategory
         tile.innerHTML = `
-            <img src="${sub.img}" alt="${sub.title}">
+            <img src="${sub.img}" alt="${sub.title}" loading="lazy" decoding="async">
             <div class="category-overlay">
                 <h3>${sub.title}</h3> 
             </div>
@@ -1245,7 +1267,7 @@ function populateDiscoverDetails(title, img, places, isSub = false) {
         card.className = 'place-card';
         card.innerHTML = `
             <div class="place-card-img-wrapper">
-                <img src="${place.img}" class="place-card-img" alt="${place.name}">
+                <img src="${place.img}" class="place-card-img" alt="${place.name}" loading="lazy" decoding="async">
             </div>
             <div class="place-card-content">
                 <div class="place-type">${place.type}</div>
