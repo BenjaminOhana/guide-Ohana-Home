@@ -1,4 +1,4 @@
-const CACHE_NAME = 'ohana-home-v2';
+const CACHE_NAME = 'ohana-home-v3';
 const ASSETS_TO_CACHE = [
     '/',
     '/index.html',

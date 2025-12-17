@@ -344,16 +344,16 @@ export const screensaverImages = [
     'assets/img/screensaver/slide_story_benjamin.png',
     'assets/img/screensaver/slide_review_ohana.png',
 
-    // High Quality (HQ)
-    'assets/img/screensaver/slide_hq_1.png',
-    'assets/img/screensaver/slide_hq_3.png',
-    'assets/img/screensaver/slide_hq_4.png',
-    'assets/img/screensaver/slide_hq_5.png',
-    'assets/img/screensaver/slide_hq_6.png',
-    'assets/img/screensaver/slide_hq_7.png',
-    'assets/img/screensaver/slide_hq_9.png',
-    'assets/img/screensaver/slide_hq_10.png',
-    'assets/img/screensaver/slide_hq_12.png',
+    // High Quality (HQ) - Optimized
+    'assets/img/screensaver/slide_hq_1.png.jpg',
+    'assets/img/screensaver/slide_hq_3.png.jpg',
+    'assets/img/screensaver/slide_hq_4.png.jpg',
+    'assets/img/screensaver/slide_hq_5.png.jpg',
+    'assets/img/screensaver/slide_hq_6.png.jpg',
+    'assets/img/screensaver/slide_hq_7.png.jpg',
+    'assets/img/screensaver/slide_hq_9.png.jpg',
+    'assets/img/screensaver/slide_hq_10.png.jpg',
+    'assets/img/screensaver/slide_hq_12.png.jpg',
 
     // Generated (AI)
     'assets/img/screensaver/slide_gen_1.png',
@@ -720,18 +720,18 @@ document.getElementById('view-hub').classList.add('active');
 
 // -- Hero Slideshow Logic --
 const heroImages = [
-    // HQ 
-    'assets/img/hero/hero_hq_1.png',
-    'assets/img/hero/hero_hq_3.png',
-    'assets/img/hero/hero_hq_4.png',
-    'assets/img/hero/hero_hq_5.png',
-    'assets/img/hero/hero_hq_6.png',
-    'assets/img/hero/hero_hq_7.png',
-    'assets/img/hero/hero_hq_8.png',
-    'assets/img/hero/hero_hq_9.png',
-    'assets/img/hero/hero_hq_10.png',
-    'assets/img/hero/hero_hq_11.png',
-    'assets/img/hero/hero_hq_12.png',
+    // HQ - Optimized
+    'assets/img/hero/hero_hq_1.png.jpg',
+    'assets/img/hero/hero_hq_3.png.jpg',
+    'assets/img/hero/hero_hq_4.png.jpg',
+    'assets/img/hero/hero_hq_5.png.jpg',
+    'assets/img/hero/hero_hq_6.png.jpg',
+    'assets/img/hero/hero_hq_7.png.jpg',
+    'assets/img/hero/hero_hq_8.png.jpg',
+    'assets/img/hero/hero_hq_9.png.jpg',
+    'assets/img/hero/hero_hq_10.png.jpg',
+    'assets/img/hero/hero_hq_11.png.jpg',
+    'assets/img/hero/hero_hq_12.png.jpg',
 
     // Standard
     'assets/img/hero/hero_6.png',
