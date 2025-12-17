@@ -984,28 +984,28 @@ const discoverData = {
                 name: 'Musée de la Tour aux Puces',
                 type: 'Histoire & Archéologie',
                 review: 'Un voyage dans le temps au cœur d\'un ancien donjon médiéval : découvrez les secrets archéologiques du Pays Thionvillois pour un prix tout doux.',
-                img: 'assets/img/hero/hero_4.jpg', // Placeholder
+                img: 'assets/img/adresses/explorer_tour_aux_puces.jpg',
                 maps_url: 'https://www.google.com/maps/place/Mus%C3%A9e+de+la+Tour+aux+Puces/@49.3579136,6.1691047,17z/data=!3m1!4b1!4m6!3m5!1s0x479524d673e53b91:0x1ee545eb451ae07!8m2!3d49.3579136!4d6.1691047!16s%2Fg%2F11bc5fkfm9?entry=ttu'
             },
             {
                 name: 'Fort de Guentrange',
                 type: 'Histoire Militaire & Vue',
                 review: 'Perché sur la colline, ce géant de béton offre une vue imprenable sur la vallée et une plongée fascinante dans l\'histoire militaire de la région.',
-                img: 'assets/img/hero/hero_4.jpg', // Placeholder 
+                img: 'assets/img/adresses/explorer_fort_guentrange.jpg',
                 maps_url: 'https://www.google.com/maps/search/?api=1&query=Fort+de+Guentrange+Thionville'
             },
             {
                 name: 'Escapade à Luxembourg',
                 type: 'Ville & Culture',
                 review: 'Transformez votre séjour en escapade internationale : Luxembourg-Ville et ses trésors UNESCO ne sont qu\'à 25 minutes de train direct.',
-                img: 'assets/img/hero/hero_2.jpg', // Placeholder
+                img: 'assets/img/adresses/explorer_luxembourg.jpg',
                 maps_url: 'https://www.google.com/maps/search/Gare+de+Luxembourg/@49.6012245,6.129576,15z/data=!3m1!4b1?entry=ttu'
             },
             {
                 name: 'Château de Malbrouck',
                 type: 'Médiéval & Panorama',
                 review: 'Imposant château médiéval magnifiquement restauré à la frontière (30 min). Architecture fortifiée, vues panoramiques et expositions d\'art dans un cadre d\'exception.',
-                img: 'assets/img/hero/hero_4.jpg', // Placeholder
+                img: 'assets/img/adresses/explorer_malbrouck.jpg',
                 maps_url: 'https://www.google.com/maps/search/?api=1&query=Chateau+de+Malbrouck'
             }
         ]
