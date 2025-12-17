@@ -1012,21 +1012,49 @@ const discoverData = {
     },
     'indispensables': {
         title: 'Indispensables',
-        img: 'assets/img/hero/hero_7.png',
-        places: [
-            {
-                name: 'Pharmacie du Centre',
-                type: 'Santé',
-                review: 'Ouverte 24/7, très pratique en cas de pépin.',
-                img: 'assets/img/hero/hero_7.png'
+        img: 'assets/img/adresses/indispensable_main.jpg',
+        hasSubcategories: true,
+        subcategories: {
+            'courses': {
+                title: 'Courses',
+                img: 'assets/img/adresses/cat_courses.png',
+                places: [
+                    {
+                        name: 'Supermarché Match',
+                        type: 'Supermarché',
+                        review: 'Le plus proche et complet pour vos courses du quotidien.',
+                        img: 'assets/img/hero/hero_7.png', // Placeholder
+                        maps_url: 'https://www.google.com/maps/search/?api=1&query=Supermarch%C3%A9+Thionville'
+                    }
+                ]
             },
-            {
-                name: 'Supermarché Match',
-                type: 'Courses',
-                review: 'Tout ce qu\'il faut à 5 minutes à pied.',
-                img: 'assets/img/hero/hero_9.jpg'
+            'sante': {
+                title: 'Pharmacie et santé',
+                img: 'assets/img/adresses/cat_sante.png',
+                places: [
+                    {
+                        name: 'Pharmacie du Centre',
+                        type: 'Santé',
+                        review: 'Ouverte 24/7, très pratique en cas de pépin.',
+                        img: 'assets/img/hero/hero_7.png', // Placeholder
+                        maps_url: 'https://www.google.com/maps/search/?api=1&query=Pharmacie+Thionville'
+                    }
+                ]
+            },
+            'mobilite': {
+                title: 'Mobilité',
+                img: 'assets/img/adresses/cat_mobilite.png',
+                places: [
+                    {
+                        name: 'Gare de Thionville',
+                        type: 'Transport',
+                        review: 'Accès rapide vers Luxembourg ou Metz.',
+                        img: 'assets/img/hero/hero_2.jpg', // Placeholder
+                        maps_url: 'https://www.google.com/maps/search/?api=1&query=Gare+de+Thionville'
+                    }
+                ]
             }
-        ]
+        }
     }
 };
 
