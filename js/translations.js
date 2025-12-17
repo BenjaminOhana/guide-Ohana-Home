@@ -22,6 +22,16 @@ export const translations = {
                 qr_label: "En savoir plus",
                 qr_sub: "Et oui, je fais ma pub 😂",
                 signature: "Benjamin - Votre Hôte"
+            },
+            dog_slide: {
+                title: "Salut les humains ! 🐾",
+                intro: "Si vous avez adoré votre séjour, un joli <b>5/5</b> c'est comme une grattouille derrière l'oreille : ça nous fait trop plaisir !",
+                secret_title: "🤫 Mon petit secret :",
+                secret_text: "On pourrait croire que <b>4/5</b> c'est une bonne note... mais pour le méchant algorithme Airbnb, c'est une petite claque sur le museau !",
+                algo_text: "Il faut environ <b>10 notes parfaites</b> pour rattraper un seul 4/5. Si on en a trop, pfiou... on disparaît des recherches. Plus de visibilité, plus d'invités, plus de croquettes... 🥺",
+                call_to_action: "Alors si tout a été au poil, le 5/5 est le meilleur moyen de nous sauver !",
+                feedback_title: "Un truc qui ne va pas ?",
+                feedback_text: "Dites-le à Papa (Benjamin) par message. Il court plus vite que moi pour régler les soucis ! Et à Ohana Home on veut vous chouchouter par ce que vous êtes les meilleurs voyageurs ! ❤️"
             }
         },
         stay: {
@@ -192,6 +202,16 @@ export const translations = {
                 qr_label: "Learn more",
                 qr_sub: "Yep, doing my own promo 😂",
                 signature: "Benjamin - Your Host"
+            },
+            dog_slide: {
+                title: "Hi humans! 🐾",
+                intro: "If you loved your stay, a nice <b>5/5</b> is like a scratch behind the ear: it makes us so happy!",
+                secret_title: "🤫 My little secret:",
+                secret_text: "You might think <b>4/5</b> is a good score... but for the mean Airbnb algorithm, it's a little slap on the nose!",
+                algo_text: "It takes about <b>10 perfect scores</b> to make up for a single 4/5. If we have too many, phew... we disappear from searches. No more visibility, no more guests, no more kibble... 🥺",
+                call_to_action: "So if everything was paw-fect, a 5/5 is the best way to save us!",
+                feedback_title: "Something wrong?",
+                feedback_text: "Tell Papa (Benjamin) by message. He runs faster than me to fix problems! And at Ohana Home we want to pamper you because you are the best travelers! ❤️"
             }
         },
         stay: {

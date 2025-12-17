@@ -343,7 +343,8 @@ export const screensaverImages = [
     // Top Priority (Story & Review & Ben Overlay)
     // 'assets/img/screensaver/slide_story_benjamin.png', // REMOVED: File missing
     'assets/img/screensaver/slide_ben_overlay.jpg',
-    'assets/img/screensaver/slide_review_ohana.jpg',
+    'assets/img/screensaver/slide_dog_message.png',
+    // 'assets/img/screensaver/slide_review_ohana.jpg', // REMOVED per request
 
     // High Quality (HQ) - Optimized
     'assets/img/screensaver/slide_hq_1.png.jpg',
@@ -379,7 +380,7 @@ export const screensaverImages = [
     'assets/img/screensaver/slide_23.png',
     'assets/img/screensaver/slide_24.png',
     'assets/img/screensaver/slide_26.png',
-    'assets/img/screensaver/slide_27.png',
+    // 'assets/img/screensaver/slide_27.png', // DELETED
     'assets/img/screensaver/slide_28.png',
     'assets/img/screensaver/slide_29.png',
     'assets/img/screensaver/slide_30.png',
@@ -400,7 +401,7 @@ export function isTextSlide(src) {
     if (!src) return false;
     // Specific Whitelist based on Aspect Ratio (> 1.9) & User Input
     // These slides have text burned in and should NOT be cropped (Contain + Blur BG)
-    return src.includes('slide_review_ohana.jpg') ||
+    return src.includes('slide_dog_message.png') ||
         src.includes('slide_ben_overlay.jpg');
     // Removed slide_hq_7.png to allow it to be Full Screen (Cover) as requested
 }
@@ -418,26 +419,108 @@ function initScreensaverSlides() {
         if (index === 0) slide.classList.add('active');
 
         if (isTextSlide(imgSrc)) {
-            // -- SPECIAL CASE: Review Slide (Dog) --
-            // User Request: "Mets un cadre autour pour remplacer le flou" -> Solid Background Color
-            if (imgSrc.includes('slide_review_ohana.jpg')) {
-                // Layer 1: Solid Background (Frame effect)
-                const bgLayer = document.createElement('div');
-                bgLayer.classList.add('slide-bg');
-                bgLayer.style.backgroundImage = 'none';
-                bgLayer.style.backgroundColor = '#F9F5F0'; // Cream color from slide
-                // Optional: border? User said "cadre".
-                // Let's add a subtle border to the inner image via a container if needed,
-                // but just a solid clean background replaces the "blur" effectively.
-                slide.appendChild(bgLayer);
+            if (imgSrc.includes('slide_dog_message.png')) {
+                // -- SPECIAL CASE: Dog Message (Ratings) --
+                slide.style.display = 'flex';
+                slide.style.flexDirection = 'row';
+                slide.style.backgroundColor = '#f7f5f2'; // Warm white
 
-                // Layer 2: Sharp Image (Contain)
-                const imgLayer = document.createElement('div');
-                imgLayer.classList.add('slide-img');
-                imgLayer.style.backgroundImage = `url('${imgSrc}')`;
-                // Add a border/shadow to "frame" it?
-                imgLayer.style.boxShadow = '0 0 50px rgba(0,0,0,0.1)';
-                slide.appendChild(imgLayer);
+                // Left Panel: Text
+                const leftPanel = document.createElement('div');
+                leftPanel.style.flex = '1.3'; // Text takes more space
+                leftPanel.style.padding = '50px 60px';
+                leftPanel.style.display = 'flex';
+                leftPanel.style.flexDirection = 'column';
+                leftPanel.style.justifyContent = 'center';
+                leftPanel.style.alignItems = 'flex-start';
+                leftPanel.style.color = '#333';
+                leftPanel.style.gap = '20px';
+                leftPanel.style.overflowY = 'auto'; // Safety
+
+                // Title
+                const title = document.createElement('h2');
+                title.textContent = getTranslation(currentLang, 'screensaver.dog_slide.title');
+                title.style.fontSize = '2.8rem';
+                title.style.fontFamily = "'Caveat', cursive"; // Playful font
+                title.style.color = '#C17B5F';
+                title.style.marginBottom = '10px';
+                leftPanel.appendChild(title);
+
+                // Intro
+                const intro = document.createElement('p');
+                intro.innerHTML = getTranslation(currentLang, 'screensaver.dog_slide.intro');
+                intro.style.fontSize = '1.2rem';
+                intro.style.lineHeight = '1.5';
+                leftPanel.appendChild(intro);
+
+                // Secret Block
+                const secretBox = document.createElement('div');
+                secretBox.style.background = 'white';
+                secretBox.style.padding = '20px';
+                secretBox.style.borderRadius = '15px';
+                secretBox.style.boxShadow = '0 5px 20px rgba(0,0,0,0.05)';
+                secretBox.style.width = '100%';
+
+                const secretTitle = document.createElement('h3');
+                secretTitle.textContent = getTranslation(currentLang, 'screensaver.dog_slide.secret_title');
+                secretTitle.style.fontSize = '1.2rem';
+                secretTitle.style.marginBottom = '10px';
+                secretTitle.style.color = '#5A7D7C'; // Soft Green
+                secretBox.appendChild(secretTitle);
+
+                const secretText = document.createElement('p');
+                secretText.innerHTML = getTranslation(currentLang, 'screensaver.dog_slide.secret_text');
+                secretText.style.fontSize = '1.1rem';
+                secretText.style.marginBottom = '10px';
+                secretBox.appendChild(secretText);
+
+                const algoText = document.createElement('p');
+                algoText.innerHTML = getTranslation(currentLang, 'screensaver.dog_slide.algo_text');
+                algoText.style.fontSize = '1.0rem';
+                algoText.style.fontStyle = 'italic';
+                algoText.style.opacity = '0.8';
+                secretBox.appendChild(algoText);
+
+                leftPanel.appendChild(secretBox);
+
+                // Call to Action
+                const cta = document.createElement('p');
+                cta.textContent = getTranslation(currentLang, 'screensaver.dog_slide.call_to_action');
+                cta.style.fontSize = '1.2rem';
+                cta.style.fontWeight = 'bold';
+                cta.style.color = '#C17B5F';
+                leftPanel.appendChild(cta);
+
+                // Feedback
+                const feedbackBox = document.createElement('div');
+                feedbackBox.style.marginTop = '20px';
+                feedbackBox.style.borderLeft = '4px solid #C17B5F';
+                feedbackBox.style.paddingLeft = '15px';
+
+                const fbTitle = document.createElement('strong');
+                fbTitle.textContent = getTranslation(currentLang, 'screensaver.dog_slide.feedback_title');
+                fbTitle.style.display = 'block';
+                fbTitle.style.marginBottom = '5px';
+                feedbackBox.appendChild(fbTitle);
+
+                const fbText = document.createElement('span');
+                fbText.textContent = getTranslation(currentLang, 'screensaver.dog_slide.feedback_text');
+                fbText.style.fontSize = '0.95rem';
+                feedbackBox.appendChild(fbText);
+
+                leftPanel.appendChild(feedbackBox);
+                slide.appendChild(leftPanel);
+
+                // Right Panel: Image
+                const rightPanel = document.createElement('div');
+                rightPanel.style.flex = '0.9';
+                rightPanel.style.backgroundImage = `url('${imgSrc}')`;
+                rightPanel.style.backgroundSize = 'contain';
+                rightPanel.style.backgroundRepeat = 'no-repeat';
+                rightPanel.style.backgroundPosition = 'center bottom';
+                // rightPanel.style.marginTop = '50px'; // Push dog down a bit if needed
+
+                slide.appendChild(rightPanel);
 
             } else if (imgSrc.includes('slide_ben_overlay.jpg')) {
                 // -- SPECIAL CASE: Ben's Photo + Overlay Text + QR (User Request) --
