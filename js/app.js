@@ -343,6 +343,50 @@ function goBack() {
     // Show Hub
     document.getElementById('view-hub').classList.add('active');
     document.body.classList.add('on-hub');
+
+    // Reset all sections to their initial state
+    resetAllSections();
+}
+
+// Reset all sections to their initial state (called when returning to hub)
+function resetAllSections() {
+    // 1. Reset "Nos Adresses" to category menu (not details)
+    const discoverMenu = document.getElementById('discover-menu');
+    const discoverDetails = document.getElementById('discover-details');
+    if (discoverMenu && discoverDetails) {
+        discoverDetails.classList.remove('active');
+        discoverDetails.classList.add('hidden');
+        discoverMenu.classList.remove('hidden');
+        discoverMenu.classList.add('active');
+        // Re-render the main category menu (in case we were in a sub-menu)
+        renderDiscoverMenu();
+    }
+
+    // 2. Reset Guestbook to "Write" mode
+    const gbWrite = document.getElementById('guestbook-state-write');
+    const gbRead = document.getElementById('guestbook-state-read');
+    if (gbWrite && gbRead) {
+        gbRead.classList.remove('active');
+        gbRead.classList.add('hidden');
+        gbWrite.classList.remove('hidden');
+        gbWrite.classList.add('active');
+    }
+
+    // 3. Reset Story scroll to top
+    const storyScroller = document.querySelector('.story-scroller');
+    if (storyScroller) {
+        storyScroller.scrollTo({ top: 0, behavior: 'instant' });
+    }
+
+    // 4. Reset all section-content scrolls to top
+    document.querySelectorAll('.section-content').forEach(section => {
+        section.scrollTo({ top: 0, behavior: 'instant' });
+    });
+
+    // 5. Reset horizontal scroll (address cards) to start
+    document.querySelectorAll('.horizontal-scroll-container').forEach(container => {
+        container.scrollTo({ left: 0, behavior: 'instant' });
+    });
 }
 
 function createTempSection(id) {
@@ -355,6 +399,7 @@ function createTempSection(id) {
 // -- EXPOSE TO WINDOW (CRITICAL FOR HTML ONCLICK) --
 window.openSection = openSection;
 window.goBack = goBack;
+window.resetAllSections = resetAllSections;
 window.updateLanguage = updateLanguage; // Ensure this is available too
 
 // Note: Initial state and preload are handled in the main DOMContentLoaded listener above
