@@ -39,7 +39,7 @@ body {
     margin: 0;
     padding: 0;
     /* iPad status bar spacing - use max for fallback if env() returns 0 */
-    padding-top: max(20px, env(safe-area-inset-top, 20px));
+    padding-top: max(10px, env(safe-area-inset-top, 10px));
     font-family: 'Raleway', sans-serif;
     /* Updated to Raleway */
     /* Background Texture - Tropical HD */
