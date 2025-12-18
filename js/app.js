@@ -79,13 +79,29 @@ function initGuestNameListener() {
             }
 
             // -- REMOTE REFRESH LOGIC --
-            // If admin triggers a refresh, reload page
+            // If admin triggers a refresh, check type and act accordingly
             if (data.refreshTrigger) {
                 const lastRefresh = sessionStorage.getItem('lastRefreshTimestamp');
                 if (lastRefresh && data.refreshTrigger > lastRefresh) {
-                    console.log("Remote refresh received. Reloading...");
+                    console.log("Remote refresh received. Type:", data.refreshType || 'legacy');
                     sessionStorage.setItem('lastRefreshTimestamp', Date.now());
-                    window.location.reload(true);
+
+                    // Full refresh: Clear Service Worker caches first
+                    if (data.refreshType === 'full') {
+                        console.log("Full refresh: Clearing caches...");
+                        if ('serviceWorker' in navigator && navigator.serviceWorker.controller) {
+                            navigator.serviceWorker.controller.postMessage({ type: 'CLEAR_ALL_CACHES' });
+                            // Wait a moment for cache clear, then reload
+                            setTimeout(() => {
+                                window.location.reload(true);
+                            }, 1000);
+                        } else {
+                            window.location.reload(true);
+                        }
+                    } else {
+                        // Soft refresh: Just reload Firebase data (images stay in cache)
+                        window.location.reload(true);
+                    }
                 } else if (!lastRefresh) {
                     // First load, just set the timestamp so we don't reload immediately loop
                     sessionStorage.setItem('lastRefreshTimestamp', Date.now());

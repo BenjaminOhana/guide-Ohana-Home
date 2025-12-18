@@ -149,10 +149,21 @@
                 Mettre à jour
             </button>
 
-            <!-- Remote Refresh Button -->
-            <button id="refresh-btn" onclick="triggerRemoteRefresh()" style="margin-top: 15px; background: white; border: 2px solid var(--color-accent-terracotta); color: var(--color-accent-terracotta);">
-                 🔄 Rafraîchir les iPads
-            </button>
+            <!-- Refresh Buttons -->
+            <div style="display: flex; gap: 10px; margin-top: 15px;">
+                <!-- Soft Refresh: Data only (Firebase) -->
+                <button id="refresh-btn" onclick="triggerSoftRefresh()" style="flex:1; background: white; border: 2px solid var(--color-accent-terracotta); color: var(--color-accent-terracotta); font-size: 0.85rem;">
+                    🔄 Actualiser données
+                </button>
+                <!-- Full Refresh: Clear cache + reload all images -->
+                <button id="full-refresh-btn" onclick="triggerFullRefresh()" style="flex:1; background: white; border: 2px solid #666; color: #666; font-size: 0.85rem;">
+                    🗑️ MAJ complète
+                </button>
+            </div>
+            <p style="font-size: 0.75rem; opacity: 0.5; margin-top: 8px;">
+                "Actualiser" = nom voyageur uniquement<br>
+                "MAJ complète" = retélécharge toutes les images
+            </p>
 
             <div id="app-msg" class="status-msg"></div>
         </div>
@@ -292,8 +303,8 @@
             }
         };
 
-        // Trigger Remote Refresh
-        window.triggerRemoteRefresh = async () => {
+        // Trigger Soft Refresh (Firebase data only - NO images redownload)
+        window.triggerSoftRefresh = async () => {
             const btn = document.getElementById('refresh-btn');
             const msg = document.getElementById('app-msg');
 
@@ -302,20 +313,57 @@
 
             try {
                 await setDoc(doc(db, "guest_settings", "home"), {
-                    refreshTrigger: Date.now()
+                    refreshTrigger: Date.now(),
+                    refreshType: 'soft' // Just reload Firebase data
                 }, { merge: true });
 
-                btn.textContent = "Ordre envoyé !";
-                msg.textContent = "Les iPads vont se rafraîchir 🔄";
+                btn.textContent = "Envoyé !";
+                msg.textContent = "Données actualisées (images en cache) ✨";
                 msg.className = "status-msg status-success";
 
                 setTimeout(() => {
                     btn.disabled = false;
-                    btn.textContent = "🔄 Rafraîchir les iPads";
+                    btn.textContent = "🔄 Actualiser données";
                 }, 2000);
 
             } catch (error) {
-                console.error("Error triggering refresh: ", error);
+                console.error("Error triggering soft refresh: ", error);
+                btn.textContent = "Erreur";
+                msg.textContent = "Problème connexion...";
+                msg.className = "status-msg status-error";
+                btn.disabled = false;
+            }
+        };
+
+        // Trigger Full Refresh (Clear all caches + reload ALL assets including images)
+        window.triggerFullRefresh = async () => {
+            const btn = document.getElementById('full-refresh-btn');
+            const msg = document.getElementById('app-msg');
+
+            if (!confirm("Cela va retélécharger TOUTES les images sur les iPads.\n\nUtiliser uniquement si vous avez modifié des images.\n\nContinuer ?")) {
+                return;
+            }
+
+            btn.disabled = true;
+            btn.textContent = "Envoi...";
+
+            try {
+                await setDoc(doc(db, "guest_settings", "home"), {
+                    refreshTrigger: Date.now(),
+                    refreshType: 'full' // Clear cache + reload everything
+                }, { merge: true });
+
+                btn.textContent = "Envoyé !";
+                msg.textContent = "MAJ complète en cours... 📦";
+                msg.className = "status-msg status-success";
+
+                setTimeout(() => {
+                    btn.disabled = false;
+                    btn.textContent = "🗑️ MAJ complète";
+                }, 2000);
+
+            } catch (error) {
+                console.error("Error triggering full refresh: ", error);
                 btn.textContent = "Erreur";
                 msg.textContent = "Problème connexion...";
                 msg.className = "status-msg status-error";
