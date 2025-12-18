@@ -245,6 +245,17 @@ self.addEventListener('message', (event) => {
         self.skipWaiting();
     }
 
+    // Code-only update (CSS/JS/HTML) - keeps images in cache
+    if (event.data && event.data.type === 'CLEAR_STATIC_CACHE') {
+        console.log('[SW] Clearing static cache (code only)...');
+        event.waitUntil(
+            caches.delete(STATIC_CACHE).then(() => {
+                console.log('[SW] Static cache cleared. Re-caching code...');
+                return caches.open(STATIC_CACHE).then((cache) => cache.addAll(STATIC_ASSETS));
+            })
+        );
+    }
+
     // Full cache clear (when images are updated)
     if (event.data && event.data.type === 'CLEAR_ALL_CACHES') {
         console.log('[SW] Clearing all caches for full refresh...');

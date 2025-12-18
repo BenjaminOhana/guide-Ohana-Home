@@ -86,9 +86,9 @@ function initGuestNameListener() {
                     console.log("Remote refresh received. Type:", data.refreshType || 'legacy');
                     sessionStorage.setItem('lastRefreshTimestamp', Date.now());
 
-                    // Full refresh: Clear Service Worker caches first
+                    // Full refresh: Clear ALL caches (including images) first
                     if (data.refreshType === 'full') {
-                        console.log("Full refresh: Clearing caches...");
+                        console.log("Full refresh: Clearing all caches...");
                         if ('serviceWorker' in navigator && navigator.serviceWorker.controller) {
                             navigator.serviceWorker.controller.postMessage({ type: 'CLEAR_ALL_CACHES' });
                             // Wait a moment for cache clear, then reload
@@ -99,8 +99,16 @@ function initGuestNameListener() {
                             window.location.reload(true);
                         }
                     } else {
-                        // Soft refresh: Just reload Firebase data (images stay in cache)
-                        window.location.reload(true);
+                        // Soft refresh: Clear CODE cache (CSS/JS/HTML) but keep images
+                        console.log("Soft refresh: Updating code only...");
+                        if ('serviceWorker' in navigator && navigator.serviceWorker.controller) {
+                            navigator.serviceWorker.controller.postMessage({ type: 'CLEAR_STATIC_CACHE' });
+                            setTimeout(() => {
+                                window.location.reload(true);
+                            }, 500);
+                        } else {
+                            window.location.reload(true);
+                        }
                     }
                 } else if (!lastRefresh) {
                     // First load, just set the timestamp so we don't reload immediately loop
