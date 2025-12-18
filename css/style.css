@@ -38,8 +38,8 @@
 body {
     margin: 0;
     padding: 0;
-    /* iPad status bar spacing - use max for fallback if env() returns 0 */
-    padding-top: max(5px, env(safe-area-inset-top, 5px));
+    /* iPad: No top padding needed in PWA mode */
+    padding-top: 0;
     font-family: 'Raleway', sans-serif;
     /* Updated to Raleway */
     /* Background Texture - Tropical HD */
@@ -2499,6 +2499,21 @@ body:not(.on-hub) #view-story.active~.global-home-btn {
 .global-home-btn:active {
     transform: translate(-50%, 0) scale(0.96);
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+}
+
+/* Guestbook: Move Home button to bottom-right to avoid text overlap */
+#view-guestbook.active~.global-home-btn {
+    left: auto;
+    right: 30px;
+    transform: translateY(0);
+}
+
+#view-guestbook.active~.global-home-btn:hover {
+    transform: translateY(-2px);
+}
+
+#view-guestbook.active~.global-home-btn:active {
+    transform: scale(0.96);
 }
 
 /* --- Language Switcher (Enhanced) --- */
