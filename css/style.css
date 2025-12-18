@@ -38,6 +38,8 @@
 body {
     margin: 0;
     padding: 0;
+    padding-top: env(safe-area-inset-top);
+    /* iPad status bar spacing */
     font-family: 'Raleway', sans-serif;
     /* Updated to Raleway */
     /* Background Texture - Tropical HD */
