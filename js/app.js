@@ -738,25 +738,17 @@ function startSlideshow() {
 }
 
 let clockInterval;
-let reloadTimer; // Smart Auto-Reload Reference
 
-function checkAndReload() {
-    // Only reload if screensaver is CURRENTLY active (safe time)
-    if (!screensaver.classList.contains('hidden')) {
-        console.log('Auto-Reloading for updates...');
-        sessionStorage.setItem('wasScreensaver', 'true');
-        location.reload();
-    }
-}
+// NOTE: reloadTimer and checkAndReload removed - refresh is now admin-controlled only
 
 function stopSlideshow() {
     if (slideTimeout) clearTimeout(slideTimeout);
     if (clockInterval) clearInterval(clockInterval);
-    if (reloadTimer) clearTimeout(reloadTimer); // Cancel auto-reload if user returns
     clockInterval = null;
-    reloadTimer = null;
     slideTimeout = null;
 }
+
+
 
 function scheduleNextSlide() {
     if (!slidesNodeList.length) return;
@@ -1318,46 +1310,10 @@ function closeDiscoverCategory() {
 // Init when App loads
 renderDiscoverMenu();
 
-// -- Auto-Reload Logic --
-const RELOAD_INTERVAL = 300000; // 5 minutes
+// NOTE: Auto-reload removed - refresh is now admin-controlled only
+// This reduces Netlify bandwidth by preventing automatic page reloads
 
-function scheduleAutoReload() {
-    if (reloadTimer) clearTimeout(reloadTimer);
-    reloadTimer = setTimeout(() => {
-        // Only reload if screensaver is active (don't interrupt user)
-        if (!screensaver.classList.contains('hidden')) {
-            performSmartReload();
-        } else {
-            // If user is active, wait another minute and check again?
-            // Or just rely on the idle timer to trigger screensaver first
-            scheduleAutoReload();
-        }
-    }, RELOAD_INTERVAL);
-}
 
-function performSmartReload() {
-    // Save state so we know to show screensaver immediately after reload
-    sessionStorage.setItem('restore_screensaver', 'true');
-    window.location.reload(true);
-}
-
-// Check for restore state on load
-window.addEventListener('load', () => {
-    if (sessionStorage.getItem('restore_screensaver') === 'true') {
-        sessionStorage.removeItem('restore_screensaver');
-        // Show screensaver immediately without animation if possible
-        screensaver.classList.remove('hidden');
-        screensaver.style.transition = 'none'; // Disable fade for instant switch
-        screensaver.style.opacity = '1';
-
-        startSlideshow();
-
-        // Restore transition after a moment
-        setTimeout(() => {
-            screensaver.style.transition = '';
-        }, 100);
-    }
-});
 
 
 
