@@ -839,6 +839,16 @@ Scannez pour écrire avec le clavier de votre mobile.
             <span class="label" data-i18n="common.home">Accueil</span>
         </button>
 
+        <!-- Hidden Admin Modal (Triple-tap on weather widget) -->
+        <div id="hidden-admin-modal" class="hidden-admin-modal" style="display:none;">
+            <div class="admin-modal-content">
+                <h3>🔧 Admin</h3>
+                <button onclick="doSmartRefresh()">📦 Actualiser données</button>
+                <button onclick="doFullRefresh()">🗑️ MAJ Complète</button>
+                <button onclick="closeAdminModal()">❌ Fermer</button>
+            </div>
+        </div>
+
     </main>
 
     <!-- Scripts -->

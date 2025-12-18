@@ -1173,12 +1173,34 @@ async function fetchWeather() {
     }
 }
 
-// Widget Interaction
+// Widget Interaction + Hidden Admin Trigger (Triple-tap)
 const weatherWidget = document.querySelector('.weather-widget');
+let tapCount = 0;
+let tapTimeout = null;
+
 if (weatherWidget) {
     weatherWidget.addEventListener('click', (e) => {
-        weatherWidget.classList.toggle('expanded');
-        e.stopPropagation(); // Prevent bubbling if needed
+        tapCount++;
+
+        // Triple-tap detection
+        if (tapCount === 3) {
+            tapCount = 0;
+            clearTimeout(tapTimeout);
+            openAdminModal();
+            return;
+        }
+
+        // Reset after 600ms
+        clearTimeout(tapTimeout);
+        tapTimeout = setTimeout(() => {
+            if (tapCount < 3) {
+                // Normal click - expand widget
+                weatherWidget.classList.toggle('expanded');
+            }
+            tapCount = 0;
+        }, 600);
+
+        e.stopPropagation();
     });
 
     // Close when clicking outside
@@ -1188,6 +1210,50 @@ if (weatherWidget) {
         }
     });
 }
+
+// --- Hidden Admin Functions ---
+function openAdminModal() {
+    const modal = document.getElementById('hidden-admin-modal');
+    if (modal) modal.style.display = 'flex';
+}
+
+function closeAdminModal() {
+    const modal = document.getElementById('hidden-admin-modal');
+    if (modal) modal.style.display = 'none';
+}
+
+function doSmartRefresh() {
+    // Clear static cache only (keep images)
+    if ('serviceWorker' in navigator && navigator.serviceWorker.controller) {
+        navigator.serviceWorker.controller.postMessage({ type: 'CLEAR_STATIC_CACHE' });
+        alert('📦 Cache code vidé. Rechargement...');
+        setTimeout(() => window.location.reload(true), 500);
+    } else {
+        window.location.reload(true);
+    }
+}
+
+function doFullRefresh() {
+    // Clear ALL caches
+    if ('caches' in window) {
+        caches.keys().then(names => {
+            names.forEach(name => caches.delete(name));
+        });
+    }
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.getRegistrations().then(regs => {
+            regs.forEach(reg => reg.unregister());
+        });
+    }
+    alert('🗑️ Cache complet vidé. Rechargement...');
+    setTimeout(() => window.location.reload(true), 1000);
+}
+
+// Expose to global scope
+window.openAdminModal = openAdminModal;
+window.closeAdminModal = closeAdminModal;
+window.doSmartRefresh = doSmartRefresh;
+window.doFullRefresh = doFullRefresh;
 
 // Init Widget
 updateTime();

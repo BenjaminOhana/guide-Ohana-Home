@@ -3392,3 +3392,59 @@ body:not(.on-hub) #view-story.active~.global-home-btn {
     pointer-events: none;
     visibility: hidden;
 }
+
+/* --- Hidden Admin Modal (Triple-tap on weather) --- */
+.hidden-admin-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.8);
+    z-index: 99999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.admin-modal-content {
+    background: white;
+    padding: 30px 40px;
+    border-radius: 20px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    min-width: 300px;
+}
+
+.admin-modal-content h3 {
+    margin: 0 0 10px 0;
+    font-size: 1.5rem;
+    color: var(--color-accent-terracotta);
+}
+
+.admin-modal-content button {
+    padding: 15px 25px;
+    font-size: 1.1rem;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.2s;
+}
+
+.admin-modal-content button:first-of-type {
+    background: #4CAF50;
+    color: white;
+}
+
+.admin-modal-content button:nth-of-type(2) {
+    background: #FF5722;
+    color: white;
+}
+
+.admin-modal-content button:last-of-type {
+    background: #eee;
+    color: #333;
+}
