@@ -39,7 +39,7 @@ body {
     margin: 0;
     padding: 0;
     /* iPad status bar spacing - use max for fallback if env() returns 0 */
-    padding-top: max(10px, env(safe-area-inset-top, 10px));
+    padding-top: max(5px, env(safe-area-inset-top, 5px));
     font-family: 'Raleway', sans-serif;
     /* Updated to Raleway */
     /* Background Texture - Tropical HD */
@@ -3061,8 +3061,8 @@ body:not(.on-hub) #view-story.active~.global-home-btn {
     /* Enable scrolling if content is tall */
     -webkit-overflow-scrolling: touch;
     /* Smooth scroll on iOS */
-    padding: 20px 0 100px 0;
-    /* Top padding + Bottom padding for Home button */
+    padding: 20px 0 120px 0;
+    /* Top padding + Bottom padding for Home button (increased) */
 }
 
 .guestbook-state.active {
