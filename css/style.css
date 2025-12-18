@@ -211,6 +211,32 @@ button {
     border-bottom: 1px solid rgba(0, 0, 0, 0.05);
 }
 
+/* Split Page Navigation Row - Stacked Layout for Better UX */
+.split-nav-row {
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    margin-bottom: 20px;
+}
+
+.split-nav-row .back-btn {
+    position: static;
+    transform: none;
+}
+
+/* Split Page Title - Clean Typography */
+.split-page-title {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: var(--color-accent-terracotta);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin: 0 0 25px 0;
+    text-align: left;
+}
+
+
 /* --- HUB LAYOUT (Split View) --- */
 #view-hub {
     display: flex;

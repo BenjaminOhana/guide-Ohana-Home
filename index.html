@@ -171,13 +171,15 @@
                 </div>
 
                 <!-- Right Panel: Sub-Menu Grid -->
-                <div class="split-right-panel" style="padding: var(--gap-lg); justify-content: center;">
-                    <header class="section-header" style="background:transparent; border:none; margin-bottom: 20px; padding:0;">
+                <div class="split-right-panel" style="padding: var(--gap-lg); justify-content: flex-start;">
+                    <!-- Navigation Row -->
+                    <div class="split-nav-row">
                         <button class="back-btn" onclick="goBack()">
                             <span class="icon-back">←</span> <span data-i18n="common.back">Retour</span>
                         </button>
-                        <h2 style="text-align:left; margin-left:20px;" data-i18n="stay.title">Votre séjour</h2>
-                    </header>
+                    </div>
+                    <!-- Title Row -->
+                    <h2 class="split-page-title" data-i18n="stay.title">Votre séjour</h2>
 
                     <div class="vertical-menu-grid">
                         <!-- 1. Consignes de départ (Moved to top) -->
