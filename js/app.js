@@ -46,6 +46,10 @@ function updateLanguage(lang) {
         if (typeof renderDiscoverMenu === 'function') {
             renderDiscoverMenu();
         }
+        // Re-render guestbook to update sample entries in new language
+        if (typeof renderGuestbook === 'function' && typeof currentGuestbookEntries !== 'undefined') {
+            renderGuestbook(currentGuestbookEntries);
+        }
     }, 0);
 }
 
@@ -93,6 +97,9 @@ function initGuestNameListener() {
 
 // -- GUESTBOOK LOGIC (Firebase Real-Time) --
 
+// Store current Firebase entries for re-render on language change
+let currentGuestbookEntries = [];
+
 function initGuestbook() {
     console.log("Initializing Guestbook (Firebase Mode)...");
 
@@ -104,6 +111,7 @@ function initGuestbook() {
         snapshot.forEach((doc) => {
             entries.push({ id: doc.id, ...doc.data() });
         });
+        currentGuestbookEntries = entries; // Store for re-render
         renderGuestbook(entries);
     }, (error) => {
         console.error("Error getting guestbook updates:", error);
@@ -203,12 +211,19 @@ function renderGuestbook(entries) {
 
     listContainer.innerHTML = ''; // Clear
 
-    if (entries.length === 0) {
-        listContainer.innerHTML = '<div style="text-align:center; width:100%; opacity:0.5; font-style:italic;">Soyez le premier à écrire !</div>';
+    // Get sample entries from translations (localized)
+    const sampleEntries = getTranslation(currentLang, 'guestbook.sample_entries') || [];
+
+    // Combine: Firebase entries first (newest), then sample entries
+    const allEntries = [...entries, ...sampleEntries];
+
+    if (allEntries.length === 0) {
+        const emptyText = getTranslation(currentLang, 'guestbook.empty_state') || 'Be the first to write!';
+        listContainer.innerHTML = `<div style="text-align:center; width:100%; opacity:0.5; font-style:italic;">${emptyText}</div>`;
         return;
     }
 
-    entries.forEach(entry => {
+    allEntries.forEach(entry => {
         const card = document.createElement('div');
         card.className = 'guest-note-card';
         card.innerHTML = `
@@ -234,6 +249,9 @@ window.startSlideshow = startSlideshow; // Debug
 
 // Ensure critical listeners are attached after load
 document.addEventListener('DOMContentLoaded', () => {
+    // Set initial state
+    document.body.classList.add('on-hub');
+
     initGuestbook();
     initGuestNameListener();
     updateGuestbookQR();
@@ -251,9 +269,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     initScreensaverSlides(); // CRITICAL: Start slides init
-    initWeather();
-    initClock();
 
+    // iPad Optimization: Delay preload slightly to prioritize UI rendering
     setTimeout(() => {
         preloadScreensaverImages();
     }, 2000);
@@ -316,15 +333,7 @@ window.openSection = openSection;
 window.goBack = goBack;
 window.updateLanguage = updateLanguage; // Ensure this is available too
 
-// Initial State
-document.addEventListener('DOMContentLoaded', () => {
-    document.body.classList.add('on-hub');
-
-    // iPad Optimization: Delay preload slightly to prioritize UI rendering
-    setTimeout(() => {
-        preloadScreensaverImages();
-    }, 2000);
-});
+// Note: Initial state and preload are handled in the main DOMContentLoaded listener above
 
 // Optimized Image Preloader for Kiosk Mode
 // Optimized Image Preloader: Sequential Loading
@@ -790,62 +799,7 @@ function nextSlide() {
     updateMantra();
 }
 
-// -- WEATHER & TIME --
-function initClock() {
-    const timeEl = document.getElementById('current-time');
-
-    function update() {
-        const now = new Date();
-        if (timeEl) {
-            timeEl.textContent = now.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' });
-        }
-    }
-
-    update(); // Immediate
-    setInterval(update, 1000);
-}
-
-async function initWeather() {
-    // Thionville Coordinates
-    const lat = 49.359;
-    const lon = 6.169;
-
-    const iconMap = {
-        0: '☀️', 1: '🌤️', 2: '⛅', 3: '☁️',
-        45: '🌫️', 48: '🌫️',
-        51: '🌧️', 53: '🌧️', 55: '🌧️',
-        61: '🌧️', 63: '🌧️', 65: '🌧️',
-        71: '❄️', 73: '❄️', 75: '❄️',
-        95: '⚡', 96: '⚡', 99: '⚡'
-    };
-
-    async function fetchWeather() {
-        try {
-            const res = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,relative_humidity_2m,weather_code,wind_speed_10m&timezone=Europe%2FParis`);
-            const data = await res.json();
-            const current = data.current;
-
-            const tempEl = document.getElementById('weather-temp');
-            const windEl = document.getElementById('weather-wind');
-            const humEl = document.getElementById('weather-humidity');
-            const iconEl = document.getElementById('weather-icon');
-
-            if (tempEl) tempEl.textContent = Math.round(current.temperature_2m) + '°';
-            if (windEl) windEl.textContent = Math.round(current.wind_speed_10m) + ' km/h';
-            if (humEl) humEl.textContent = current.relative_humidity_2m + '%';
-
-            // Map code to icon
-            const icon = iconMap[current.weather_code] || '⛅';
-            if (iconEl) iconEl.textContent = icon;
-
-        } catch (e) {
-            console.error("Weather fetch failed:", e);
-        }
-    }
-
-    fetchWeather();
-    setInterval(fetchWeather, 3600000); // Every hour
-}
+// Note: Weather & Time widget logic is consolidated below (see fetchWeather and updateTime functions)
 
 // -- Screensaver Clock --
 function updateScreensaverClock() {
@@ -870,19 +824,39 @@ function updateScreensaverClock() {
 }
 
 // -- Mantras Logic --
-// -- Mantras Logic --
 // Mantras are now in translations.js
+// Improved: Uses a deck system that ensures ALL mantras are shown before any repeats
 let mantraDeck = [];
+let lastShownMantra = null; // Prevent immediate repeat after reshuffle
 
 function getNextMantra() {
+    const localizedMantras = getTranslation(currentLang, 'mantras') || [];
+
+    // If deck is empty or has only one item left and it's the same as last shown
     if (mantraDeck.length === 0) {
-        // Refill and shuffle from current language
-        const localizedMantras = getTranslation(currentLang, 'mantras') || [];
+        // Refill deck with all mantras
         mantraDeck = [...localizedMantras];
         shuffleArray(mantraDeck);
-        // console.log("Refilled Mantra Deck for lang:", currentLang);
+
+        // If the first mantra after reshuffle is the same as the last one shown,
+        // move it to the end to avoid immediate repetition
+        if (mantraDeck.length > 1 && mantraDeck[mantraDeck.length - 1] === lastShownMantra) {
+            const first = mantraDeck.pop();
+            mantraDeck.unshift(first); // Move to beginning (will be shown last)
+        }
+        // console.log("Refilled Mantra Deck for lang:", currentLang, "Total:", mantraDeck.length);
     }
-    return mantraDeck.pop();
+
+    // Get next mantra from deck
+    const mantra = mantraDeck.pop();
+
+    // Skip empty strings (safeguard)
+    if (!mantra && mantraDeck.length > 0) {
+        return getNextMantra(); // Recursively get next valid one
+    }
+
+    lastShownMantra = mantra;
+    return mantra;
 }
 
 function updateMantra() {

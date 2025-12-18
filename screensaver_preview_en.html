@@ -1,12 +1,10 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Preview Screensaver - iPad Simulator</title>
-    <!-- Use the REAL CSS to ensure 1:1 fidelity -->
+    <title>Preview Screensaver - English Version</title>
     <link rel="stylesheet" href="css/style.css">
-    <!-- Font Imports for fidelity -->
     <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&family=Cormorant+Garamond:wght@300;400;500;600;700&family=Montserrat:wght@100..900&family=Raleway:wght@100..900&display=swap" rel="stylesheet">
     
     <style>
@@ -46,19 +44,18 @@
         button:hover { background: #666; transform: translateY(-2px); }
         button:active { transform: translateY(0); }
 
-        /* iPad Simulator Frame (Optimized for iPad Air 10.9" - 2360x1640 / 2) */
         #preview-slideshow {
             width: 100%;
             height: 100%;
             position: relative;
-            background: black; /* Prevent white gaps */
+            background: black;
         }
         .ipad-frame {
             width: 1180px; 
             height: 820px;
             background: black;
             border-radius: 40px;
-            border: 40px solid #111; /* Bezel */
+            border: 40px solid #111;
             box-shadow: 0 50px 100px rgba(0,0,0,0.5), inset 0 0 0 2px #333;
             position: relative;
             overflow: hidden;
@@ -73,7 +70,6 @@
             .ipad-frame { transform: scale(0.6); }
         }
 
-        /* Override Styles to force Screensaver visible */
         #screensaver {
             display: block !important;
             visibility: visible !important;
@@ -81,7 +77,6 @@
             top: 0; left: 0; width: 100%; height: 100%;
         }
 
-        /* Debug Info */
         .debug-panel {
             margin-top: 20px;
             padding: 20px;
@@ -98,12 +93,12 @@
 </head>
 <body>
 
-    <h1>iPad Screensaver Preview (Version Autonome)</h1>
+    <h1>iPad Screensaver Preview (English Version)</h1>
 
     <div class="controls">
-        <button id="btn-prev">⬅️ Précédent</button>
-        <button id="btn-next">Suivant ➡️</button>
-        <button id="btn-refresh">🔄 Recharger</button>
+        <button id="btn-prev">⬅️ Previous</button>
+        <button id="btn-next">Next ➡️</button>
+        <button id="btn-refresh">🔄 Reload</button>
     </div>
 
     <div class="ipad-frame">
@@ -112,7 +107,7 @@
             
             <div class="screensaver-clock">
                 <div id="ss-time">12:00</div>
-                <div id="ss-date">Mardi 16 Décembre</div>
+                <div id="ss-date">Tuesday, December 16</div>
             </div>
 
             <div class="screensaver-mantra-wrapper">
@@ -120,22 +115,19 @@
             </div>
 
             <div class="screensaver-prompt">
-                <p>Touchez l'écran pour commencer</p>
+                <p>Touch screen to start</p>
             </div>
         </div>
     </div>
 
     <div class="debug-panel">
-        <div class="debug-row"><span>Fichier :</span> <span id="info-filename">...</span></div>
-        <div class="debug-row"><span>Type :</span> <span id="info-type">...</span></div>
-        <div class="debug-row"><span>Mantra Activé :</span> <span id="info-mantra">...</span></div>
-        <div class="debug-row"><span>Layout :</span> <span id="info-layout">...</span></div>
+        <div class="debug-row"><span>File:</span> <span id="info-filename">...</span></div>
+        <div class="debug-row"><span>Type:</span> <span id="info-type">...</span></div>
+        <div class="debug-row"><span>Mantra Enabled:</span> <span id="info-mantra">...</span></div>
+        <div class="debug-row"><span>Layout:</span> <span id="info-layout">...</span></div>
     </div>
 
     <script>
-        // --- EMBEDDED DATA & LOGIC (Pour contourner la sécurité locale) ---
-
-        // List of Images (Copied from app.js)
         const screensaverImages = [
             'assets/img/screensaver/slide_ben_overlay.jpg',
             'assets/img/screensaver/slide_dog_message.png',
@@ -176,30 +168,25 @@
         ];
 
         const mantras = [
-            "Ici et maintenant.",
-            "Respirez. Vous êtes chez vous.",
-            "Prenez le temps de ne rien faire.",
-            "La simplicité est la sophistication suprême.",
-            "Ohana signifie famille."
+            "Here and now.",
+            "Breathe. You're home.",
+            "Take time to do nothing.",
+            "Simplicity is the ultimate sophistication.",
+            "Ohana means family."
         ];
 
-        // Logic Helper (Copied from app.js)
         function isTextSlide(src) {
             if (!src) return false;
-            // Specific Whitelist based on Aspect Ratio (> 1.9) & User Input
             return src.includes('slide_review_ohana.png') || 
                    src.includes('slide_ben_overlay.jpg') ||
                    src.includes('slide_dog_message.png');
         }
-
-        // --- PREVIEW LOGIC ---
 
         let currentIndex = 0;
         const container = document.getElementById('preview-slideshow');
         const mantraEl = document.getElementById('ss-mantra-text');
         const mantraContainer = document.querySelector('.screensaver-mantra-wrapper');
 
-        // Initial Mantra
         mantraEl.textContent = "Test Mantra";
         
         function renderSlide(index) {
@@ -210,36 +197,32 @@
             const imgSrc = screensaverImages[currentIndex];
             const isText = isTextSlide(imgSrc);
 
-            // Update Debug UI
             document.getElementById('info-filename').textContent = imgSrc.split('/').pop();
             
             if (isText) {
                  document.getElementById('info-type').textContent = "TEXT SLIDE (Protected)";
                  document.getElementById('info-type').className = "tag-false"; 
-                 document.getElementById('info-mantra').textContent = "NON (Hidden)";
+                 document.getElementById('info-mantra').textContent = "NO (Hidden)";
                  document.getElementById('info-mantra').className = "tag-false";
                  document.getElementById('info-layout').textContent = "CONTAIN (Safe)";
             } else {
                  document.getElementById('info-type').textContent = "PHOTO (Standard)";
                  document.getElementById('info-type').className = "tag-true"; 
-                 document.getElementById('info-mantra').textContent = "OUI (Visible)";
+                 document.getElementById('info-mantra').textContent = "YES (Visible)";
                  document.getElementById('info-mantra').className = "tag-true";
                  document.getElementById('info-layout').textContent = "COVER (Full)";
             }
 
-            // Render
             container.innerHTML = '';
             
             const slide = document.createElement('div');
             slide.className = 'slide active'; 
 
             if (imgSrc.includes('slide_dog_message.png')) {
-                // -- DOG SLIDE SIMULATION --
                 slide.style.display = 'flex';
                 slide.style.flexDirection = 'row';
                 slide.style.backgroundColor = '#f7f5f2';
 
-                // Left Panel
                 const leftPanel = document.createElement('div');
                 leftPanel.style.flex = '1.1';
                 leftPanel.style.padding = '40px 40px 40px 100px'; 
@@ -251,25 +234,24 @@
                 leftPanel.style.gap = '15px';
                 
                 leftPanel.innerHTML = `
-                    <h2 style="font-family: 'Caveat', cursive; font-size: 2.5rem; color: #C17B5F; margin: 0 0 10px 0;">Salut les humains ! 🐾</h2>
-                    <p style="font-size: 1.1rem; line-height: 1.4; margin: 0;">Si vous avez adoré votre séjour, un joli <b>5/5</b> c'est comme une grattouille derrière l'oreille : ça nous fait trop plaisir !</p>
+                    <h2 style="font-family: 'Caveat', cursive; font-size: 2.5rem; color: #C17B5F; margin: 0 0 10px 0;">Hi humans! 🐾</h2>
+                    <p style="font-size: 1.1rem; line-height: 1.4; margin: 0;">If you loved your stay, a nice <b>5/5</b> is like a scratch behind the ear: it makes us so happy!</p>
                     
                     <div style="background: white; padding: 15px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); width: 100%;">
-                        <h3 style="font-size: 1.1rem; color: #5A7D7C; margin: 0 0 8px 0;">🤫 Mon petit secret :</h3>
-                        <p style="font-size: 1rem; margin: 0 0 8px 0;">On pourrait croire que <b>4/5</b> c'est une bonne note... mais pour le méchant algorithme Airbnb, c'est une petite claque sur le museau !</p>
-                        <p style="font-size: 0.9rem; font-style: italic; opacity: 0.8; margin: 0;">Il faut environ <b>10 notes parfaites</b> pour rattraper un seul 4/5. Si on en a trop, pfiou... on disparaît des recherches. Plus de visibilité, plus d'invités, plus de croquettes... 🥺</p>
+                        <h3 style="font-size: 1.1rem; color: #5A7D7C; margin: 0 0 8px 0;">🤫 My little secret:</h3>
+                        <p style="font-size: 1rem; margin: 0 0 8px 0;">You might think <b>4/5</b> is a good score... but for the mean Airbnb algorithm, it's a little slap on the nose!</p>
+                        <p style="font-size: 0.9rem; font-style: italic; opacity: 0.8; margin: 0;">It takes about <b>10 perfect scores</b> to make up for a single 4/5. If we have too many, phew... we disappear from searches. No more visibility, no more guests, no more kibble... 🥺</p>
                     </div>
 
-                    <p style="font-size: 1.1rem; font-weight: bold; color: #C17B5F; margin: 0;">Alors si tout a été au poil, le 5/5 est le meilleur moyen de nous sauver !</p>
+                    <p style="font-size: 1.1rem; font-weight: bold; color: #C17B5F; margin: 0;">So if everything was paw-fect, a 5/5 is the best way to save us!</p>
 
                     <div style="margin-top: 10px; border-left: 3px solid #C17B5F; padding-left: 10px;">
-                        <strong style="display: block; margin-bottom: 4px;">Un truc qui ne va pas ?</strong>
-                        <span style="font-size: 0.9rem;">Dites-le à Papa (Benjamin) par message. Il court plus vite que moi pour régler les soucis ! Et à Ohana Home on veut vous chouchouter par ce que vous êtes les meilleurs voyageurs ! ❤️</span>
+                        <strong style="display: block; margin-bottom: 4px;">Something wrong?</strong>
+                        <span style="font-size: 0.9rem;">Tell Papa (Benjamin) by message. He runs faster than me to fix problems! And at Ohana Home we want to pamper you because you are the best travelers! ❤️</span>
                     </div>
                 `;
                 slide.appendChild(leftPanel);
 
-                // Right Panel
                 const rightPanel = document.createElement('div');
                 rightPanel.style.flex = '1.3'; 
                 rightPanel.style.backgroundImage = `url('${imgSrc}')`;
@@ -278,16 +260,13 @@
                 rightPanel.style.backgroundPosition = '70% center';
                 slide.appendChild(rightPanel);
                 
-                // Hide Mantra
                 mantraContainer.style.opacity = '0';
 
             } else if (imgSrc.includes('slide_ben_overlay.jpg')) {
-                // -- BEN OVERLAY SIMULATION --
                 slide.style.backgroundImage = `url('${imgSrc}')`;
                 slide.style.backgroundSize = 'cover';
                 slide.style.backgroundPosition = 'center';
 
-                // Overlay
                 const overlay = document.createElement('div');
                 overlay.style.position = 'absolute';
                 overlay.style.left = '0';
@@ -298,23 +277,21 @@
                 overlay.style.display = 'flex';
                 overlay.style.flexDirection = 'column';
                 overlay.style.justifyContent = 'center';
-                overlay.style.paddingLeft = '60px'; // scaled down bit for preview
+                overlay.style.paddingLeft = '60px';
                 overlay.style.zIndex = '10';
 
-                // Text
                 const textHTML = `
-                    <p style="color: white; font-size: 1.5rem; line-height: 1.3; margin-bottom: 20px; font-family: 'Cormorant Garamond', serif;">Aujourd'hui, mon bureau n'a plus de murs.</p>
-                    <p style="color: white; font-size: 1.5rem; line-height: 1.3; margin-bottom: 20px; font-family: 'Cormorant Garamond', serif;">J'accompagne les entrepreneurs à trouver leur propre liberté.</p>
-                    <p style="color: white; font-size: 1.5rem; line-height: 1.3; margin-bottom: 30px; font-family: 'Cormorant Garamond', serif;">J'ai conçu ce lieu pour qu'il vous inspire la vôtre.</p>
+                    <p style="color: white; font-size: 1.5rem; line-height: 1.3; margin-bottom: 20px; font-family: 'Cormorant Garamond', serif;">Today, my office has no walls.</p>
+                    <p style="color: white; font-size: 1.5rem; line-height: 1.3; margin-bottom: 20px; font-family: 'Cormorant Garamond', serif;">I help entrepreneurs find their own freedom.</p>
+                    <p style="color: white; font-size: 1.5rem; line-height: 1.3; margin-bottom: 30px; font-family: 'Cormorant Garamond', serif;">I designed this place to inspire yours.</p>
                 `;
                 const textContainer = document.createElement('div');
                 textContainer.innerHTML = textHTML;
                 textContainer.style.maxWidth = '400px';
                 overlay.appendChild(textContainer);
 
-                // Signature
                 const signature = document.createElement('div');
-                signature.textContent = "Benjamin - Votre Hôte";
+                signature.textContent = "Benjamin - Your Host";
                 signature.style.color = '#C17B5F';
                 signature.style.fontSize = '1.2rem';
                 signature.style.fontWeight = 'bold';
@@ -322,7 +299,6 @@
                 signature.style.marginBottom = '40px';
                 overlay.appendChild(signature);
 
-                // QR Wrapper
                 const qrWrapper = document.createElement('div');
                 qrWrapper.style.display = 'inline-flex';
                 qrWrapper.style.alignItems = 'center';
@@ -345,23 +321,21 @@
                 qrInfo.style.display = 'flex';
                 qrInfo.style.flexDirection = 'column';
                 qrInfo.innerHTML = `
-                    <span style="color:white; font-size: 0.9rem; font-weight: 600; letter-spacing: 1px; text-transform: uppercase;">En savoir plus</span>
-                    <span style="color:white; font-size: 0.8rem; font-style: italic; opacity: 0.8;">Et oui, je fais ma pub 😂</span>
+                    <span style="color:white; font-size: 0.9rem; font-weight: 600; letter-spacing: 1px; text-transform: uppercase;">Learn more</span>
+                    <span style="color:white; font-size: 0.8rem; font-style: italic; opacity: 0.8;">Yep, doing my own promo 😂</span>
                 `;
                 qrWrapper.appendChild(qrInfo);
                 
                 overlay.appendChild(qrWrapper);
                 slide.appendChild(overlay);
 
-                // Hide Mantra
                 mantraContainer.style.opacity = '0';
 
             } else if (isText) {
-                // TEXT LAYOUT
                 const bgLayer = document.createElement('div');
                 bgLayer.className = 'slide-bg';
                 bgLayer.style.backgroundImage = `url('${imgSrc}')`;
-                bgLayer.style.transform = 'scale(1.1)'; // Overscan to hide blur edges
+                bgLayer.style.transform = 'scale(1.1)';
                 slide.appendChild(bgLayer);
 
                 const imgLayer = document.createElement('div');
@@ -369,16 +343,13 @@
                 imgLayer.style.backgroundImage = `url('${imgSrc}')`;
                 slide.appendChild(imgLayer);
 
-                // Hide Mantra
                 mantraContainer.style.opacity = '0';
             } else {
-                // PHOTO LAYOUT
                 slide.style.backgroundImage = `url('${imgSrc}')`;
                 slide.style.backgroundSize = 'cover';
                 slide.style.backgroundPosition = 'center';
                 slide.style.backgroundRepeat = 'no-repeat';
 
-                // Show Mantra
                 mantraContainer.style.opacity = '1';
                 mantraEl.textContent = mantras[Math.floor(Math.random() * mantras.length)];
                 mantraContainer.style.display = 'block';

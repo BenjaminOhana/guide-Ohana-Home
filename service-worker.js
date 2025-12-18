@@ -1,11 +1,15 @@
-const CACHE_NAME = 'ohana-home-v5';
+const CACHE_NAME = 'ohana-home-v6'; // Bumped version for new cache
 const ASSETS_TO_CACHE = [
     '/',
     '/index.html',
     '/css/style.css',
     '/js/app.js',
     '/js/firebase-config.js',
+    '/js/translations.js',
     '/guestbook_mobile.html',
+    // Firebase CDN (for offline support)
+    'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js',
+    'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js',
     // Fonts
     'https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Raleway:wght@300;400;500;600&family=Caveat:wght@400;600;700&display=swap',
     // Critical Images (Preloaded in index.html)

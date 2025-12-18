@@ -157,7 +157,35 @@ export const translations = {
             },
             qr_text: "Plus cool avec votre téléphone non ?\nScannez pour écrire avec le clavier de votre mobile.",
             read_title: "Les mots des voyageurs",
-            add_btn: "+ Ajouter un mot"
+            add_btn: "+ Ajouter un mot",
+            empty_state: "Soyez le premier à écrire !",
+            sample_entries: [
+                {
+                    name: "Mireille & Philippe",
+                    date: "Novembre 2024",
+                    text: "Un vrai coup de cœur ! La vue panoramique nous a subjugués dès notre arrivée. Tout était au-delà de nos espérances, la réalité était encore plus belle que les photos. On reviendra c'est certain !"
+                },
+                {
+                    name: "Sarah",
+                    date: "Novembre 2024",
+                    text: "Je recommande les yeux fermés ! À deux pas de la gare, aussi beau que sur les photos, très bien équipé. Benjamin est super réactif et arrangeant. Merci pour tout 🙏"
+                },
+                {
+                    name: "Lana-Jolin",
+                    date: "Décembre 2024",
+                    text: "Le logement est magnifique ! Meublé avec beaucoup d'attention aux détails, lits hyper confortables et vue incroyable. On a visité le Luxembourg, Strasbourg et Metz depuis ici. On recommande à 100% !"
+                },
+                {
+                    name: "Serbah",
+                    date: "Septembre 2024",
+                    text: "3 nuits inoubliables ! L'appartement au 9e étage offre une vue superbe sur la rivière. Tout fonctionne parfaitement, parking privé inclus. La communication avec Benjamin était excellente. Merci pour cette hospitalité !"
+                },
+                {
+                    name: "Ellen & Family",
+                    date: "Septembre 2024",
+                    text: "Parfait pour notre séjour en famille ! L'appartement est exactement comme sur les photos. Les chambres bien occultantes étaient idéales pour notre petit. Toutes les installations mentionnées étaient disponibles. On recommande !"
+                }
+            ]
         },
         discover: {
             title: "Nos Adresses",
@@ -418,8 +446,7 @@ export const translations = {
             "Vous êtes plus fort que vos peurs.",
             "Le monde a besoin de votre lumière.",
             "Ce que vous cherchez vous cherche aussi.",
-            "Faites-le pour vous.",
-            "", "", "", "", "", "", "", ""
+            "Faites-le pour vous."
         ],
         story: {
             ben: {
@@ -596,7 +623,35 @@ export const translations = {
             },
             qr_text: "Cooler with your phone right?\nScan to write using your mobile keyboard.",
             read_title: "Travelers' Words",
-            add_btn: "+ Add a note"
+            add_btn: "+ Add a note",
+            empty_state: "Be the first to write!",
+            sample_entries: [
+                {
+                    name: "Mireille & Philippe",
+                    date: "November 2024",
+                    text: "Absolutely loved it! The panoramic view captivated us from the moment we arrived. Everything exceeded our expectations, even more beautiful than the photos. We'll definitely be back!"
+                },
+                {
+                    name: "Sarah",
+                    date: "November 2024",
+                    text: "I highly recommend! Steps away from the train station, as beautiful as the photos, very well equipped. Benjamin is super responsive and accommodating. Thank you for everything 🙏"
+                },
+                {
+                    name: "Lana-Jolin",
+                    date: "December 2024",
+                    text: "The place is stunning! Furnished with great attention to detail, super comfy beds and an incredible view. We visited Luxembourg, Strasbourg and Metz from here. 100% recommended!"
+                },
+                {
+                    name: "Serbah",
+                    date: "September 2024",
+                    text: "3 unforgettable nights! The 9th floor apartment offers a stunning view of the river. Everything works perfectly, private parking included. Communication with Benjamin was excellent. Thank you for the hospitality!"
+                },
+                {
+                    name: "Ellen & Family",
+                    date: "September 2024",
+                    text: "Perfect for our family stay! The apartment is exactly as pictured. The darkened bedrooms were ideal for our little one. All mentioned amenities were available. Highly recommended!"
+                }
+            ]
         },
         discover: {
             title: "Local Gems",
@@ -853,12 +908,11 @@ export const translations = {
             "The soul knows before the mind.",
             "Everything starts from within.",
             "What moves you matters.",
-            "Your story is written now.",
+            "Your story is being written now.",
             "You are stronger than your fears.",
             "The world needs your light.",
             "What you seek is seeking you.",
-            "Do it for you.",
-            "", "", "", "", "", "", "", ""
+            "Do it for you."
         ],
         story: {
             ben: {

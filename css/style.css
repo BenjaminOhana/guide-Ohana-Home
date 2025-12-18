@@ -632,8 +632,8 @@ button {
 /* Base Slide (Container) - No Transform here to prefer cropping */
 .slide {
     opacity: 0;
-    transition: opacity 3s ease;
-    /* Removed global will-change to save memory on 20+ slides */
+    transition: opacity 1.5s ease;
+    /* Reduced from 3s for smoother UX */
 }
 
 .slide.active {
