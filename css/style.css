@@ -864,18 +864,20 @@ button {
 
 /* Improved Back Button Interactions */
 .back-btn:hover {
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-    transform: translateY(-1px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+    transform: translateY(-50%) scale(1.02);
+    /* Preserve vertical centering */
 }
 
 .back-btn:active {
-    transform: scale(0.96);
+    transform: translateY(-50%) scale(0.96);
+    /* Preserve vertical centering */
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
 
 .header-spacer {
-    width: 100px;
-    /* Balance the back button for centering title */
+    display: none;
+    /* No longer needed with absolute back button positioning */
 }
 
 /* Scrollable Content */
@@ -3009,14 +3011,25 @@ body:not(.on-hub) #view-story.active~.global-home-btn {
     overflow: hidden;
 }
 
-/* Header (Minimal) */
+/* Header (Minimal) - Updated for consistent navigation */
 .guestbook-header {
-    height: 80px;
+    min-height: 80px;
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    padding: 0 var(--gap-lg);
+    justify-content: center;
+    /* Center any icons */
+    padding: var(--gap-md) var(--gap-lg);
     flex-shrink: 0;
+    position: relative;
+    /* For absolute back button */
+}
+
+/* Guestbook back button positioning */
+.guestbook-header .back-btn {
+    position: absolute;
+    left: var(--gap-lg);
+    top: 50%;
+    transform: translateY(-50%);
 }
 
 .guestbook-content-wrapper {
