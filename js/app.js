@@ -572,6 +572,17 @@ window.exitPreviewMode = exitPreviewMode;
 window.previewNextSlide = previewNextSlide;
 window.previewPrevSlide = previewPrevSlide;
 
+// -- ADMIN MODAL HELPER --
+function startPreviewModeFromAdmin() {
+    console.log("Admin triggering Preview Mode...");
+    closeAdminModal();
+    // Small delay to allow modal to close smoothly
+    setTimeout(() => {
+        startPreviewMode();
+    }, 300);
+}
+window.startPreviewModeFromAdmin = startPreviewModeFromAdmin;
+
 // Note: Initial state and preload are handled in the main DOMContentLoaded listener above
 
 // Optimized Image Preloader for Kiosk Mode
