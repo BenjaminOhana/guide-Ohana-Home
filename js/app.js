@@ -481,6 +481,9 @@ function startPreviewMode() {
     console.log('Starting Preview Mode...');
     isPreviewMode = true;
 
+    // FAILSAFE: Clear any pending idle (screensaver) timer
+    if (idleTimer) clearTimeout(idleTimer);
+
     // Show screensaver without starting auto-slideshow
     screensaver.classList.remove('hidden');
     screensaver.classList.add('preview-mode');
@@ -943,6 +946,13 @@ function showScreensaver() {
 }
 
 function hideScreensaver(event) {
+    // FAILSAFE: If in Preview Mode, DO NOT HIDE SCREENSAVER via this generic function
+    // You must use exitPreviewMode() instead.
+    if (isPreviewMode) {
+        console.log('hideScreensaver ignored due to Preview Mode');
+        return;
+    }
+
     // Stop the event from propagating to elements underneath
     if (event) {
         event.stopPropagation();
