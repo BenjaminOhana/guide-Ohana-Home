@@ -538,6 +538,7 @@ function initScreensaverSlides() {
                 slide.style.display = 'flex';
                 slide.style.flexDirection = 'row';
                 slide.style.backgroundColor = '#f7f5f2'; // Warm white
+                slide.setAttribute('data-text-slide', 'true'); // Mark as text slide for mantra hiding
 
                 // Left Panel: Text
                 const leftPanel = document.createElement('div');
@@ -641,6 +642,7 @@ function initScreensaverSlides() {
                 slide.style.display = 'flex';
                 slide.style.flexDirection = 'row';
                 slide.style.backgroundColor = '#1a1a1a'; // Dark bg base
+                slide.setAttribute('data-text-slide', 'true'); // Mark as text slide for mantra hiding
 
                 // Left Panel: Text + QR
                 const leftPanel = document.createElement('div');
@@ -681,10 +683,9 @@ function initScreensaverSlides() {
                 qrContainer.style.alignItems = 'center';
                 qrContainer.style.gap = '10px';
 
-                // QR Image (Placeholder for now)
+                // QR Image - Points to Ben's business site
                 const qrImg = document.createElement('img');
-                // Use a generic generated QR for now as placeholder or the guestbook one
-                qrImg.src = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(window.location.href)}`;
+                qrImg.src = 'https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=' + encodeURIComponent('https://entrepreneuraligne.fr');
                 qrImg.style.width = '120px';
                 qrImg.style.height = '120px';
                 qrContainer.appendChild(qrImg);
@@ -703,14 +704,14 @@ function initScreensaverSlides() {
 
                 // Right Panel: Image
                 const rightPanel = document.createElement('div');
-                rightPanel.style.flex = '1.2'; // Slightly wider image
+                rightPanel.style.flex = '1.5'; // Wider for the image - show Ben properly
                 rightPanel.style.backgroundImage = `url('${imgSrc}')`;
                 rightPanel.style.backgroundSize = 'cover';
-                rightPanel.style.backgroundPosition = 'center';
+                rightPanel.style.backgroundPosition = 'center center'; // Center the image
                 rightPanel.style.height = '100%';
                 // Fade effect on the left edge of the image to blend with dark bg
-                rightPanel.style.maskImage = 'linear-gradient(to right, transparent, black 15%)';
-                rightPanel.style.webkitMaskImage = 'linear-gradient(to right, transparent, black 15%)';
+                rightPanel.style.maskImage = 'linear-gradient(to right, transparent 0%, black 20%)';
+                rightPanel.style.webkitMaskImage = 'linear-gradient(to right, transparent 0%, black 20%)';
 
                 slide.appendChild(rightPanel);
 
@@ -960,8 +961,13 @@ function updateMantra() {
     // Check if current slide should hide Mantra (Text Slides)
     const activeSlide = document.querySelector('.slide.active');
     if (activeSlide) {
-        // Check inline background image to match filename
-        const style = window.getComputedStyle(activeSlide);
+        // Method 1: Check data attribute for special layout slides (Ben, Dog)
+        if (activeSlide.getAttribute('data-text-slide') === 'true') {
+            container.style.opacity = '0';
+            return;
+        }
+
+        // Method 2: Check inline background image to match filename
         let bg = activeSlide.style.backgroundImage || ''; // Inline style preferred
 
         // Fix: If inline is empty, try to find child with class slide-img
