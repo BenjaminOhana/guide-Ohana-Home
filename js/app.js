@@ -328,24 +328,37 @@ document.addEventListener('DOMContentLoaded', () => {
 
         refreshBtn.addEventListener('click', (e) => {
             clickCount++;
+            console.log('Refresh btn clicked, count:', clickCount);
 
             if (clickCount === 1) {
                 // Wait to see if it's a double-click
                 clickTimer = setTimeout(() => {
                     // Single click: refresh page
+                    console.log('Single click - refreshing page');
                     clickCount = 0;
                     window.location.reload(true);
-                }, 300);
-            } else if (clickCount === 2) {
+                }, 400); // Increased to 400ms for easier double-click on iPad
+            } else if (clickCount >= 2) {
                 // Double-click: start preview mode
+                console.log('Double click - starting preview mode');
                 clearTimeout(clickTimer);
                 clickCount = 0;
                 e.stopPropagation();
-                startPreviewMode();
+                e.preventDefault();
+                // Use setTimeout to ensure function is available
+                setTimeout(() => {
+                    if (typeof window.startPreviewMode === 'function') {
+                        window.startPreviewMode();
+                    } else {
+                        console.error('startPreviewMode not available');
+                    }
+                }, 0);
             }
         });
 
         console.log("Refresh button double-click handler attached.");
+    } else {
+        console.error("Refresh button not found!");
     }
 });
 
