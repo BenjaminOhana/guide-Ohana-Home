@@ -286,8 +286,21 @@ document.addEventListener('DOMContentLoaded', () => {
     // Screensaver Dismissal (Critical)
     // FIX: Capture and stop event propagation to prevent clicks from reaching menus underneath
     if (screensaver) {
-        screensaver.addEventListener('click', (e) => hideScreensaver(e), { capture: true });
-        screensaver.addEventListener('touchstart', (e) => hideScreensaver(e), { capture: true });
+        screensaver.addEventListener('click', (e) => {
+            // In preview mode, use exitPreviewMode; otherwise use hideScreensaver
+            if (screensaver.classList.contains('preview-mode')) {
+                exitPreviewMode(e);
+            } else {
+                hideScreensaver(e);
+            }
+        }, { capture: true });
+        screensaver.addEventListener('touchstart', (e) => {
+            if (screensaver.classList.contains('preview-mode')) {
+                exitPreviewMode(e);
+            } else {
+                hideScreensaver(e);
+            }
+        }, { capture: true });
         screensaver.addEventListener('touchend', (e) => {
             // Also block touchend to prevent synthetic click events
             if (!screensaver.classList.contains('hidden')) {
@@ -295,7 +308,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 e.preventDefault();
             }
         }, { capture: true });
-        console.log("Screensaver listeners attached with event capture.");
+        console.log("Screensaver listeners attached with event capture and preview mode support.");
     } else {
         console.error("CRITICAL: Screensaver element not found for listeners.");
     }
@@ -417,6 +430,106 @@ window.openSection = openSection;
 window.goBack = goBack;
 window.resetAllSections = resetAllSections;
 window.updateLanguage = updateLanguage; // Ensure this is available too
+
+// -- SECRET PREVIEW MODE (Double-click on refresh button) --
+let isPreviewMode = false;
+
+function startPreviewMode() {
+    console.log('Starting Preview Mode...');
+    isPreviewMode = true;
+
+    // Show screensaver without starting auto-slideshow
+    screensaver.classList.remove('hidden');
+    screensaver.classList.add('preview-mode');
+
+    // Show navigation arrows
+    const previewNav = document.getElementById('preview-nav');
+    if (previewNav) {
+        previewNav.classList.remove('hidden');
+    }
+
+    // Initialize slides if not already done
+    if (!slidesNodeList || slidesNodeList.length === 0) {
+        initScreensaverSlides();
+    }
+
+    // Update counter display
+    updatePreviewCounter();
+
+    // Start clock but NOT the auto-slideshow
+    updateScreensaverClock();
+    if (!clockInterval) clockInterval = setInterval(updateScreensaverClock, 1000);
+
+    // Hide mantras in preview mode
+    const mantraWrapper = document.querySelector('.screensaver-mantra-wrapper');
+    if (mantraWrapper) mantraWrapper.style.opacity = '0';
+}
+
+function exitPreviewMode(event) {
+    // In preview mode, clicking outside arrows exits
+    if (!isPreviewMode) {
+        hideScreensaver(event);
+        return;
+    }
+
+    console.log('Exiting Preview Mode...');
+    isPreviewMode = false;
+
+    // Hide navigation arrows
+    const previewNav = document.getElementById('preview-nav');
+    if (previewNav) {
+        previewNav.classList.add('hidden');
+    }
+
+    // Remove preview mode class
+    screensaver.classList.remove('preview-mode');
+
+    // Hide screensaver
+    hideScreensaver(event);
+}
+
+function previewNextSlide() {
+    if (!isPreviewMode || !slidesNodeList.length) return;
+
+    // Hide current slide
+    slidesNodeList[currentSlide].classList.remove('active');
+
+    // Go to next (with wrap-around)
+    currentSlide = (currentSlide + 1) % slidesNodeList.length;
+
+    // Show new slide
+    slidesNodeList[currentSlide].classList.add('active');
+
+    updatePreviewCounter();
+}
+
+function previewPrevSlide() {
+    if (!isPreviewMode || !slidesNodeList.length) return;
+
+    // Hide current slide
+    slidesNodeList[currentSlide].classList.remove('active');
+
+    // Go to previous (with wrap-around)
+    currentSlide = (currentSlide - 1 + slidesNodeList.length) % slidesNodeList.length;
+
+    // Show new slide
+    slidesNodeList[currentSlide].classList.add('active');
+
+    updatePreviewCounter();
+}
+
+function updatePreviewCounter() {
+    const counter = document.getElementById('preview-counter');
+    if (counter && slidesNodeList.length) {
+        counter.textContent = `${currentSlide + 1} / ${slidesNodeList.length}`;
+    }
+}
+
+// Export preview functions to window
+window.startPreviewMode = startPreviewMode;
+window.exitPreviewMode = exitPreviewMode;
+window.previewNextSlide = previewNextSlide;
+window.previewPrevSlide = previewPrevSlide;
 
 // Note: Initial state and preload are handled in the main DOMContentLoaded listener above
 
