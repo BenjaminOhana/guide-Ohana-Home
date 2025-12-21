@@ -18,8 +18,7 @@ export const translations = {
         screensaver: {
             prompt: "Touchez l'écran pour commencer",
             ben_slide: {
-                title: "Rencontrez Benjamin",
-                subtitle: "Aujourd'hui, mon bureau n'a plus de murs.\n\nJ'accompagne les entrepreneurs à trouver leur propre liberté.\n\nJ'ai conçu ce lieu pour qu'il vous inspire la vôtre.",
+                text_main: "Aujourd'hui, mon bureau n'a plus de murs.\n\nJ'accompagne les entrepreneurs à trouver leur propre liberté.\n\nJ'ai conçu ce lieu pour qu'il vous inspire la vôtre.",
                 qr_label: "En savoir plus",
                 qr_sub: "Et oui, je fais ma pub 😂",
                 signature: "Benjamin - Votre Hôte"
@@ -485,8 +484,7 @@ export const translations = {
         screensaver: {
             prompt: "Touch screen to start",
             ben_slide: {
-                title: "Meet Benjamin",
-                subtitle: "Today, my office has no walls.\n\nI help entrepreneurs find their own freedom.\n\nI designed this place to inspire yours.",
+                text_main: "Today, my office has no walls.\n\nI help entrepreneurs find their own freedom.\n\nI designed this place to inspire yours.",
                 qr_label: "Learn more",
                 qr_sub: "Yep, doing my own promo 😂",
                 signature: "Benjamin - Your Host"

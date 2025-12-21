@@ -1,7 +1,7 @@
 // Service Worker v8 - Offline-First for Kiosk Mode
 // Goal: Minimize Netlify bandwidth, serve images from local cache
 
-const CACHE_VERSION = 'v11';
+const CACHE_VERSION = 'v12';
 const STATIC_CACHE = `ohana-static-${CACHE_VERSION}`;
 const IMAGE_CACHE = `ohana-images-${CACHE_VERSION}`;
 

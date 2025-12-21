@@ -808,7 +808,7 @@ function initScreensaverSlides() {
                 slide.appendChild(rightPanel);
 
             } else if (imgSrc.includes('slide_ben_overlay.jpg')) {
-                // -- SPECIAL CASE: Ben's Photo + Overlay Text + QR (User Request) --
+                // -- SPECIAL CASE: Ben's Photo + Overlay Text + QR --
                 slide.style.display = 'flex';
                 slide.style.flexDirection = 'row';
                 slide.style.backgroundColor = '#1a1a1a'; // Dark bg base
@@ -825,23 +825,17 @@ function initScreensaverSlides() {
                 leftPanel.style.color = 'white';
                 leftPanel.style.zIndex = '10';
 
-                // Title
-                const title = document.createElement('h2');
-                title.setAttribute('data-i18n', 'screensaver.ben_slide.title');
-                title.textContent = getTranslation(currentLang, 'screensaver.ben_slide.title');
-                title.style.fontSize = '3rem';
-                title.style.marginBottom = '20px';
-                title.style.fontFamily = "'Cormorant Garamond', serif";
-                leftPanel.appendChild(title);
-
-                // Subtitle
-                const sub = document.createElement('p');
-                sub.setAttribute('data-i18n', 'screensaver.ben_slide.subtitle');
-                sub.textContent = getTranslation(currentLang, 'screensaver.ben_slide.subtitle');
-                sub.style.fontSize = '1.5rem';
-                sub.style.opacity = '0.8';
-                sub.style.marginBottom = '40px';
-                leftPanel.appendChild(sub);
+                // Main Text (Restored "l'ancien texte")
+                const textMain = document.createElement('p');
+                textMain.setAttribute('data-i18n', 'screensaver.ben_slide.text_main');
+                // Use innerHTML to handle \n as <br> or styling if needed, but textContent preserves newlines with pre-wrap
+                textMain.textContent = getTranslation(currentLang, 'screensaver.ben_slide.text_main');
+                textMain.style.fontSize = '1.4rem'; // Slightly smaller than title but bigger than body
+                textMain.style.lineHeight = '1.6';
+                textMain.style.marginBottom = '40px';
+                textMain.style.fontFamily = "'Montserrat', sans-serif"; // Standard readable font
+                textMain.style.whiteSpace = 'pre-line'; // Respect newlines
+                leftPanel.appendChild(textMain);
 
                 // QR Container
                 const qrContainer = document.createElement('div');
@@ -874,13 +868,14 @@ function initScreensaverSlides() {
 
                 // Right Panel: Image
                 const rightPanel = document.createElement('div');
-                rightPanel.style.flex = '1.5'; // Wider for the image - show Ben properly
+                rightPanel.style.flex = '1.5';
                 rightPanel.style.backgroundImage = `url('${imgSrc}')`;
-                rightPanel.style.backgroundSize = 'contain'; // Ensure full image is visible
-                rightPanel.style.backgroundRepeat = 'no-repeat';
-                rightPanel.style.backgroundPosition = 'center bottom'; // Anchor to bottom
+                rightPanel.style.backgroundSize = 'cover'; // Restore "ancienne mise en page" (Cover)
+                rightPanel.style.backgroundPosition = 'center center';
                 rightPanel.style.height = '100%';
-                // Mask removed to ensure full visibility of the image content
+                // Restore fade effect
+                rightPanel.style.maskImage = 'linear-gradient(to right, transparent 0%, black 20%)';
+                rightPanel.style.webkitMaskImage = 'linear-gradient(to right, transparent 0%, black 20%)';
 
                 slide.appendChild(rightPanel);
 
