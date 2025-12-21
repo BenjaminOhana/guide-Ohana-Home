@@ -284,10 +284,18 @@ document.addEventListener('DOMContentLoaded', () => {
     updateLanguage(currentLang);
 
     // Screensaver Dismissal (Critical)
+    // FIX: Capture and stop event propagation to prevent clicks from reaching menus underneath
     if (screensaver) {
-        screensaver.addEventListener('click', hideScreensaver);
-        screensaver.addEventListener('touchstart', hideScreensaver, { passive: true });
-        console.log("Screensaver listeners attached.");
+        screensaver.addEventListener('click', (e) => hideScreensaver(e), { capture: true });
+        screensaver.addEventListener('touchstart', (e) => hideScreensaver(e), { capture: true });
+        screensaver.addEventListener('touchend', (e) => {
+            // Also block touchend to prevent synthetic click events
+            if (!screensaver.classList.contains('hidden')) {
+                e.stopPropagation();
+                e.preventDefault();
+            }
+        }, { capture: true });
+        console.log("Screensaver listeners attached with event capture.");
     } else {
         console.error("CRITICAL: Screensaver element not found for listeners.");
     }
@@ -308,10 +316,18 @@ let idleTimer;
 const IDLE_TIMEOUT = 180000; // 3 minutes in ms
 let currentSlide = 0;
 let slideInterval;
+let isUnlockProtectionActive = false; // Protection flag to prevent accidental clicks after screensaver unlock
 
 // -- Navigation Logic --
 
 function openSection(sectionId) {
+    // PROTECTION: Ignore clicks during the unlock protection period
+    // This prevents accidental navigation when unlocking the screensaver
+    if (isUnlockProtectionActive) {
+        console.log('Navigation blocked - unlock protection active');
+        return;
+    }
+
     // Hide ALL active views first (Clean slate)
     document.querySelectorAll('.view.active').forEach(view => {
         view.classList.remove('active');
@@ -755,9 +771,25 @@ function showScreensaver() {
     startSlideshow();
 }
 
-function hideScreensaver() {
+function hideScreensaver(event) {
+    // Stop the event from propagating to elements underneath
+    if (event) {
+        event.stopPropagation();
+        event.preventDefault();
+    }
+
+    // Only process if screensaver is actually visible
+    if (screensaver.classList.contains('hidden')) return;
+
     screensaver.classList.add('hidden');
     stopSlideshow();
+
+    // Activate unlock protection - block menu clicks for 500ms
+    isUnlockProtectionActive = true;
+    setTimeout(() => {
+        isUnlockProtectionActive = false;
+    }, 500);
+
     // Reset Navigation to Hub when waking up?
     goBack();
 }
@@ -817,7 +849,7 @@ function scheduleNextSlide() {
         if (currentImg.includes('slide_dog_message.png')) {
             duration = 420000; // 7 minutes for Dog Message
         } else {
-            duration = 600000; // 10 minutes for other text slides
+            duration = 420000; // 7 minutes for other text slides (Benjamin)
         }
     }
 
