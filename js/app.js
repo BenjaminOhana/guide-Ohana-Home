@@ -319,6 +319,34 @@ document.addEventListener('DOMContentLoaded', () => {
     setTimeout(() => {
         preloadScreensaverImages();
     }, 2000);
+
+    // -- SECRET PREVIEW MODE: Double-click detection on refresh button --
+    const refreshBtn = document.getElementById('refresh-btn-main');
+    if (refreshBtn) {
+        let clickCount = 0;
+        let clickTimer = null;
+
+        refreshBtn.addEventListener('click', (e) => {
+            clickCount++;
+
+            if (clickCount === 1) {
+                // Wait to see if it's a double-click
+                clickTimer = setTimeout(() => {
+                    // Single click: refresh page
+                    clickCount = 0;
+                    window.location.reload(true);
+                }, 300);
+            } else if (clickCount === 2) {
+                // Double-click: start preview mode
+                clearTimeout(clickTimer);
+                clickCount = 0;
+                e.stopPropagation();
+                startPreviewMode();
+            }
+        });
+
+        console.log("Refresh button double-click handler attached.");
+    }
 });
 
 const screensaverPrompt = document.querySelector('.screensaver-prompt');
