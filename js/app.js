@@ -287,16 +287,18 @@ document.addEventListener('DOMContentLoaded', () => {
     // FIX: Capture and stop event propagation to prevent clicks from reaching menus underneath
     if (screensaver) {
         screensaver.addEventListener('click', (e) => {
-            // In preview mode, use exitPreviewMode; otherwise use hideScreensaver
+            // In preview mode, click shouldn't exit unless it's the close button
+            // The close button has stopPropagation, so clicks reaching here are background clicks
             if (screensaver.classList.contains('preview-mode')) {
-                exitPreviewMode(e);
+                // Do nothing on background click in preview mode (allow manual nav)
+                console.log('Background click ignored in preview mode');
             } else {
                 hideScreensaver(e);
             }
         }, { capture: true });
         screensaver.addEventListener('touchstart', (e) => {
             if (screensaver.classList.contains('preview-mode')) {
-                exitPreviewMode(e);
+                // Do nothing on touch in preview mode
             } else {
                 hideScreensaver(e);
             }
@@ -922,6 +924,9 @@ function initScreensaverSlides() {
 let slidesNodeList = []; // Will hold DOM elements
 
 function resetIdleTimer() {
+    // IGNORE IDLE TIMER logic if in Preview Mode (prevents auto-exit on mousemove)
+    if (isPreviewMode) return;
+
     clearTimeout(idleTimer);
 
     // If screensaver is active, hide it on first touch
