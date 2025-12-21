@@ -876,12 +876,11 @@ function initScreensaverSlides() {
                 const rightPanel = document.createElement('div');
                 rightPanel.style.flex = '1.5'; // Wider for the image - show Ben properly
                 rightPanel.style.backgroundImage = `url('${imgSrc}')`;
-                rightPanel.style.backgroundSize = 'cover';
-                rightPanel.style.backgroundPosition = 'center center'; // Center the image
+                rightPanel.style.backgroundSize = 'contain'; // Ensure full image is visible
+                rightPanel.style.backgroundRepeat = 'no-repeat';
+                rightPanel.style.backgroundPosition = 'center bottom'; // Anchor to bottom
                 rightPanel.style.height = '100%';
-                // Fade effect on the left edge of the image to blend with dark bg
-                rightPanel.style.maskImage = 'linear-gradient(to right, transparent 0%, black 20%)';
-                rightPanel.style.webkitMaskImage = 'linear-gradient(to right, transparent 0%, black 20%)';
+                // Mask removed to ensure full visibility of the image content
 
                 slide.appendChild(rightPanel);
 
