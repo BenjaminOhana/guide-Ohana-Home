@@ -1374,11 +1374,28 @@ if (weatherWidget) {
     weatherWidget.addEventListener('click', (e) => {
         tapCount++;
 
-        // Triple-tap detection
-        if (tapCount === 3) {
+        // Quadruple-tap = Preview Mode (4 taps)
+        if (tapCount === 4) {
             tapCount = 0;
             clearTimeout(tapTimeout);
-            openAdminModal();
+            console.log('4 taps detected - starting preview mode');
+            if (typeof window.startPreviewMode === 'function') {
+                window.startPreviewMode();
+            }
+            return;
+        }
+
+        // Triple-tap = Admin Modal (3 taps)
+        if (tapCount === 3) {
+            // Wait briefly to see if 4th tap comes
+            clearTimeout(tapTimeout);
+            tapTimeout = setTimeout(() => {
+                if (tapCount === 3) {
+                    console.log('3 taps detected - opening admin');
+                    tapCount = 0;
+                    openAdminModal();
+                }
+            }, 300);
             return;
         }
 
@@ -1402,6 +1419,17 @@ if (weatherWidget) {
         }
     });
 }
+
+// --- Keyboard Shortcut for Preview Mode (Mac testing) ---
+document.addEventListener('keydown', (e) => {
+    // Shift+P = Preview Mode
+    if (e.shiftKey && e.key === 'P') {
+        console.log('Shift+P pressed - starting preview mode');
+        if (typeof window.startPreviewMode === 'function') {
+            window.startPreviewMode();
+        }
+    }
+});
 
 // --- Hidden Admin Functions ---
 function openAdminModal() {
