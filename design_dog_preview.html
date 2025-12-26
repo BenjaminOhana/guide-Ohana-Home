@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Preview Dog Design</title>
+    <style>
+        /* Import Cormorant Garamond for Serif Title */
+        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Montserrat:wght@300;400;500;600;700&display=swap');
+        
+        body { 
+            margin: 0; 
+            overflow: hidden; 
+            font-family: 'Montserrat', sans-serif; 
+            background: #f9f7f2; /* Cream/Beige Background */
+        }
+        
+        .container {
+            display: flex;
+            width: 100vw;
+            height: 100vh;
+        }
+        
+        .left-panel {
+            flex: 1;
+            padding: 60px 80px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            background-color: #f9f7f2;
+            color: #4a4a4a;
+        }
+        
+        .right-panel {
+            flex: 1;
+            /* Dog image covering right side */
+            background: url('assets/img/screensaver/slide_dog_message.png') no-repeat center bottom;
+            background-size: cover;
+            position: relative;
+        }
+        
+        /* Fade effect on the left edge of image */
+        .right-panel::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; bottom: 0;
+            width: 150px;
+            background: linear-gradient(to right, #f9f7f2, transparent);
+            z-index: 10;
+        }
+        
+        h1 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 4rem; /* Big Serif Title */
+            line-height: 1.1;
+            color: #bf7e6f; /* Muted Terra Cotta color for Title matched from screenshot */
+            font-weight: 500;
+            margin-bottom: 30px;
+        }
+        
+        h1 span.highlight {
+            color: #d48166; /* Slightly stronger accent */
+        }
+        
+        .intro-text {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+        
+        .secret-box {
+            background-color: #fcece8; /* Light Peach/Pink background */
+            border-left: 4px solid #d48166; /* Accent border */
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+        }
+        
+        .secret-title {
+            color: #d48166;
+            font-family: 'Cormorant Garamond', serif; /* Serif for secret title too? Screenshot looks serif-y */
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .secret-content {
+            font-size: 1rem;
+            line-height: 1.5;
+            color: #555;
+        }
+        
+        .cta-text {
+            font-weight: 500;
+            font-size: 1.1rem;
+            margin-bottom: 30px;
+        }
+        
+        .feedback-note {
+            font-size: 0.9rem;
+            font-style: italic;
+            color: #888;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="left-panel">
+            <h1>
+                Vous avez le pouvoir de changer 🧘🏼‍♂️... <span class="highlight">Notre moyenne !</span>
+            </h1>
+            
+            <p class="intro-text">
+                Si vous avez apprécié votre séjour, un joli <b>5/5</b> serait la cerise sur le gâteau. 
+                Ça nous dit que vous avez passé un bon moment, et ça nous fait chaud au cœur !
+            </p>
+            
+            <div class="secret-box">
+                <div class="secret-title">🤫 Petit secret entre nous :</div>
+                <div class="secret-content">
+                    On pourrait croire qu'un <b>4/5</b> est une bonne note... mais pour l'algorithme Airbnb, c'est une petite claque !<br><br>
+                    Il nous faut environ <b>10 notes parfaites</b> pour rattraper un seul 4/5. En dessous d'une certaine moyenne, on disparaît des radars... 
+                    <i>Bye bye visibilité, bye bye Ohana Home...</i>
+                </div>
+            </div>
+            
+            <div class="cta-text">
+                Alors, si tout s'est bien passé, un 5/5 est le meilleur moyen de nous soutenir.
+            </div>
+            
+            <div class="feedback-note">
+                💡 Et bien sur, vos suggestions sont toujours les bienvenues pour qu'on s'améliore encore !
+            </div>
+        </div>
+        
+        <div class="right-panel">
+            <!-- Image background -->
+        </div>
+    </div>
+</body>
+</html>

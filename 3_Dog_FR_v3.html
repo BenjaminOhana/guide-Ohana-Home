@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>3_Dog_FR_v3</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Raleway:wght@300;400;500;600&family=Caveat:wght@400;600;700&family=Cormorant+Garamond:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { margin: 0; overflow: hidden; font-family: 'Montserrat', sans-serif; }
+        .slide {
+            width: 100vw; height: 100vh;
+        }
+        .dog-slide-container {
+            display: flex; width: 100%; height: 100%;
+        }
+        /* Adjusted Left Panel: Pushed text towards center (Right) */
+        .dog-slide-left {
+            flex: 1; 
+            padding: 50px 40px 50px 120px; /* More left padding */
+            display: flex; flex-direction: column; justify-content: center;
+            background-color: #f9f7f2; color: #4a4a4a; text-align: left;
+        }
+        /* Adjusted Right Panel: Pull dog image Left */
+        .dog-slide-right {
+            flex: 1; 
+            background: url('assets/img/screensaver/slide_dog_message.png') no-repeat;
+            background-position: 25% center; /* Moved dog left */
+            background-size: cover;
+            position: relative;
+        }
+        .dog-slide-right::before {
+            content: ''; position: absolute; top: 0; left: 0; bottom: 0;
+            width: 150px; background: linear-gradient(to right, #f9f7f2, transparent);
+            z-index: 10;
+        }
+        .dog-slide-title {
+            font-family: 'Caveat', cursive; 
+            font-size: 3.5rem; line-height: 1.1; color: #bf7e6f;
+            font-weight: 700; margin-bottom: 20px; margin-top: 0;
+        }
+        .highlight { color: #d48166; }
+        .dog-slide-intro {
+            font-size: 1.1rem; line-height: 1.6; margin-bottom: 30px;
+            font-family: 'Montserrat', sans-serif;
+        }
+        .dog-slide-secret {
+            background-color: #fcece8; border-left: 4px solid #d48166;
+            padding: 25px; border-radius: 15px; margin-bottom: 30px;
+        }
+        .dog-slide-secret-title {
+            color: #d48166; font-family: 'Cormorant Garamond', serif;
+            font-size: 1.4rem; font-weight: 600; margin-bottom: 10px;
+            display: flex; align-items: center; gap: 10px;
+        }
+        .dog-slide-secret-content { font-size: 1rem; line-height: 1.5; color: #555; }
+        .dog-slide-cta { font-weight: 600; font-size: 1.1rem; margin-bottom: 30px; color: #C17B5F; }
+        .dog-slide-feedback { 
+            font-size: 0.9rem; color: #555; 
+            border-left: 4px solid #C17B5F; padding-left: 15px; 
+            margin-top: 10px;
+        }
+        .dog-slide-feedback strong { display: block; margin-bottom: 5px; color: #333; }
+    </style>
+</head>
+<body>
+    <div class="slide">
+        <div class="dog-slide-container">
+            <div class="dog-slide-left">
+                <h1 class="dog-slide-title">Salut les humains ! 🐾</h1>
+                <p class="dog-slide-intro">Si vous avez adoré votre séjour, un joli <b>5/5</b> c'est comme une grattouille derrière l'oreille : ça nous fait trop plaisir !</p>
+                
+                <div class="dog-slide-secret">
+                    <div class="dog-slide-secret-title">🤫 Mon petit secret :</div>
+                    <div class="dog-slide-secret-content">On pourrait croire que <b>4/5</b> c'est une bonne note... mais pour le méchant algorithme Airbnb, c'est une petite claque sur le museau !<br><br>Il faut environ <b>10 notes parfaites</b> pour rattraper un seul 4/5. Si on en a trop, pfiou... on disparaît des recherches. Plus de visibilité, plus d'invités, plus de croquettes... 🥺</div>
+                </div>
+
+                <div class="dog-slide-cta">Alors si tout a été au poil, le 5/5 est le meilleur moyen de nous sauver !</div>
+                <div class="dog-slide-feedback">
+                    <strong>Un truc qui ne va pas ?</strong>
+                    Dites-le à Papa (Benjamin) par message. Il court plus vite que moi pour régler les soucis ! Et à Ohana Home on veut vous chouchouter par ce que vous êtes les meilleurs voyageurs ! ❤️
+                </div>
+            </div>
+            <div class="dog-slide-right"></div>
+        </div>
+    </div>
+</body>
+</html>

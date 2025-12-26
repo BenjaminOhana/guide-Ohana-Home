@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>3_Dog_FR</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Raleway:wght@300;400;500;600&family=Caveat:wght@400;600;700&family=Cormorant+Garamond:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { margin: 0; overflow: hidden; font-family: 'Montserrat', sans-serif; }
+        .slide {
+            width: 100vw; height: 100vh;
+        }
+        .dog-slide-container {
+            display: flex; width: 100%; height: 100%;
+        }
+        .dog-slide-left {
+            flex: 1; padding: 60px 80px;
+            display: flex; flex-direction: column; justify-content: center;
+            background-color: #f9f7f2; color: #4a4a4a; text-align: left;
+        }
+        .dog-slide-right {
+            flex: 1;
+            background: url('assets/img/screensaver/slide_dog_message.png') no-repeat center bottom;
+            background-size: cover;
+            position: relative;
+        }
+        .dog-slide-right::before {
+            content: ''; position: absolute; top: 0; left: 0; bottom: 0;
+            width: 150px; background: linear-gradient(to right, #f9f7f2, transparent);
+            z-index: 10;
+        }
+        .dog-slide-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 4rem; line-height: 1.1; color: #bf7e6f;
+            font-weight: 500; margin-bottom: 30px; margin-top: 0;
+        }
+        .highlight { color: #d48166; }
+        .dog-slide-intro {
+            font-size: 1.1rem; line-height: 1.6; margin-bottom: 30px;
+            font-family: 'Montserrat', sans-serif;
+        }
+        .dog-slide-secret {
+            background-color: #fcece8; border-left: 4px solid #d48166;
+            padding: 25px; border-radius: 15px; margin-bottom: 30px;
+        }
+        .dog-slide-secret-title {
+            color: #d48166; font-family: 'Cormorant Garamond', serif;
+            font-size: 1.4rem; font-weight: 600; margin-bottom: 10px;
+            display: flex; align-items: center; gap: 10px;
+        }
+        .dog-slide-secret-content { font-size: 1rem; line-height: 1.5; color: #555; }
+        .dog-slide-cta { font-weight: 500; font-size: 1.1rem; margin-bottom: 30px; }
+        .dog-slide-feedback { font-size: 0.9rem; font-style: italic; color: #888; display: flex; align-items: center; gap: 10px; }
+    </style>
+</head>
+<body>
+    <div class="slide">
+        <div class="dog-slide-container">
+            <div class="dog-slide-left">
+                <h1 class="dog-slide-title">Vous avez le pouvoir de changer 🧘🏼‍♂️... <span class="highlight">Notre moyenne !</span></h1>
+                <p class="dog-slide-intro">Si vous avez apprécié votre séjour, un joli <b>5/5</b> serait la cerise sur le gâteau. Ça nous dit que vous avez passé un bon moment, et ça nous fait chaud au cœur !</p>
+                
+                <div class="dog-slide-secret">
+                    <div class="dog-slide-secret-title">🤫 Petit secret entre nous :</div>
+                    <div class="dog-slide-secret-content">On pourrait croire qu'un <b>4/5</b> est une bonne note... mais pour l'algorithme Airbnb, c'est une petite claque !<br><br>Il nous faut environ <b>10 notes parfaites</b> pour rattraper un seul 4/5. En dessous d'une certaine moyenne, on disparaît des radars... <i>Bye bye visibilité, bye bye Ohana Home...</i></div>
+                </div>
+
+                <div class="dog-slide-cta">Alors, si tout s'est bien passé, un 5/5 est le meilleur moyen de nous soutenir.</div>
+                <div class="dog-slide-feedback">💡 Et bien sur, vos suggestions sont toujours les bienvenues pour qu'on s'améliore encore !</div>
+            </div>
+            <div class="dog-slide-right"></div>
+        </div>
+    </div>
+</body>
+</html>

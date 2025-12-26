@@ -27,7 +27,7 @@ function updateLanguage(lang) {
             if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
                 el.placeholder = val;
             } else {
-                el.textContent = val;
+                el.innerHTML = val;
             }
         }
     });
@@ -49,6 +49,11 @@ function updateLanguage(lang) {
         // Re-render guestbook to update sample entries in new language
         if (typeof renderGuestbook === 'function' && typeof currentGuestbookEntries !== 'undefined') {
             renderGuestbook(currentGuestbookEntries);
+        }
+        // Re-render screensaver slides to update text (Ben/Dog slides)
+        if (typeof initScreensaverSlides === 'function') {
+            console.log("Re-initializing screensaver slides for new language...");
+            initScreensaverSlides();
         }
     }, 0);
 }
@@ -506,9 +511,8 @@ function startPreviewMode() {
     updateScreensaverClock();
     if (!clockInterval) clockInterval = setInterval(updateScreensaverClock, 1000);
 
-    // Hide mantras in preview mode
-    const mantraWrapper = document.querySelector('.screensaver-mantra-wrapper');
-    if (mantraWrapper) mantraWrapper.style.opacity = '0';
+    // Initial Mantra Update for Preview
+    updateMantra();
 }
 
 function exitPreviewMode(event) {
@@ -547,6 +551,7 @@ function previewNextSlide() {
     slidesNodeList[currentSlide].classList.add('active');
 
     updatePreviewCounter();
+    updateMantra();
 }
 
 function previewPrevSlide() {
@@ -562,6 +567,7 @@ function previewPrevSlide() {
     slidesNodeList[currentSlide].classList.add('active');
 
     updatePreviewCounter();
+    updateMantra();
 }
 
 function updatePreviewCounter() {
@@ -704,180 +710,141 @@ function initScreensaverSlides() {
 
         if (isTextSlide(imgSrc)) {
             if (imgSrc.includes('slide_dog_message.png')) {
-                // -- SPECIAL CASE: Dog Message (Ratings) --
-                slide.style.display = 'flex';
-                slide.style.flexDirection = 'row';
-                slide.style.backgroundColor = '#f7f5f2'; // Warm white
-                slide.setAttribute('data-text-slide', 'true'); // Mark as text slide for mantra hiding
+                // ============================================================
+                // 🔒 LOCKED DESIGN - DO NOT MODIFY WITHOUT VALIDATION
+                // This section (Dog Slide V4) is validated and pixel-perfect.
+                // It handles Multilingual Text + Mantra Blocking.
+                // ============================================================
+                // -- SPECIAL CASE: Dog Slide (Validé Pixel Perfect V4) --
+                slide.setAttribute('data-text-slide', 'true');
+                slide.setAttribute('data-text-slide', 'true');
 
-                // Left Panel: Text
+                const container = document.createElement('div');
+                container.className = 'dog-slide-container';
+
                 const leftPanel = document.createElement('div');
-                leftPanel.style.flex = '1.3'; // Text takes more space
-                leftPanel.style.padding = '50px 60px';
-                leftPanel.style.display = 'flex';
-                leftPanel.style.flexDirection = 'column';
-                leftPanel.style.justifyContent = 'center';
-                leftPanel.style.alignItems = 'flex-start';
-                leftPanel.style.color = '#333';
-                leftPanel.style.gap = '20px';
-                leftPanel.style.overflowY = 'auto'; // Safety
+                leftPanel.className = 'dog-slide-left';
 
                 // Title
-                const title = document.createElement('h2');
-                title.textContent = getTranslation(currentLang, 'screensaver.dog_slide.title');
-                title.style.fontSize = '2.8rem';
-                title.style.fontFamily = "'Caveat', cursive"; // Playful font
-                title.style.color = '#C17B5F';
-                title.style.marginBottom = '10px';
+                const title = document.createElement('h1');
+                title.className = 'dog-slide-title';
+                title.innerHTML = getTranslation(currentLang, 'screensaver.dog_slide.title');
                 leftPanel.appendChild(title);
 
                 // Intro
                 const intro = document.createElement('p');
+                intro.className = 'dog-slide-intro';
                 intro.innerHTML = getTranslation(currentLang, 'screensaver.dog_slide.intro');
-                intro.style.fontSize = '1.2rem';
-                intro.style.lineHeight = '1.5';
                 leftPanel.appendChild(intro);
 
-                // Secret Block
+                // Secret Box
                 const secretBox = document.createElement('div');
-                secretBox.style.background = 'white';
-                secretBox.style.padding = '20px';
-                secretBox.style.borderRadius = '15px';
-                secretBox.style.boxShadow = '0 5px 20px rgba(0,0,0,0.05)';
-                secretBox.style.width = '100%';
+                secretBox.className = 'dog-slide-secret';
 
-                const secretTitle = document.createElement('h3');
+                const secretTitle = document.createElement('div');
+                secretTitle.className = 'dog-slide-secret-title';
                 secretTitle.textContent = getTranslation(currentLang, 'screensaver.dog_slide.secret_title');
-                secretTitle.style.fontSize = '1.2rem';
-                secretTitle.style.marginBottom = '10px';
-                secretTitle.style.color = '#5A7D7C'; // Soft Green
                 secretBox.appendChild(secretTitle);
 
-                const secretText = document.createElement('p');
-                secretText.innerHTML = getTranslation(currentLang, 'screensaver.dog_slide.secret_text');
-                secretText.style.fontSize = '1.1rem';
-                secretText.style.marginBottom = '10px';
-                secretBox.appendChild(secretText);
-
-                const algoText = document.createElement('p');
-                algoText.innerHTML = getTranslation(currentLang, 'screensaver.dog_slide.algo_text');
-                algoText.style.fontSize = '1.0rem';
-                algoText.style.fontStyle = 'italic';
-                algoText.style.opacity = '0.8';
-                secretBox.appendChild(algoText);
+                const secretContent = document.createElement('div');
+                secretContent.className = 'dog-slide-secret-content';
+                secretContent.innerHTML = getTranslation(currentLang, 'screensaver.dog_slide.secret_content');
+                secretBox.appendChild(secretContent);
 
                 leftPanel.appendChild(secretBox);
 
-                // Call to Action
-                const cta = document.createElement('p');
-                cta.textContent = getTranslation(currentLang, 'screensaver.dog_slide.call_to_action');
-                cta.style.fontSize = '1.2rem';
-                cta.style.fontWeight = 'bold';
-                cta.style.color = '#C17B5F';
+                // CTA
+                const cta = document.createElement('div');
+                cta.className = 'dog-slide-cta';
+                cta.textContent = getTranslation(currentLang, 'screensaver.dog_slide.cta');
                 leftPanel.appendChild(cta);
 
-                // Feedback
-                const feedbackBox = document.createElement('div');
-                feedbackBox.style.marginTop = '20px';
-                feedbackBox.style.borderLeft = '4px solid #C17B5F';
-                feedbackBox.style.paddingLeft = '15px';
+                // Feedback (Uses innerHTML for strong tag from translations)
+                const feedback = document.createElement('div');
+                feedback.className = 'dog-slide-feedback';
+                feedback.innerHTML = getTranslation(currentLang, 'screensaver.dog_slide.feedback');
+                leftPanel.appendChild(feedback);
 
-                const fbTitle = document.createElement('strong');
-                fbTitle.textContent = getTranslation(currentLang, 'screensaver.dog_slide.feedback_title');
-                fbTitle.style.display = 'block';
-                fbTitle.style.marginBottom = '5px';
-                feedbackBox.appendChild(fbTitle);
+                container.appendChild(leftPanel);
 
-                const fbText = document.createElement('span');
-                fbText.textContent = getTranslation(currentLang, 'screensaver.dog_slide.feedback_text');
-                fbText.style.fontSize = '0.95rem';
-                feedbackBox.appendChild(fbText);
-
-                leftPanel.appendChild(feedbackBox);
-                slide.appendChild(leftPanel);
-
-                // Right Panel: Image
+                // Right Panel (Image)
                 const rightPanel = document.createElement('div');
-                rightPanel.style.flex = '0.9';
+                rightPanel.className = 'dog-slide-right';
                 rightPanel.style.backgroundImage = `url('${imgSrc}')`;
-                rightPanel.style.backgroundSize = 'contain';
-                rightPanel.style.backgroundRepeat = 'no-repeat';
-                rightPanel.style.backgroundPosition = 'center bottom';
-                // rightPanel.style.marginTop = '50px'; // Push dog down a bit if needed
 
-                slide.appendChild(rightPanel);
+                container.appendChild(rightPanel);
+                slide.appendChild(container);
 
             } else if (imgSrc.includes('slide_ben_overlay.jpg')) {
-                // -- SPECIAL CASE: Ben's Photo + Overlay Text + QR --
-                slide.style.display = 'flex';
-                slide.style.flexDirection = 'row';
-                slide.style.backgroundColor = '#1a1a1a'; // Dark bg base
-                slide.setAttribute('data-text-slide', 'true'); // Mark as text slide for mantra hiding
+                // ============================================================
+                // 🔒 LOCKED DESIGN - DO NOT MODIFY WITHOUT VALIDATION
+                // This section (Ben Slide) is validated.
+                // ============================================================
+                // -- SPECIAL CASE: Ben Slide (Validé Pixel Perfect) --
+                slide.setAttribute('data-text-slide', 'true');
 
-                // Left Panel: Text + QR
-                const leftPanel = document.createElement('div');
-                leftPanel.style.flex = '1';
-                leftPanel.style.padding = '60px';
-                leftPanel.style.display = 'flex';
-                leftPanel.style.flexDirection = 'column';
-                leftPanel.style.justifyContent = 'center';
-                leftPanel.style.alignItems = 'flex-start';
-                leftPanel.style.color = 'white';
-                leftPanel.style.zIndex = '10';
+                const card = document.createElement('div');
+                card.className = 'ben-slide-card';
 
-                // Main Text (Restored "l'ancien texte")
-                const textMain = document.createElement('p');
-                textMain.setAttribute('data-i18n', 'screensaver.ben_slide.text_main');
-                // Use innerHTML to handle \n as <br> or styling if needed, but textContent preserves newlines with pre-wrap
-                textMain.textContent = getTranslation(currentLang, 'screensaver.ben_slide.text_main');
-                textMain.style.fontSize = '1.4rem'; // Slightly smaller than title but bigger than body
-                textMain.style.lineHeight = '1.6';
-                textMain.style.marginBottom = '40px';
-                textMain.style.fontFamily = "'Montserrat', sans-serif"; // Standard readable font
-                textMain.style.whiteSpace = 'pre-line'; // Respect newlines
-                leftPanel.appendChild(textMain);
+                // Sun Icon
+                const sunIcon = document.createElement('div');
+                sunIcon.className = 'ben-slide-sun';
+                // Using SVG directly
+                sunIcon.innerHTML = `<svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>`;
+                card.appendChild(sunIcon);
 
-                // QR Container
-                const qrContainer = document.createElement('div');
-                qrContainer.style.background = 'white';
-                qrContainer.style.padding = '15px';
-                qrContainer.style.borderRadius = '15px';
-                qrContainer.style.display = 'flex';
-                qrContainer.style.flexDirection = 'column';
-                qrContainer.style.alignItems = 'center';
-                qrContainer.style.gap = '10px';
+                // Quote
+                const quote = document.createElement('div');
+                quote.className = 'ben-slide-quote';
+                quote.textContent = getTranslation(currentLang, 'screensaver.ben_slide.text_main');
+                card.appendChild(quote);
 
-                // QR Image - Points to Ben's business site
+                // More Info Label
+                const moreInfo = document.createElement('div');
+                moreInfo.className = 'ben-slide-info';
+                moreInfo.textContent = getTranslation(currentLang, 'screensaver.ben_slide.more_info');
+                card.appendChild(moreInfo);
+
+                // QR Section
+                const qrSection = document.createElement('div');
+                qrSection.className = 'ben-slide-qr-section';
+
+                const qrBox = document.createElement('div');
+                qrBox.className = 'ben-slide-qr-box';
                 const qrImg = document.createElement('img');
-                qrImg.src = 'https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=' + encodeURIComponent('https://entrepreneuraligne.fr');
-                qrImg.style.width = '120px';
-                qrImg.style.height = '120px';
-                qrContainer.appendChild(qrImg);
+                qrImg.src = 'https://api.qrserver.com/v1/create-qr-code/?size=90x90&data=' + encodeURIComponent('https://entrepreneuraligne.fr');
+                qrImg.width = 90;
+                qrBox.appendChild(qrImg);
+                qrSection.appendChild(qrBox);
 
-                // QR Label
-                const qrLabel = document.createElement('span');
-                qrLabel.setAttribute('data-i18n', 'screensaver.ben_slide.qr_label');
-                qrLabel.textContent = getTranslation(currentLang, 'screensaver.ben_slide.qr_label');
-                qrLabel.style.color = '#333';
-                qrLabel.style.fontSize = '0.9rem';
-                qrLabel.style.fontWeight = '600';
-                qrContainer.appendChild(qrLabel);
+                const qrSub = document.createElement('span');
+                qrSub.className = 'ben-slide-qr-sub';
+                qrSub.textContent = getTranslation(currentLang, 'screensaver.ben_slide.qr_sub');
+                qrSection.appendChild(qrSub);
 
-                leftPanel.appendChild(qrContainer);
-                slide.appendChild(leftPanel);
+                card.appendChild(qrSection);
 
-                // Right Panel: Image
-                const rightPanel = document.createElement('div');
-                rightPanel.style.flex = '1.5';
-                rightPanel.style.backgroundImage = `url('${imgSrc}')`;
-                rightPanel.style.backgroundSize = 'cover'; // Restore "ancienne mise en page" (Cover)
-                rightPanel.style.backgroundPosition = 'center center';
-                rightPanel.style.height = '100%';
-                // Restore fade effect
-                rightPanel.style.maskImage = 'linear-gradient(to right, transparent 0%, black 20%)';
-                rightPanel.style.webkitMaskImage = 'linear-gradient(to right, transparent 0%, black 20%)';
+                // Signature
+                const sigBlock = document.createElement('div');
+                sigBlock.className = 'ben-slide-signature';
 
-                slide.appendChild(rightPanel);
+                const sigName = document.createElement('span');
+                sigName.className = 'ben-slide-sig-name';
+                sigName.textContent = getTranslation(currentLang, 'screensaver.ben_slide.sig_name');
+                sigBlock.appendChild(sigName);
+
+                const sigRole = document.createElement('span');
+                sigRole.className = 'ben-slide-sig-role';
+                sigRole.textContent = getTranslation(currentLang, 'screensaver.ben_slide.sig_role');
+                sigBlock.appendChild(sigRole);
+
+                card.appendChild(sigBlock);
+                slide.appendChild(card);
+
+                // Background
+                slide.style.backgroundImage = `url('${imgSrc}')`;
+                slide.style.backgroundSize = 'cover';
+                slide.style.backgroundPosition = 'center center';
 
             } else {
                 // -- STANDARD TEXT SLIDE: Blur Background + Sharp Image --
@@ -1150,6 +1117,12 @@ function updateMantra() {
             if (imgLayer) {
                 bg = imgLayer.style.backgroundImage || '';
             }
+        }
+
+        if (activeSlide.querySelector('.ben-slide-card') || activeSlide.classList.contains('dog-slide-layout')) {
+            container.style.opacity = '0';
+            container.style.display = 'none'; // FORCE IMMEDIATE HIDE
+            return;
         }
 
         if (isTextSlide(bg)) {

@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Preview Benjamin Design</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap');
+        
+        body { 
+            margin: 0; 
+            overflow: hidden; 
+            font-family: 'Montserrat', sans-serif; 
+            background: #000; 
+        }
+        
+        .slide {
+            width: 100vw; 
+            height: 100vh;
+            /* Using the absolute path logic or relative if opened from folder. 
+               Assuming file is at project root, assets/ is correct */
+            background: url('assets/img/screensaver/slide_ben_overlay.jpg') no-repeat center center;
+            background-size: cover;
+            position: relative;
+        }
+        
+        .card {
+            position: absolute;
+            top: 50%; 
+            left: 10%; /* Adjusted for spacing */
+            transform: translateY(-50%);
+            width: 450px; /* Slightly wider */
+            background: rgba(20, 20, 20, 0.85); /* Dark semi-transparent */
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            padding: 50px;
+            border-radius: 30px;
+            color: white;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .sun-icon {
+            color: #d48166; /* Terracotta/Orange */
+            margin-bottom: 30px;
+        }
+        
+        .quote {
+            font-size: 1.5rem;
+            line-height: 1.5;
+            font-weight: 400;
+            margin-bottom: 40px;
+            color: #f1f1f1;
+        }
+        
+        .more-info {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #d48166;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+        
+        .qr-section {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+        
+        .qr-box {
+            background: white;
+            padding: 8px;
+            border-radius: 12px;
+            width: 100px; 
+            height: 100px;
+            display: flex; 
+            justify-content: center; 
+            align-items: center;
+        }
+        
+        .qr-sub {
+            font-size: 0.8rem;
+            font-style: italic;
+            color: #aaa;
+            margin-top: 5px;
+        }
+        
+        .signature-block {
+            margin-top: 40px;
+            border-left: 3px solid #d48166;
+            padding-left: 15px;
+        }
+        
+        .sig-name {
+            color: #d48166;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            font-size: 0.9rem;
+            display: block;
+        }
+        
+        .sig-role {
+            color: #aaa;
+            font-size: 0.8rem;
+            margin-top: 4px;
+            display: block;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide">
+        <div class="card">
+            <!-- Sun Icon SVG -->
+            <div class="sun-icon">
+                <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="5"></circle>
+                    <line x1="12" y1="1" x2="12" y2="3"></line>
+                    <line x1="12" y1="21" x2="12" y2="23"></line>
+                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                    <line x1="1" y1="12" x2="3" y2="12"></line>
+                    <line x1="21" y1="12" x2="23" y2="12"></line>
+                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                </svg>
+            </div>
+            
+            <div class="quote">
+                "Aujourd'hui, mon bureau n'a plus de murs. J'accompagne les entrepreneurs à trouver leur propre liberté.<br><br>
+                J'ai conçu ce lieu pour qu'il vous inspire la vôtre."
+            </div>
+            
+            <div class="more-info">PLUS D'INFOS ICI</div>
+            
+            <div class="qr-section">
+               <div class="qr-box">
+                   <img src="https://api.qrserver.com/v1/create-qr-code/?size=90x90&data=https://entrepreneuraligne.fr" width="90">
+               </div>
+               <span class="qr-sub">Et oui, je fais ma pub 😂</span>
+            </div>
+            
+            <div class="signature-block">
+                <span class="sig-name">BENJAMIN</span>
+                <span class="sig-role">Votre Hôte</span>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

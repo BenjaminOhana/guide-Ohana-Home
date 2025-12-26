@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Debug Load</title>
+</head>
+<body style="background: #333; color: white; font-family: monospace; padding: 20px;">
+    <h1>Debug Loader</h1>
+    <div id="status">Testing imports...</div>
+    <ul id="log"></ul>
+
+    <script type="module">
+        function log(msg, color = 'white') {
+            const li = document.createElement('li');
+            li.textContent = msg;
+            li.style.color = color;
+            document.getElementById('log').appendChild(li);
+        }
+
+        try {
+            log("Attempting to import translations.js...");
+            const module = await import('./js/translations.js');
+            log("Successfully imported translations.js", '#0f0');
+            console.log(module.translations);
+
+            if (module.translations && module.translations.fr && module.translations.fr.equip && module.translations.fr.equip.comfort) {
+                log("Structure check: translations.fr.equip.comfort exists.", '#0f0');
+            } else {
+                log("Structure error: Missing comfort key!", 'red');
+            }
+
+        } catch (e) {
+            log("CRITICAL ERROR IMPORTING TRANSLATIONS:", 'red');
+            log(e.message, 'red');
+            console.error(e);
+        }
+    </script>
+</body>
+</html>

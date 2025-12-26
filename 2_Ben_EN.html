@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>2_Ben_EN</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Raleway:wght@300;400;500;600&family=Caveat:wght@400;600;700&family=Cormorant+Garamond:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { margin: 0; overflow: hidden; font-family: 'Montserrat', sans-serif; }
+        .slide {
+            width: 100vw; height: 100vh;
+            background: url('assets/img/screensaver/slide_ben_overlay.jpg') no-repeat center center;
+            background-size: cover;
+            position: relative;
+        }
+        .ben-slide-card {
+            position: absolute;
+            top: 50%;
+            left: 10%;
+            transform: translateY(-50%);
+            width: 450px;
+            background: rgba(20, 20, 20, 0.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            padding: 50px;
+            border-radius: 30px;
+            color: white;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            border: 1px solid rgba(255,255,255,0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            text-align: left;
+            z-index: 10;
+        }
+        .ben-slide-sun { color: #d48166; margin-bottom: 30px; }
+        .ben-slide-quote {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.5rem;
+            line-height: 1.5;
+            font-weight: 400;
+            margin-bottom: 40px;
+            color: #f1f1f1;
+            white-space: pre-wrap;
+        }
+        .ben-slide-info {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #d48166;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+        .ben-slide-qr-section { display: flex; flex-direction: column; gap: 5px; }
+        .ben-slide-qr-box {
+            background: white; padding: 8px; border-radius: 12px;
+            width: 100px; height: 100px;
+            display: flex; justify-content: center; align-items: center;
+        }
+        .ben-slide-qr-sub { font-size: 0.8rem; font-style: italic; color: #aaa; margin-top: 5px; }
+        .ben-slide-signature { margin-top: 40px; border-left: 3px solid #d48166; padding-left: 15px; }
+        .ben-slide-sig-name {
+            color: #d48166; font-weight: 700; text-transform: uppercase;
+            letter-spacing: 3px; font-size: 0.9rem; display: block;
+        }
+        .ben-slide-sig-role {
+            color: #aaa; font-size: 0.8rem; margin-top: 4px;
+            display: block; text-transform: uppercase; letter-spacing: 1px;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide">
+        <div class="ben-slide-card">
+            <div class="ben-slide-sun">
+                <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+            </div>
+            <div class="ben-slide-quote">"Today, my office has no walls. I help entrepreneurs find their own freedom.
+
+I designed this place to inspire yours."</div>
+            <div class="ben-slide-info">MORE INFO HERE</div>
+            <div class="ben-slide-qr-section">
+               <div class="ben-slide-qr-box">
+                   <img src="https://api.qrserver.com/v1/create-qr-code/?size=90x90&data=https://entrepreneuraligne.fr" width="90">
+               </div>
+               <span class="ben-slide-qr-sub">Yep, doing my own promo 😂</span>
+            </div>
+            <div class="ben-slide-signature">
+                <span class="ben-slide-sig-name">BENJAMIN</span>
+                <span class="ben-slide-sig-role">Your Host</span>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
