@@ -1,7 +1,7 @@
 // Service Worker v8 - Offline-First for Kiosk Mode
 // Goal: Minimize Netlify bandwidth, serve images from local cache
 
-const CACHE_VERSION = 'v21';
+const CACHE_VERSION = 'v22_fix_updates';
 const STATIC_CACHE = `ohana-static-${CACHE_VERSION}`;
 const IMAGE_CACHE = `ohana-images-${CACHE_VERSION}`;
 
@@ -137,7 +137,7 @@ const IMAGE_ASSETS = [
 
 // Install: Cache all static and image assets
 self.addEventListener('install', (event) => {
-    console.log('[SW] Installing v7 - Offline First Mode');
+    console.log('[SW] Installing v22 (Network-First Fix)');
     self.skipWaiting();
 
     event.waitUntil(
@@ -158,7 +158,7 @@ self.addEventListener('install', (event) => {
 
 // Activate: Clean up old caches
 self.addEventListener('activate', (event) => {
-    console.log('[SW] Activating v7');
+    console.log('[SW] Activating v22');
     event.waitUntil(
         caches.keys().then((cacheNames) => {
             return Promise.all(
@@ -175,7 +175,9 @@ self.addEventListener('activate', (event) => {
     return self.clients.claim();
 });
 
-// Fetch: Serve from cache first, fall back to network
+// Fetch Strategy:
+// 1. Images -> Cache First (Bandwidth saving)
+// 2. Everything else (HTML/JS/CSS) -> Network First (Always fresh code)
 self.addEventListener('fetch', (event) => {
     const url = new URL(event.request.url);
 
@@ -183,7 +185,6 @@ self.addEventListener('fetch', (event) => {
     if (url.hostname.includes('firestore.googleapis.com') ||
         url.hostname.includes('firebase') ||
         url.hostname.includes('gstatic.com')) {
-        // Network only for Firebase real-time
         return;
     }
 
@@ -193,16 +194,18 @@ self.addEventListener('fetch', (event) => {
         return;
     }
 
-    // IMAGES: Cache-First (never hit network if cached)
+    // STRATEGY 1: CACHE FIRST (IMAGES)
+    // Only for explicit image destinations or common image extensions
     if (event.request.destination === 'image' ||
         url.pathname.match(/\.(jpg|jpeg|png|gif|webp|svg)$/i)) {
+
         event.respondWith(
             caches.match(event.request).then((cachedResponse) => {
                 if (cachedResponse) {
                     // Serve from cache - NO network request
                     return cachedResponse;
                 }
-                // Not in cache, fetch and cache for next time
+                // Not in cache? Fetch and cache.
                 return fetch(event.request).then((networkResponse) => {
                     return caches.open(IMAGE_CACHE).then((cache) => {
                         cache.put(event.request, networkResponse.clone());
@@ -214,27 +217,30 @@ self.addEventListener('fetch', (event) => {
         return;
     }
 
-    // STATIC ASSETS (HTML, CSS, JS): Cache-First with network fallback
+    // STRATEGY 2: NETWORK FIRST (CODE - HTML, JS, CSS)
+    // Always try to fetch the latest version from Netlify.
+    // Only fall back to cache if offline or fetch fails.
     event.respondWith(
-        caches.match(event.request).then((cachedResponse) => {
-            if (cachedResponse) {
-                return cachedResponse;
-            }
-            return fetch(event.request).then((networkResponse) => {
-                // Cache new static assets
-                if (event.request.method === 'GET') {
-                    return caches.open(STATIC_CACHE).then((cache) => {
-                        cache.put(event.request, networkResponse.clone());
-                        return networkResponse;
-                    });
-                }
-                return networkResponse;
+        fetch(event.request).then((networkResponse) => {
+            // Update cache with new version
+            const responseClone = networkResponse.clone();
+            caches.open(STATIC_CACHE).then((cache) => {
+                cache.put(event.request, responseClone);
             });
+            return networkResponse;
         }).catch(() => {
-            // Offline fallback
-            if (event.request.destination === 'document') {
-                return caches.match('/index.html');
-            }
+            // Network failed? Serve from cache.
+            console.log('[SW] Network failed, serving from cache:', event.request.url);
+            return caches.match(event.request).then(cachedResponse => {
+                if (cachedResponse) return cachedResponse;
+
+                // Fallback for navigation (index.html)
+                if (event.request.destination === 'document') {
+                    return caches.match('/index.html');
+                }
+
+                return null;
+            });
         })
     );
 });

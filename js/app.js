@@ -87,9 +87,15 @@ function initGuestNameListener() {
             // If admin triggers a refresh, check type and act accordingly
             if (data.refreshTrigger) {
                 const lastRefresh = sessionStorage.getItem('lastRefreshTimestamp');
-                if (lastRefresh && data.refreshTrigger > lastRefresh) {
+
+                // IGNORE if the trigger is older than our last refresh (avoids loop)
+                // But if it's new, execute!
+                if (data.refreshTrigger > (lastRefresh || 0)) {
                     console.log("Remote refresh received. Type:", data.refreshType || 'legacy');
                     sessionStorage.setItem('lastRefreshTimestamp', Date.now());
+
+                    // Visual Feedback for User/Admin watching the screen
+                    showUpdateToast("Mise à jour à distance reçue... 🔄");
 
                     // Full refresh: Clear ALL caches (including images) first
                     if (data.refreshType === 'full') {
@@ -99,9 +105,9 @@ function initGuestNameListener() {
                             // Wait a moment for cache clear, then reload
                             setTimeout(() => {
                                 window.location.reload(true);
-                            }, 1000);
+                            }, 1500);
                         } else {
-                            window.location.reload(true);
+                            setTimeout(() => window.location.reload(true), 1500);
                         }
                     } else {
                         // Soft refresh: Clear CODE cache (CSS/JS/HTML) but keep images
@@ -110,17 +116,45 @@ function initGuestNameListener() {
                             navigator.serviceWorker.controller.postMessage({ type: 'CLEAR_STATIC_CACHE' });
                             setTimeout(() => {
                                 window.location.reload(true);
-                            }, 500);
+                            }, 1000);
                         } else {
-                            window.location.reload(true);
+                            setTimeout(() => window.location.reload(true), 1000);
                         }
                     }
-                } else if (!lastRefresh) {
-                    // First load, just set the timestamp so we don't reload immediately loop
+                }
+                else if (!lastRefresh) {
+                    // First load initialization
                     sessionStorage.setItem('lastRefreshTimestamp', Date.now());
                 }
             }
         }
+    });
+}
+
+// Helper: Toast Notification
+function showUpdateToast(msg) {
+    const toast = document.createElement('div');
+    toast.style.position = 'fixed';
+    toast.style.bottom = '20px';
+    toast.style.left = '50%';
+    toast.style.transform = 'translateX(-50%)';
+    toast.style.background = 'rgba(0,0,0,0.8)';
+    toast.style.color = 'white';
+    toast.style.padding = '15px 30px';
+    toast.style.borderRadius = '30px';
+    toast.style.zIndex = '9999';
+    toast.style.fontFamily = 'Montserrat, sans-serif';
+    toast.style.fontWeight = '600';
+    toast.style.boxShadow = '0 10px 30px rgba(0,0,0,0.3)';
+    toast.style.transition = 'opacity 0.5s';
+    toast.innerText = msg;
+
+    document.body.appendChild(toast);
+
+    // Animation in
+    requestAnimationFrame(() => {
+        toast.style.opacity = '1';
+        toast.style.transform = 'translateX(-50%) translateY(-10px)';
     });
 }
 
@@ -327,45 +361,14 @@ document.addEventListener('DOMContentLoaded', () => {
         preloadScreensaverImages();
     }, 2000);
 
-    // -- SECRET PREVIEW MODE: Double-click detection on refresh button --
+    // -- REFRESH BUTTON (Panic Button) --
+    // Simple reload in case of glitches. No more hidden double-click menu here.
     const refreshBtn = document.getElementById('refresh-btn-main');
     if (refreshBtn) {
-        let clickCount = 0;
-        let clickTimer = null;
-
         refreshBtn.addEventListener('click', (e) => {
-            clickCount++;
-            console.log('Refresh btn clicked, count:', clickCount);
-
-            if (clickCount === 1) {
-                // Wait to see if it's a double-click
-                clickTimer = setTimeout(() => {
-                    // Single click: refresh page
-                    console.log('Single click - refreshing page');
-                    clickCount = 0;
-                    window.location.reload(true);
-                }, 400); // Increased to 400ms for easier double-click on iPad
-            } else if (clickCount >= 2) {
-                // Double-click: start preview mode
-                console.log('Double click - starting preview mode');
-                clearTimeout(clickTimer);
-                clickCount = 0;
-                e.stopPropagation();
-                e.preventDefault();
-                // Use setTimeout to ensure function is available
-                setTimeout(() => {
-                    if (typeof window.startPreviewMode === 'function') {
-                        window.startPreviewMode();
-                    } else {
-                        console.error('startPreviewMode not available');
-                    }
-                }, 0);
-            }
+            console.log('Refresh button clicked - reloading page...');
+            window.location.reload(true);
         });
-
-        console.log("Refresh button double-click handler attached.");
-    } else {
-        console.error("Refresh button not found!");
     }
 });
 
@@ -1427,7 +1430,14 @@ document.addEventListener('keydown', (e) => {
 // --- Hidden Admin Functions ---
 function openAdminModal() {
     const modal = document.getElementById('hidden-admin-modal');
-    if (modal) modal.style.display = 'flex';
+    if (modal) {
+        modal.style.display = 'flex';
+        // Inject current version if not already there
+        const title = modal.querySelector('h3');
+        if (title && !title.textContent.includes('v22')) {
+            title.innerHTML = '🔧 Admin <span style="font-size:0.4em; opacity:0.5; vertical-align:middle;">v22</span>';
+        }
+    }
 }
 
 function closeAdminModal() {
