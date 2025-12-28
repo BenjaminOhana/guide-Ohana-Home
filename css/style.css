@@ -3692,7 +3692,8 @@ body:not(.on-hub) #view-story.active~.global-home-btn {
 
 .dog-slide-left {
     flex: 0.9;
-    padding: 50px 50px 50px 80px;
+    padding: 40px 40px 40px 60px;
+    /* Reduced padding */
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -3723,20 +3724,22 @@ body:not(.on-hub) #view-story.active~.global-home-btn {
 
 .dog-slide-title {
     font-family: 'Caveat', cursive;
-    font-size: 4rem;
-    /* Larger */
+    font-size: 3.5rem;
+    /* Reduced from 4rem */
     line-height: 1.1;
     color: #bf7e6f;
     font-weight: 700;
-    margin-bottom: 25px;
+    margin-bottom: 20px;
+    /* Reduced margin */
     margin-top: 0;
 }
 
 .dog-slide-intro {
-    font-size: 1.3rem;
-    /* Larger */
-    line-height: 1.6;
-    margin-bottom: 35px;
+    font-size: 1.15rem;
+    /* Reduced from 1.3rem */
+    line-height: 1.5;
+    margin-bottom: 25px;
+    /* Reduced margin */
     font-family: 'Montserrat', sans-serif;
     font-weight: 500;
 }
