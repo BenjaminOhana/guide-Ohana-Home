@@ -720,7 +720,7 @@ function initScreensaverSlides() {
                 // ============================================================
                 // -- SPECIAL CASE: Dog Slide (Validé Pixel Perfect V4) --
                 slide.setAttribute('data-text-slide', 'true');
-                slide.setAttribute('data-text-slide', 'true');
+                slide.classList.add('no-mantra');
 
                 const container = document.createElement('div');
                 container.className = 'dog-slide-container';
@@ -830,6 +830,9 @@ function initScreensaverSlides() {
                 // Signature
                 const sigBlock = document.createElement('div');
                 sigBlock.className = 'ben-slide-signature';
+
+                // Add robust class for mantra suppression
+                slide.classList.add('no-mantra');
 
                 const sigName = document.createElement('span');
                 sigName.className = 'ben-slide-sig-name';
@@ -1098,6 +1101,9 @@ function getNextMantra() {
 }
 
 function updateMantra() {
+    // Race Condition Fix: Always clear pending mantra show
+    if (mantraTimer) clearTimeout(mantraTimer);
+
     const mantraEl = document.getElementById('ss-mantra-text');
     const container = document.querySelector('.screensaver-mantra-wrapper');
     if (!mantraEl || !container) return;
@@ -1105,16 +1111,35 @@ function updateMantra() {
     // Check if current slide should hide Mantra (Text Slides)
     const activeSlide = document.querySelector('.slide.active');
     if (activeSlide) {
-        // Method 1: Check data attribute for special layout slides (Ben, Dog)
-        if (activeSlide.getAttribute('data-text-slide') === 'true') {
+        // Method 0: Check robust 'no-mantra' class (Added for Ben/Dog slides)
+        if (activeSlide.classList.contains('no-mantra')) {
             container.style.opacity = '0';
+            container.style.display = 'none';
             return;
         }
 
-        // Method 2: Check inline background image to match filename
+        // Method 1: Check data attribute for special layout slides (Ben, Dog)
+        if (activeSlide.getAttribute('data-text-slide') === 'true') {
+            // FORCE HIDE
+            container.style.opacity = '0';
+            container.style.display = 'none';
+            return;
+        }
+
+        // Method 2: Robust Content Check (Ben & Dog)
+        // Checks if the slide contains specific structures even if attributes are missing
+        if (activeSlide.querySelector('.ben-slide-card') ||
+            activeSlide.querySelector('.dog-slide-container')) {
+
+            container.style.opacity = '0';
+            container.style.display = 'none'; // FORCE IMMEDIATE HIDE
+            return;
+        }
+
+        // Method 3: Check inline background image to match filename
         let bg = activeSlide.style.backgroundImage || ''; // Inline style preferred
 
-        // Fix: If inline is empty, try to find child with class slide-img
+        // Fix: If inline is empty, try to find child with class slide-img or any div with bg
         if (!bg || bg === 'none') {
             const imgLayer = activeSlide.querySelector('.slide-img');
             if (imgLayer) {
@@ -1122,14 +1147,9 @@ function updateMantra() {
             }
         }
 
-        if (activeSlide.querySelector('.ben-slide-card') || activeSlide.classList.contains('dog-slide-layout')) {
-            container.style.opacity = '0';
-            container.style.display = 'none'; // FORCE IMMEDIATE HIDE
-            return;
-        }
-
         if (isTextSlide(bg)) {
             container.style.opacity = '0';
+            container.style.display = 'none';
             return;
         }
     }
@@ -1140,7 +1160,10 @@ function updateMantra() {
     // Smooth Transition: Fade Out -> Change -> Fade In
     container.style.opacity = '0';
 
-    setTimeout(() => {
+    // Race Condition Fix: Store timer to clear it if slide changes rapidly
+    if (mantraTimer) clearTimeout(mantraTimer);
+
+    mantraTimer = setTimeout(() => {
         if (text) {
             mantraEl.textContent = text;
             container.style.display = 'block';
@@ -1155,6 +1178,8 @@ function updateMantra() {
     }, 1000); // Wait for fade out to finish
 }
 
+// Global timer variable
+let mantraTimer;
 
 // -- Event Listeners --
 
