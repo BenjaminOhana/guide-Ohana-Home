@@ -54,6 +54,8 @@ function updateLanguage(lang) {
         if (typeof initScreensaverSlides === 'function') {
             console.log("Re-initializing screensaver slides for new language...");
             initScreensaverSlides();
+            // Force refresh of mantra to switch language immediately
+            if (typeof updateMantra === 'function') updateMantra();
         }
     }, 0);
 }
