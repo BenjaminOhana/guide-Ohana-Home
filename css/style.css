@@ -2253,7 +2253,8 @@ button {
 
 .category-overlay h3 {
     color: white;
-    font-size: 1.8rem;
+    font-size: 1.5rem;
+    /* Reduced to prevent overflow */
     font-weight: 500;
     letter-spacing: 1px;
     text-transform: uppercase;
@@ -2262,6 +2263,9 @@ button {
     /* Ensure text is centered if it wraps */
     width: 100%;
     /* Ensure it takes full available width (minus padding) */
+    overflow-wrap: break-word;
+    word-break: break-word;
+    hyphens: auto;
 }
 
 /* Horizontal Scroll List (Level 2) */
